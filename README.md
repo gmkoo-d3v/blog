@@ -1,6 +1,6 @@
 # Runtime Notes
 
-[Visit Blog](https://gmkoo-d3v.github.io/blog/)
+👉[Visit Blog](https://gmkoo-d3v.github.io/blog/)
 
 GitHub Pages를 활용하여 호스팅하는 **개발 블로그(정적 웹사이트)**입니다.
 Jekyll이나 번들러 같은 별도 빌드 도구 없이, 순수 HTML/CSS/JS 파일만으로 빠르고 가볍게 운영됩니다.
