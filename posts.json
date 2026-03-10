@@ -1,5 +1,15 @@
 [
   {
+    "slug": "java-bufferedreader-stringtokenizer-stringbuilder",
+    "title": "자바 코딩문제 입력 기본기: BufferedReader, StringTokenizer, StringBuilder",
+    "sectionSlug": "coding-problem",
+    "sectionLabel": "Coding Problem",
+    "category": "Java Input Basics",
+    "date": "2026-03-11",
+    "summary": "BufferedReader, StringTokenizer, StringBuilder의 역할과 코딩문제에서 셋을 함께 쓰는 이유를 간단한 예제와 함께 정리.",
+    "tags": ["Java", "Programming", "Coding Problem"]
+  },
+  {
     "slug": "java-for-each",
     "title": "Java for-each 문 완전 정리: 언제 쓰고, 언제 쓰면 안 되는가",
     "sectionSlug": "programming",
