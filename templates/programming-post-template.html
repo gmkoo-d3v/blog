@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{POST_TITLE}}</title>
+    <meta name="description" content="{{POST_DESCRIPTION}}" />
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <script defer src="../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../">Home</a>
+          <a class="nav-link" href="../../posts/">Posts</a>
+          <a class="nav-link" href="../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">Programming</p>
+            <h1>{{POST_TITLE}}</h1>
+            <p class="lead">{{POST_LEAD}}</p>
+            <div class="meta-row">
+              <span>{{YYYY-MM-DD}}</span>
+              <span>{{CATEGORY}}</span>
+              <span>{{META_EXTRA}}</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#example">예제</a>
+            <a href="#tips">작성 팁</a>
+            <a href="#summary">정리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              이 템플릿은 프로그래밍 포스트용 기본 구조입니다. 제목, 리드,
+              목차, 코드 블록 규칙만 유지하고 본문은 주제에 맞게 바꿔 쓰면
+              됩니다.
+            </p>
+            <div class="callout">
+              <strong>코드 블록 규칙</strong>
+              <p>
+                `&lt;pre&gt;&lt;code class="language-..."&gt;...&lt;/code&gt;&lt;/pre&gt;`
+                형식만 지키면 Prism.js, line numbers, copy button, mac 스타일
+                헤더가 공통 자산으로 자동 적용됩니다.
+              </p>
+            </div>
+          </section>
+
+          <section id="example" class="prose">
+            <h2>예제</h2>
+            <p>Java 예제:</p>
+            <pre><code class="language-java">List&lt;String&gt; names = List.of("Kim", "Lee", "Park");
+
+for (String name : names) {
+    System.out.println(name);
+}</code></pre>
+
+            <p>Bash 예제:</p>
+            <pre><code class="language-bash">python3 -m http.server 8080</code></pre>
+
+            <p>SQL 예제:</p>
+            <pre><code class="language-sql">SELECT id, title, created_at
+FROM posts
+ORDER BY created_at DESC;</code></pre>
+          </section>
+
+          <section id="tips" class="prose">
+            <h2>작성 팁</h2>
+            <ul>
+              <li>코드 블록에는 가능한 한 `language-*` 클래스를 명시합니다.</li>
+              <li>한 글 안에서 언어가 섞이면 블록마다 다른 언어 클래스를 붙입니다.</li>
+              <li>인라인 코드는 `<code>...</code>`만 사용하면 됩니다.</li>
+              <li>새 글을 만들면 `posts.json` 메타도 같이 추가합니다.</li>
+            </ul>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>정리</h2>
+            <p>
+              이 파일을 복사해서 새 프로그래밍 포스트를 만들고, 코드 블록에는
+              언어 클래스만 붙이면 공통 코드 스타일이 그대로 적용됩니다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>

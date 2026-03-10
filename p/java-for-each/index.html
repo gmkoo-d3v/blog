@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Java for-each 문 완전 정리: 언제 쓰고, 언제 쓰면 안 되는가</title>
+    <meta
+      name="description"
+      content="Java의 for-each(enhanced for) 문법, 동작 방식, 일반 for문과의 차이, 배열과 컬렉션 순회, 수정과 삭제 시 주의점까지 한 번에 정리한 글"
+    />
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <script defer src="../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../">Home</a>
+          <a class="nav-link" href="../../posts/">Posts</a>
+          <a class="nav-link" href="../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">Programming</p>
+            <h1>Java for-each 문:<br> 언제 쓰고, 언제 쓰면 안 되는가</h1>
+            <p class="lead">
+              Java에서 배열이나 컬렉션을 순회할 때 `for-each` 문은 가장 읽기 쉬운
+              선택지입니다. 다만 인덱스가 필요하거나 순회 중 구조를 바꿔야 하는
+              상황에서는 오히려 맞지 않을 수 있습니다.
+            </p>
+            <div class="meta-row">
+              <span>2026-03-11</span>
+              <span>Java / Language Basics</span>
+              <span>Array, List, Set, Map</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#syntax">기본 문법</a>
+            <a href="#compare">일반 for문과 차이</a>
+            <a href="#array">배열에서의 동작</a>
+            <a href="#collection">컬렉션에서의 동작</a>
+            <a href="#mutation">값 변경이 안 되는 이유</a>
+            <a href="#remove">삭제할 때 주의할 점</a>
+            <a href="#when-to-use">언제 쓰고 언제 피해야 하나</a>
+            <a href="#examples">예제 모음</a>
+            <a href="#summary">정리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              Java의 `for-each` 문은 정확히는 `enhanced for statement`입니다.
+              핵심 목적은 "원소를 하나씩 꺼내서 읽는 코드"를 더 짧고 안전하게
+              만드는 것입니다.
+            </p>
+            <p>
+              일반 `for` 문은 강력하지만, 단순 순회에서도 직접 인덱스를 관리해야
+              합니다.
+            </p>
+            <pre><code>for (int i = 0; i &lt; list.size(); i++) {
+    System.out.println(list.get(i));
+}</code></pre>
+            <p>같은 코드를 `for-each`로 쓰면 더 의도가 분명해집니다.</p>
+            <pre><code>for (String item : list) {
+    System.out.println(item);
+}</code></pre>
+            <div class="callout">
+              <strong>핵심 기준</strong>
+              <p>
+                `for-each`는 "몇 번째 원소인가"보다 "현재 원소가 무엇인가"에
+                집중하는 문법입니다.
+              </p>
+            </div>
+          </section>
+
+          <section id="syntax" class="prose">
+            <h2>기본 문법</h2>
+            <p>문법은 아래처럼 단순합니다.</p>
+            <pre><code>for (타입 변수명 : 반복대상) {
+    // 반복 실행 코드
+}</code></pre>
+            <p>예를 들어:</p>
+            <pre><code>int[] numbers = {1, 2, 3};
+
+for (int number : numbers) {
+    System.out.println(number);
+}</code></pre>
+            <p>반복 대상에는 보통 아래가 들어갑니다.</p>
+            <ul>
+              <li>배열: `int[]`, `String[]`</li>
+              <li>`Iterable` 구현 컬렉션: `List`, `Set`, `Queue`</li>
+            </ul>
+          </section>
+
+          <section id="compare" class="prose">
+            <h2>일반 for문과 차이</h2>
+            <p>일반 `for` 문:</p>
+            <pre><code>for (int i = 0; i &lt; fruits.length; i++) {
+    System.out.println(fruits[i]);
+}</code></pre>
+            <p>`for-each` 문:</p>
+            <pre><code>for (String fruit : fruits) {
+    System.out.println(fruit);
+}</code></pre>
+            <p>차이는 명확합니다.</p>
+            <ul>
+              <li>일반 `for`: 인덱스 접근 가능</li>
+              <li>`for-each`: 코드가 짧고 읽기 쉬움</li>
+              <li>일반 `for`: 특정 위치 수정, 역순 순회, 앞뒤 비교에 유리</li>
+              <li>`for-each`: 단순 조회와 출력에 유리</li>
+            </ul>
+          </section>
+
+          <section id="array" class="prose">
+            <h2>배열에서의 동작</h2>
+            <p>배열에서는 앞에서부터 끝까지 순서대로 원소를 꺼냅니다.</p>
+            <pre><code>String[] fruits = {"apple", "banana", "grape"};
+
+for (String fruit : fruits) {
+    System.out.println(fruit);
+}</code></pre>
+            <p>실행 흐름은 다음과 같습니다.</p>
+            <ul>
+              <li>첫 번째 반복: `fruit = "apple"`</li>
+              <li>두 번째 반복: `fruit = "banana"`</li>
+              <li>세 번째 반복: `fruit = "grape"`</li>
+            </ul>
+            <p>배열은 순서가 보장되므로 선언된 순서대로 출력됩니다.</p>
+          </section>
+
+          <section id="collection" class="prose">
+            <h2>컬렉션에서의 동작</h2>
+            <p>`List`에서도 같은 방식으로 사용할 수 있습니다.</p>
+            <pre><code>List&lt;String&gt; names = List.of("Kim", "Lee", "Park");
+
+for (String name : names) {
+    System.out.println(name);
+}</code></pre>
+            <p>`Set`에서도 사용할 수 있습니다.</p>
+            <pre><code>Set&lt;String&gt; tags = Set.of("java", "spring", "jpa");
+
+for (String tag : tags) {
+    System.out.println(tag);
+}</code></pre>
+            <p>
+              다만 `Set`은 구현체에 따라 순서가 일정하지 않을 수 있습니다.
+              그래서 `for-each`는 특히 인덱스가 필요 없는 컬렉션과 잘 맞습니다.
+            </p>
+            <p>`Map`은 보통 `entrySet()`을 통해 순회합니다.</p>
+            <pre><code>Map&lt;String, Integer&gt; scores = Map.of(
+    "Kim", 90,
+    "Lee", 80
+);
+
+for (Map.Entry&lt;String, Integer&gt; entry : scores.entrySet()) {
+    System.out.println(entry.getKey() + " : " + entry.getValue());
+}</code></pre>
+          </section>
+
+          <section id="mutation" class="prose">
+            <h2>값 변경이 안 되는 이유</h2>
+            <p>
+              아래 코드는 많은 초보자가 "배열 값이 바뀌겠지"라고 생각하지만
+              실제로는 바뀌지 않습니다.
+            </p>
+            <pre><code>int[] numbers = {1, 2, 3};
+
+for (int number : numbers) {
+    number = number * 10;
+}</code></pre>
+            <p>
+              이유는 `number`가 배열 원소 자체가 아니라 현재 원소 값을 복사한
+              지역 변수이기 때문입니다.
+            </p>
+            <p>원본을 실제로 바꾸려면 인덱스 접근이 필요합니다.</p>
+            <pre><code>for (int i = 0; i &lt; numbers.length; i++) {
+    numbers[i] = numbers[i] * 10;
+}</code></pre>
+
+            <h3>참조형 객체는 왜 수정되는가</h3>
+            <pre><code>class User {
+    String name;
+
+    User(String name) {
+        this.name = name;
+    }
+}
+
+List&lt;User&gt; users = new ArrayList&lt;&gt;();
+users.add(new User("A"));
+users.add(new User("B"));
+
+for (User user : users) {
+    user.name = user.name + "_updated";
+}</code></pre>
+            <p>
+              이 경우 객체 내부 상태는 바뀝니다. 참조 변수 자체를 다른 객체로
+              바꾸는 것은 원본 리스트에 반영되지 않지만, 참조가 가리키는 객체의
+              필드를 수정하면 실제 객체 상태는 변경됩니다.
+            </p>
+          </section>
+
+          <section id="remove" class="prose">
+            <h2>삭제할 때 주의할 점</h2>
+            <p>
+              `for-each`를 돌면서 컬렉션을 직접 수정하면
+              `ConcurrentModificationException`이 발생할 수 있습니다.
+            </p>
+            <pre><code>for (String name : names) {
+    names.remove(name);
+}</code></pre>
+            <p>
+              이유는 `for-each`가 내부적으로 `Iterator` 기반으로 동작하는데,
+              반복 도중 컬렉션 구조가 예상치 않게 바뀌면 반복 상태가 깨지기
+              때문입니다.
+            </p>
+            <p>안전하게 삭제하려면 `Iterator`를 직접 사용하는 편이 낫습니다.</p>
+            <pre><code>Iterator&lt;String&gt; iterator = names.iterator();
+
+while (iterator.hasNext()) {
+    String name = iterator.next();
+    if (name.startsWith("K")) {
+        iterator.remove();
+    }
+}</code></pre>
+          </section>
+
+          <section id="when-to-use" class="prose">
+            <h2>언제 쓰고 언제 피해야 하나</h2>
+            <p>`for-each`를 쓰기 좋은 경우:</p>
+            <ul>
+              <li>전체 원소를 출력할 때</li>
+              <li>합계나 통계를 계산할 때</li>
+              <li>각 원소를 읽어 처리할 때</li>
+              <li>인덱스가 전혀 필요 없을 때</li>
+            </ul>
+            <p>일반 `for`가 더 좋은 경우:</p>
+            <ul>
+              <li>현재 몇 번째 원소인지 알아야 할 때</li>
+              <li>특정 위치 값을 바꿔야 할 때</li>
+              <li>앞 원소와 뒤 원소를 비교할 때</li>
+              <li>역순 순회가 필요할 때</li>
+              <li>반복 중 구조 변경을 해야 할 때</li>
+            </ul>
+            <div class="callout">
+              <strong>한 줄 기준</strong>
+              <p>
+                읽기 전용 순회면 `for-each`, 위치 제어가 필요하면 일반 `for`,
+                삭제까지 필요하면 `Iterator`를 우선 고려하면 됩니다.
+              </p>
+            </div>
+          </section>
+
+          <section id="examples" class="prose">
+            <h2>예제 모음</h2>
+            <h3>배열 출력</h3>
+            <pre><code>int[] arr = {10, 20, 30};
+
+for (int value : arr) {
+    System.out.println(value);
+}</code></pre>
+
+            <h3>List 문자열 순회</h3>
+            <pre><code>List&lt;String&gt; colors = List.of("red", "green", "blue");
+
+for (String color : colors) {
+    System.out.println(color.toUpperCase());
+}</code></pre>
+
+            <h3>객체 리스트 순회</h3>
+            <pre><code>for (User user : users) {
+    System.out.println(user.name);
+}</code></pre>
+
+            <h3>Map 순회</h3>
+            <pre><code>for (Map.Entry&lt;String, Integer&gt; entry : scores.entrySet()) {
+    System.out.println(entry.getKey() + " -&gt; " + entry.getValue());
+}</code></pre>
+
+            <h3>합계 계산</h3>
+            <pre><code>int sum = 0;
+
+for (int value : numbers) {
+    sum += value;
+}</code></pre>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>정리</h2>
+            <p>
+              `for-each` 문은 Java에서 가장 읽기 좋은 반복문 중 하나입니다.
+              배열과 컬렉션을 순회할 때 인덱스 실수를 줄여 주고, 코드 의도를 더
+              또렷하게 만듭니다.
+            </p>
+            <ul>
+              <li>`for-each` 변수 값을 바꿔도 원본 배열 원소는 바뀌지 않습니다.</li>
+              <li>순회 중 컬렉션을 직접 삭제하면 예외가 날 수 있습니다.</li>
+              <li>원소를 읽기만 하면 `for-each`, 위치 제어가 필요하면 일반 `for`가 더 적합합니다.</li>
+            </ul>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
