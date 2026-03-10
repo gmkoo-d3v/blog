@@ -2,6 +2,7 @@ const sourceCache = new Map();
 const filterState = {
   q: "",
   tag: "",
+  page: 1,
 };
 
 const normalizeText = (value) => String(value || "").toLowerCase().trim();
@@ -10,6 +11,8 @@ const readFilterStateFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
   filterState.q = normalizeText(params.get("q"));
   filterState.tag = (params.get("tag") || "").trim();
+  const parsedPage = Number.parseInt(params.get("page") || "1", 10);
+  filterState.page = Number.isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
 };
 
 const writeFilterStateToUrl = () => {
@@ -25,6 +28,12 @@ const writeFilterStateToUrl = () => {
     params.set("tag", filterState.tag);
   } else {
     params.delete("tag");
+  }
+
+  if (filterState.page > 1) {
+    params.set("page", String(filterState.page));
+  } else {
+    params.delete("page");
   }
 
   const query = params.toString();
@@ -88,12 +97,22 @@ const updateSearchStatus = (count, total) => {
     parts.push(`태그: ${filterState.tag}`);
   }
 
+  const paginationTarget = document.querySelector("[data-post-pagination]");
+  const pageSize = Number(document.querySelector("[data-post-list]")?.dataset.pageSize || "0");
+  const totalPages =
+    paginationTarget && pageSize > 0 ? Math.max(1, Math.ceil(count / pageSize)) : 1;
+
   const summary = parts.length
     ? `${parts.join(" · ")} · ${count} / ${total}개`
     : `전체 ${total}개 글`;
 
+  const withPage =
+    paginationTarget && totalPages > 1
+      ? `${summary} · ${filterState.page}/${totalPages} 페이지`
+      : summary;
+
   targets.forEach((target) => {
-    target.textContent = summary;
+    target.textContent = withPage;
   });
 };
 
@@ -121,11 +140,112 @@ const buildTagButton = (tag, count, active) => {
   button.append(label, badge);
   button.addEventListener("click", () => {
     filterState.tag = filterState.tag === tag ? "" : tag;
+    filterState.page = 1;
     writeFilterStateToUrl();
     renderAllPostUi().catch((error) => console.error(error));
   });
 
   return button;
+};
+
+const buildPaginationSequence = (totalPages, currentPage) => {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = new Set([1, totalPages, currentPage, currentPage - 1, currentPage + 1]);
+  const sorted = [...pages].filter((page) => page >= 1 && page <= totalPages).sort((a, b) => a - b);
+  const sequence = [];
+
+  sorted.forEach((page, index) => {
+    sequence.push(page);
+    const next = sorted[index + 1];
+    if (next && next - page > 1) {
+      sequence.push("ellipsis");
+    }
+  });
+
+  return sequence;
+};
+
+const renderPagination = (totalItems, pageSize) => {
+  const target = document.querySelector("[data-post-pagination]");
+
+  if (!target) {
+    return;
+  }
+
+  target.replaceChildren();
+
+  if (!pageSize) {
+    return;
+  }
+
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const currentPage = Math.min(filterState.page, totalPages);
+
+  if (currentPage !== filterState.page) {
+    filterState.page = currentPage;
+    writeFilterStateToUrl();
+  }
+
+  if (totalPages <= 1) {
+    return;
+  }
+
+  const prev = document.createElement("button");
+  prev.type = "button";
+  prev.className = "pagination-button";
+  prev.textContent = "이전";
+  prev.disabled = currentPage === 1;
+  prev.addEventListener("click", () => {
+    if (currentPage === 1) {
+      return;
+    }
+    filterState.page = currentPage - 1;
+    writeFilterStateToUrl();
+    renderAllPostUi().catch((error) => console.error(error));
+  });
+  target.append(prev);
+
+  buildPaginationSequence(totalPages, currentPage).forEach((entry) => {
+    if (entry === "ellipsis") {
+      const ellipsis = document.createElement("span");
+      ellipsis.className = "pagination-ellipsis";
+      ellipsis.textContent = "...";
+      target.append(ellipsis);
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "pagination-button";
+    if (entry === currentPage) {
+      button.classList.add("is-active");
+    }
+    button.textContent = String(entry);
+    button.addEventListener("click", () => {
+      filterState.page = entry;
+      writeFilterStateToUrl();
+      renderAllPostUi().catch((error) => console.error(error));
+    });
+    target.append(button);
+  });
+
+  const next = document.createElement("button");
+  next.type = "button";
+  next.className = "pagination-button";
+  next.textContent = "다음";
+  next.disabled = currentPage === totalPages;
+  next.addEventListener("click", () => {
+    if (currentPage === totalPages) {
+      return;
+    }
+    filterState.page = currentPage + 1;
+    writeFilterStateToUrl();
+    renderAllPostUi().catch((error) => console.error(error));
+  });
+  target.append(next);
 };
 
 const renderPostCards = async () => {
@@ -151,11 +271,27 @@ const renderPostCards = async () => {
       const fullyFilteredPosts = searchedPosts.filter((post) =>
         matchesTag(post, filterState.tag)
       );
+      const pageSize = Number(container.dataset.pageSize || "0");
       const applyLimit = !filterState.q && !filterState.tag;
       const limit = Number(container.dataset.limit || fullyFilteredPosts.length);
-      const selectedPosts = applyLimit
-        ? fullyFilteredPosts.slice(0, limit)
+      const totalPages = pageSize
+        ? Math.max(1, Math.ceil(fullyFilteredPosts.length / pageSize))
+        : 1;
+      const currentPage = pageSize ? Math.min(filterState.page, totalPages) : 1;
+
+      if (pageSize && currentPage !== filterState.page) {
+        filterState.page = currentPage;
+        writeFilterStateToUrl();
+      }
+
+      const pagedPosts = pageSize
+        ? fullyFilteredPosts.slice((currentPage - 1) * pageSize, currentPage * pageSize)
         : fullyFilteredPosts;
+      const selectedPosts = pageSize
+        ? pagedPosts
+        : applyLimit
+          ? fullyFilteredPosts.slice(0, limit)
+          : fullyFilteredPosts;
 
       container.replaceChildren();
 
@@ -173,6 +309,8 @@ const renderPostCards = async () => {
 
         emptyCard.append(title, summary);
         container.append(emptyCard);
+        renderPagination(fullyFilteredPosts.length, pageSize);
+        updateSearchStatus(fullyFilteredPosts.length, sectionFilteredPosts.length);
         return;
       }
 
@@ -213,6 +351,7 @@ const renderPostCards = async () => {
         container.append(article);
       });
 
+      renderPagination(fullyFilteredPosts.length, pageSize);
       updateSearchStatus(fullyFilteredPosts.length, sectionFilteredPosts.length);
     })
   );
@@ -310,6 +449,7 @@ const bindSearchControls = () => {
   inputs.forEach((input) => {
     input.addEventListener("input", (event) => {
       filterState.q = normalizeText(event.target.value);
+      filterState.page = 1;
       writeFilterStateToUrl();
       renderAllPostUi().catch((error) => console.error(error));
     });
@@ -319,6 +459,7 @@ const bindSearchControls = () => {
     button.addEventListener("click", () => {
       filterState.q = "";
       filterState.tag = "";
+      filterState.page = 1;
       writeFilterStateToUrl();
       renderAllPostUi().catch((error) => console.error(error));
     });
