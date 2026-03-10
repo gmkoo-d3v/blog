@@ -21,3 +21,6 @@ docs/
 
 # Local agent metadata
 .serena/
+
+# IDE metadata
+.idea/
