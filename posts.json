@@ -1,5 +1,15 @@
 [
   {
+    "slug": "github-profile-page-vercel",
+    "title": "GitHub 프로필 페이지 꾸미기: Readme Stats와 Trophy를 Vercel에 배포한 기록",
+    "sectionSlug": "infra",
+    "sectionLabel": "Infra",
+    "category": "GitHub Profile",
+    "date": "2026-03-11",
+    "summary": "github-readme-stats와 github-profile-trophy를 포크한 뒤 Vercel에 연결하고 GitHub PAT 토큰까지 설정한 과정 정리.",
+    "tags": ["GitHub", "Vercel", "README", "PAT", "Profile Trophy", "Readme Stats"]
+  },
+  {
     "slug": "java-install-macos-windows",
     "title": "Java 설치 가이드: macOS(Homebrew)와 Windows 환경 변수 설정",
     "sectionSlug": "os-settings",

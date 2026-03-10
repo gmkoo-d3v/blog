@@ -85,6 +85,22 @@ const matchesTag = (post, tag) => {
   return (post.tags || []).some((item) => item === tag);
 };
 
+const readStaticSections = (rawValue) => {
+  if (!rawValue) {
+    return [];
+  }
+
+  return rawValue
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .map((entry) => {
+      const [slug, label] = entry.split(":").map((part) => part.trim());
+      return { slug, label: label || slug };
+    })
+    .filter((section) => section.slug);
+};
+
 const updateSearchStatus = (count, total) => {
   const targets = document.querySelectorAll("[data-post-search-status]");
   const parts = [];
@@ -370,6 +386,14 @@ const renderSectionLists = async () => {
       const root = container.dataset.root || "./";
       const activeSection = container.dataset.activeSection || "";
       const sections = new Map();
+      const staticSections = readStaticSections(container.dataset.staticSections || "");
+
+      staticSections.forEach((section) => {
+        sections.set(section.slug, {
+          label: section.label,
+          count: 0,
+        });
+      });
 
       posts.forEach((post) => {
         if (!post.sectionSlug || !post.sectionLabel) {
@@ -380,6 +404,7 @@ const renderSectionLists = async () => {
           label: post.sectionLabel,
           count: 0,
         };
+        current.label = current.label || post.sectionLabel;
         current.count += 1;
         sections.set(post.sectionSlug, current);
       });
