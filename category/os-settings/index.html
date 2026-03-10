@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OS 설정 | Runtime Notes</title>
+    <meta
+      name="description"
+      content="운영체제 설치와 환경 설정 문서를 모아보는 Runtime Notes의 OS 설정 탭"
+    />
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <script defer src="../../assets/js/site.js"></script>
+    <script defer src="../../assets/js/posts.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../">Home</a>
+          <a class="nav-link" href="../../posts/">Posts</a>
+          <a class="nav-link" href="../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="content-layout">
+        <div class="content-main">
+          <section class="page-intro">
+            <p class="eyebrow">OS Settings</p>
+            <h1>운영체제 설정 관련 글</h1>
+            <p class="lead">
+              macOS, Windows 같은 실행 환경에서 설치와 환경 변수 설정을 정리합니다.
+            </p>
+          </section>
+
+          <section class="section-block">
+            <div
+              class="post-grid"
+              data-post-list
+              data-root="../../"
+              data-source="../../posts.json"
+              data-layout="grid"
+              data-page-size="4"
+              data-filter-key="sectionSlug"
+              data-filter-value="os-settings"
+              data-empty-title="아직 OS 설정 글이 없습니다."
+              data-empty-summary="운영체제 설정 글을 추가하면 이 탭에 자동으로 표시됩니다."
+            ></div>
+            <div class="pagination-bar" data-post-pagination></div>
+          </section>
+        </div>
+
+        <aside class="content-sidebar" aria-label="블로그 사이드바">
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Search</p>
+            <div class="search-panel">
+              <label class="search-label" for="os-search">OS 글 검색</label>
+              <input
+                id="os-search"
+                class="search-input"
+                type="search"
+                placeholder="제목, 요약, 태그 검색"
+                data-post-search-input
+              />
+              <button class="search-clear" type="button" data-post-search-clear>
+                초기화
+              </button>
+              <p class="filter-status" data-post-search-status></p>
+            </div>
+          </section>
+
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Categories</p>
+            <div
+              class="sidebar-list"
+              data-section-list
+              data-root="../../"
+              data-source="../../posts.json"
+              data-active-section="os-settings"
+              data-static-sections="infra:Infra,programming:Programming,coding-problem:코딩문제,db:DB,os-settings:OS Settings"
+            ></div>
+          </section>
+
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Tags</p>
+            <div
+              class="tag-cloud"
+              data-tag-list
+              data-source="../../posts.json"
+              data-root="../../"
+              data-filter-key="sectionSlug"
+              data-filter-value="os-settings"
+            ></div>
+          </section>
+
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Browse</p>
+            <div class="sidebar-list">
+              <a class="sidebar-link" href="../../posts/">
+                <span>전체 글</span>
+              </a>
+              <a class="sidebar-link" href="../../about/">
+                <span>About</span>
+              </a>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>

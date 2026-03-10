@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DDL, DML, DCL, TCL 한 번에 정리하기</title>
+    <meta
+      name="description"
+      content="DDL, DML, DCL, TCL의 풀네임과 대표 명령어를 간단하게 정리한 글"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">DB</p>
+            <h1>DDL, DML, DCL, TCL 한 번에 정리하기</h1>
+            <p class="lead">
+              SQL 명령어는 역할에 따라 DDL, DML, DCL, TCL로 나눠서 보면 외우기
+              편합니다. 자주 나오는 대표 명령어만 짧게 정리합니다.
+            </p>
+            <div class="meta-row">
+              <span>2026-03-10</span>
+              <span>DB / SQL Basics</span>
+            </div>
+          </header>
+
+          <section class="prose">
+            <h2>DDL</h2>
+            <p><code>Data Definition Language</code></p>
+            <p>데이터베이스 객체의 구조를 정의, 변경, 삭제할 때 사용합니다.</p>
+            <pre><code>CREATE
+ALTER
+DROP
+TRUNCATE</code></pre>
+
+            <h2>DML</h2>
+            <p><code>Data Manipulation Language</code></p>
+            <p>테이블 안의 데이터를 조회, 추가, 수정, 삭제할 때 사용합니다.</p>
+            <pre><code>SELECT
+INSERT
+UPDATE
+DELETE</code></pre>
+
+            <h2>DCL</h2>
+            <p><code>Data Control Language</code></p>
+            <p>사용자 권한을 부여하거나 회수할 때 사용합니다.</p>
+            <pre><code>GRANT
+REVOKE</code></pre>
+
+            <h2>TCL</h2>
+            <p><code>Transaction Control Language</code></p>
+            <p>트랜잭션을 확정하거나 되돌릴 때 사용합니다.</p>
+            <pre><code>COMMIT
+ROLLBACK
+CHECKPOINT</code></pre>
+
+            <div class="callout">
+              <strong>메모</strong>
+              <p>
+                `CHECKPOINT`는 DBMS에 따라 관리 명령이나 트랜잭션 관련 명령으로
+                분류 방식이 조금 다를 수 있습니다.
+              </p>
+            </div>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>

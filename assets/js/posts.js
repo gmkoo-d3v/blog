@@ -341,7 +341,7 @@ const renderPostCards = async () => {
 
         const title = document.createElement("h3");
         const link = document.createElement("a");
-        link.href = `${root}p/${post.slug}/`;
+        link.href = `${root}p/${post.sectionSlug}/${post.slug}/`;
         link.textContent = post.title;
         title.append(link);
 
@@ -417,7 +417,7 @@ const renderSectionLists = async () => {
         if (sectionSlug === activeSection) {
           link.classList.add("is-active");
         }
-        link.href = `${root}${sectionSlug}/`;
+        link.href = `${root}category/${sectionSlug}/`;
 
         const label = document.createElement("span");
         label.textContent = section.label;
