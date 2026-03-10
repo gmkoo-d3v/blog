@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Runtime Notes</title>
+    <meta
+      name="description"
+      content="공부하면서 알게 된 내용과 작업하면서 정리한 설정을 기록하는 기술 블로그"
+    />
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script defer src="./assets/js/site.js"></script>
+    <script defer src="./assets/js/posts.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link is-active" href="./">Home</a>
+          <a class="nav-link" href="./posts/">Posts</a>
+          <a class="nav-link" href="./about/">About</a>
+        </nav>
+      </header>
+
+      <main class="content-layout">
+        <div class="content-main">
+          <section class="page-intro home-intro">
+            <p class="eyebrow">Blog</p>
+            <h1>공부하면서 알게 된 내용과 작업하면서 정리한 설정을 기록합니다.</h1>
+            <p class="lead">
+              설치 방법, 환경 변수, 버전 전환, 개발 중 자주 막히는 설정 포인트를
+              운영체제별로 나눠 다시 찾아보기 쉽게 정리합니다.
+            </p>
+            <div class="intro-links">
+              <a class="text-link" href="./about/">블로그 소개 보기</a>
+              <a class="text-link" href="./posts/">전체 글 보기</a>
+            </div>
+          </section>
+
+          <section class="section-block">
+            <div class="section-heading">
+              <p class="eyebrow">Latest</p>
+              <h2>최근 글</h2>
+            </div>
+            <div
+              class="post-list"
+              data-post-list
+              data-root="./"
+              data-source="./posts.json"
+              data-limit="6"
+              data-layout="list"
+            ></div>
+          </section>
+        </div>
+
+        <aside class="content-sidebar" aria-label="블로그 사이드바">
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Search</p>
+            <div class="search-panel">
+              <label class="search-label" for="home-search">글 검색</label>
+              <input
+                id="home-search"
+                class="search-input"
+                type="search"
+                placeholder="제목, 요약, 태그 검색"
+                data-post-search-input
+              />
+              <button class="search-clear" type="button" data-post-search-clear>
+                초기화
+              </button>
+              <p class="filter-status" data-post-search-status></p>
+            </div>
+          </section>
+
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Categories</p>
+            <div
+              class="sidebar-list"
+              data-section-list
+              data-root="./"
+              data-source="./posts.json"
+            ></div>
+          </section>
+
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Tags</p>
+            <div
+              class="tag-cloud"
+              data-tag-list
+              data-source="./posts.json"
+              data-root="./"
+            ></div>
+          </section>
+
+          <section class="content-card sidebar-card">
+            <p class="eyebrow">Browse</p>
+            <div class="sidebar-list">
+              <a class="sidebar-link" href="./posts/">
+                <span>전체 글</span>
+              </a>
+              <a class="sidebar-link" href="./about/">
+                <span>About</span>
+              </a>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>Study notes and setup records.</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>

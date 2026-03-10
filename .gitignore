@@ -1,0 +1,23 @@
+# OS metadata
+.DS_Store
+
+# Python cache and test artifacts
+.pytest_cache/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local coverage artifacts
+.coverage
+htmlcov/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Internal docs must not be committed
+docs/
+
+# Local agent metadata
+.serena/

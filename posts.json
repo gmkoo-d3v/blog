@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "java-install-macos-windows",
+    "title": "Java 설치 가이드: macOS(Homebrew)와 Windows 환경 변수 설정",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "Java Setup",
+    "date": "2026-03-10",
+    "summary": "macOS에서는 Homebrew와 shell 설정, Windows에서는 시스템 환경 변수 등록 기준으로 Java 설치와 버전 전환 정리.",
+    "tags": ["Java", "macOS", "Windows", "Homebrew", "JAVA_HOME"]
+  },
+  {
+    "slug": "sql-ddl-dml-dcl-tcl",
+    "title": "DDL, DML, DCL, TCL 한 번에 정리하기",
+    "sectionSlug": "db",
+    "sectionLabel": "DB",
+    "category": "SQL Basics",
+    "date": "2026-03-10",
+    "summary": "DDL, DML, DCL, TCL의 풀네임과 대표 명령어 정리.",
+    "tags": ["SQL", "DDL", "DML", "DCL", "TCL"]
+  },
+  {
+    "slug": "database-normalization",
+    "title": "정규화",
+    "sectionSlug": "db",
+    "sectionLabel": "DB",
+    "category": "Normalization",
+    "date": "2026-03-10",
+    "summary": "비정규형부터 5NF까지 각 단계의 핵심 목적과 제거해야 하는 종속성 정리.",
+    "tags": ["DB", "Normalization", "1NF", "2NF", "3NF", "BCNF", "4NF", "5NF"]
+  }
+]
