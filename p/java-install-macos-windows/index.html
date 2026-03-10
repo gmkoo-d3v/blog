@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Java 설치 가이드: macOS(Homebrew)와 Windows 환경 변수 설정</title>
+    <meta
+      name="description"
+      content="macOS에서는 Homebrew와 shell 설정으로, Windows에서는 환경 변수 등록으로 Java를 설치하고 버전을 전환하는 방법을 정리한 글"
+    />
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <script defer src="../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../">Home</a>
+          <a class="nav-link" href="../../posts/">Posts</a>
+          <a class="nav-link" href="../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">OS 설정</p>
+            <h1>Java 설치 가이드: macOS(Homebrew)와 Windows 환경 변수 설정</h1>
+            <p class="lead">
+              macOS와 Windows에서 Java를 설치하고, 버전 확인과 `JAVA_HOME`
+              설정까지 바로 이어서 할 수 있게 정리했습니다.
+            </p>
+            <div class="meta-row">
+              <span>2026-03-10</span>
+              <span>macOS / Windows</span>
+              <span>Java 17, 21 예시</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#macos">macOS 설치</a>
+            <a href="#macos-zsh">macOS zsh 설정</a>
+            <a href="#macos-bash">macOS bash 설정</a>
+            <a href="#windows">Windows 설치</a>
+            <a href="#verify">검증</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              Java를 설치할 때 중요한 것은 “설치 자체”보다 “버전을 명확하게
+              관리할 수 있느냐”입니다. 프로젝트마다 Java 17, 21처럼 요구
+              버전이 달라질 수 있기 때문에, 설치 직후에 `JAVA_HOME`과 `Path`
+              기준을 같이 잡아 두는 편이 안전합니다.
+            </p>
+            <div class="callout">
+              <strong>정리 기준</strong>
+              <p>
+                macOS는 Homebrew와 shell 설정으로, Windows는 설치 후 시스템
+                환경 변수 등록으로 정리했습니다.
+              </p>
+            </div>
+          </section>
+
+          <section id="macos" class="prose">
+            <h2>macOS에서 설치하기</h2>
+            <p>
+              첨부된 기존 글의 흐름은 유지하되, 예전 `adoptopenjdk` 중심 설명은
+              걷어내고 Homebrew `openjdk` 공식 formula 기준으로 정리했습니다.
+            </p>
+
+            <h3>1. Homebrew 준비</h3>
+            <p>Homebrew가 이미 있더라도 먼저 업데이트를 한 번 실행합니다.</p>
+            <pre><code>brew update</code></pre>
+
+            <h3>2. 설치 가능한 OpenJDK 확인</h3>
+            <pre><code>brew search openjdk</code></pre>
+            <p>
+              보통은 LTS 버전 위주로 `openjdk@17`, `openjdk@21` 중 하나 또는
+              둘 다 설치해 두는 편이 실무에서 무난합니다.
+            </p>
+
+            <h3>3. 원하는 버전 설치</h3>
+            <pre><code>brew install openjdk@17
+brew install openjdk@21</code></pre>
+
+            <h3>4. macOS가 JDK를 인식할 수 있게 링크 생성</h3>
+            <pre><code>sudo ln -sfn "$(brew --prefix openjdk@17)/libexec/openjdk.jdk" \
+  /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+
+sudo ln -sfn "$(brew --prefix openjdk@21)/libexec/openjdk.jdk" \
+  /Library/Java/JavaVirtualMachines/openjdk-21.jdk</code></pre>
+            <p>
+              이 작업을 해두면 `/usr/libexec/java_home -V`로 설치된 버전을
+              명확하게 조회할 수 있습니다.
+            </p>
+
+            <h3>5. 설치된 버전 확인</h3>
+            <pre><code>/usr/libexec/java_home -V
+java -version</code></pre>
+          </section>
+
+          <section id="macos-zsh" class="prose">
+            <h2>macOS: zsh 사용자는 <code>~/.zshrc</code></h2>
+            <p>
+              zsh 기준으로는 아래처럼 버전별 `JAVA_HOME`을 먼저 만들어 두고,
+              마지막에 실제 사용할 `JAVA_HOME`을 선택하면 됩니다.
+            </p>
+            <p>TextEdit로 열려면 아래처럼 실행합니다.</p>
+            <pre><code>touch ~/.zshrc
+open -e ~/.zshrc</code></pre>
+            <pre><code># ~/.zshrc
+export JAVA_17_HOME=$(/usr/libexec/java_home -v 17)
+export JAVA_21_HOME=$(/usr/libexec/java_home -v 21)
+
+# 기본 버전 선택
+export JAVA_HOME="$JAVA_21_HOME"
+export PATH="$JAVA_HOME/bin:$PATH"</code></pre>
+            <p>변경 사항 반영:</p>
+            <pre><code>source ~/.zshrc
+java -version</code></pre>
+          </section>
+
+          <section id="macos-bash" class="prose">
+            <h2>macOS: bash 사용자는 <code>~/.bashrc</code></h2>
+            <p>
+              bash도 구조는 동일합니다. 요구사항에 맞게 `~/.bashrc` 기준으로
+              정리하면 됩니다.
+            </p>
+            <p>TextEdit로 열려면 아래처럼 실행합니다.</p>
+            <pre><code>touch ~/.bashrc
+open -e ~/.bashrc</code></pre>
+            <pre><code># ~/.bashrc
+export JAVA_17_HOME=$(/usr/libexec/java_home -v 17)
+export JAVA_21_HOME=$(/usr/libexec/java_home -v 21)
+
+# 기본 버전 선택
+export JAVA_HOME="$JAVA_17_HOME"
+export PATH="$JAVA_HOME/bin:$PATH"</code></pre>
+            <p>변경 사항 반영:</p>
+            <pre><code>source ~/.bashrc
+java -version</code></pre>
+
+            <h3>버전 전환 요령</h3>
+            <p>
+              예를 들어 Java 17을 쓰다가 21로 바꾸고 싶으면 `JAVA_HOME`이
+              가리키는 대상만 바꾸면 됩니다.
+            </p>
+            <pre><code>export JAVA_HOME="$JAVA_21_HOME"
+export PATH="$JAVA_HOME/bin:$PATH"</code></pre>
+          </section>
+
+          <section id="windows" class="prose">
+            <h2>Windows에서 설치하기</h2>
+            <p>
+              Windows는 Homebrew 대신 JDK 설치 프로그램을 사용하고, 설치 후
+              시스템 환경 변수에 `JAVA_HOME`과 `Path`를 등록하는 흐름으로
+              가는 것이 가장 단순합니다.
+            </p>
+
+            <h3>1. JDK 설치</h3>
+            <p>
+              Temurin, Oracle JDK 같은 배포판 중 하나를 선택해 Java 17 또는
+              21을 설치합니다. 설치 경로 예시는 아래처럼 잡히는 경우가 많습니다.
+            </p>
+            <pre><code>C:\Program Files\Java\jdk-21</code></pre>
+
+            <h3>2. 시스템 환경 변수 창 열기</h3>
+            <p>가장 쉬운 방법은 시작 메뉴에서 검색하는 것입니다.</p>
+            <pre><code>시작 메뉴 → "환경 변수 편집" 검색 → "시스템 환경 변수 편집" 실행</code></pre>
+            <p>또는 실행 창으로 바로 들어갈 수도 있습니다.</p>
+            <pre><code>Win + R
+sysdm.cpl</code></pre>
+            <p>
+              시스템 속성 창이 열리면 <code>고급</code> 탭으로 이동한 뒤
+              <code>환경 변수(N)...</code> 버튼을 누릅니다.
+            </p>
+
+            <h3>3. 시스템 환경 변수 등록</h3>
+            <p>
+              여러 버전을 관리할 예정이면 버전별 변수와 기본 `JAVA_HOME`을 같이
+              두는 편이 나중에 바꾸기 쉽습니다.
+            </p>
+            <pre><code>JAVA_17_HOME = C:\Program Files\Java\jdk-17
+JAVA_21_HOME = C:\Program Files\Java\jdk-21
+JAVA_HOME    = %JAVA_21_HOME%</code></pre>
+
+            <h3>4. Path에 Java 실행 파일 추가</h3>
+            <pre><code>%JAVA_HOME%\bin</code></pre>
+            <p>
+              이미 이전 Java 경로가 `Path`에 직접 들어가 있다면 제거하고,
+              `%JAVA_HOME%\bin` 하나만 남겨 두는 편이 충돌을 줄입니다.
+            </p>
+
+            <h3>5. 새 터미널에서 확인</h3>
+            <pre><code>echo %JAVA_HOME%
+where java
+java -version
+javac -version</code></pre>
+
+            <h3>6. 버전 바꾸기</h3>
+            <p>
+              기본 버전을 바꾸고 싶으면 `JAVA_HOME`만 다른 버전 변수로 바꾸면
+              됩니다.
+            </p>
+            <pre><code>JAVA_HOME = %JAVA_17_HOME%</code></pre>
+          </section>
+
+          <section id="verify" class="prose">
+            <h2>검증 체크리스트</h2>
+            <ul>
+              <li>`java -version`이 기대한 버전을 출력하는지 확인한다.</li>
+              <li>`javac -version`도 같은 계열 버전을 출력하는지 확인한다.</li>
+              <li>macOS에서는 `/usr/libexec/java_home -V`로 설치 목록을 확인한다.</li>
+              <li>Windows에서는 `where java`가 `JAVA_HOME` 기준 경로를 가리키는지 본다.</li>
+            </ul>
+            <div class="callout">
+              <strong>핵심 포인트</strong>
+              <p>
+                Java 설치는 금방 끝나지만, 실제 문제는 대부분 `JAVA_HOME`과
+                `Path`가 꼬일 때 발생합니다. 설치 직후 바로 검증 명령을 실행해
+                두면 이후 셋업 비용이 크게 줄어듭니다.
+              </p>
+            </div>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
