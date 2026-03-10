@@ -252,6 +252,7 @@ pre {
 }
 
 .feature-list,
+.prose ol,
 .prose ul {
   margin: 0;
   padding-left: 20px;
@@ -556,6 +557,25 @@ pre {
 .prose p,
 .prose li {
   color: #24352c;
+}
+
+.prose figure {
+  margin: 24px 0;
+}
+
+.prose img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.prose figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .prose pre {
