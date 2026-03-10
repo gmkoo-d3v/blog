@@ -1,5 +1,15 @@
 [
   {
+    "slug": "java-for-each",
+    "title": "Java for-each 문 완전 정리: 언제 쓰고, 언제 쓰면 안 되는가",
+    "sectionSlug": "programming",
+    "sectionLabel": "Programming",
+    "category": "Java Basics",
+    "date": "2026-03-11",
+    "summary": "Java for-each 문의 문법, 일반 for문과의 차이, 배열과 컬렉션 순회, 수정과 삭제 시 주의점을 한 번에 정리.",
+    "tags": ["Java", "for-each", "enhanced for", "List", "Set", "Map", "Array"]
+  },
+  {
     "slug": "github-profile-page-vercel",
     "title": "GitHub 프로필 페이지 꾸미기: Readme Stats와 Trophy를 Vercel에 배포한 기록",
     "sectionSlug": "infra",
