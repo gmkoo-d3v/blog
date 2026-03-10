@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>정규화</title>
+  <meta name="description" content="비정규형부터 5NF까지 데이터베이스 정규화 단계를 짧게 정리한 글" />
+  <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../../assets/css/style.css" />
+  <script defer src="../../../assets/js/site.js"></script>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="../../../">Runtime Notes</a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a class="nav-link" href="../../../">Home</a>
+        <a class="nav-link" href="../../../posts/">Posts</a>
+        <a class="nav-link" href="../../../about/">About</a>
+      </nav>
+    </header>
+
+    <main class="post-main">
+      <article class="post-article">
+        <header class="post-header">
+          <p class="eyebrow">DB</p>
+          <h1>정규화</h1>
+          <p class="lead">
+            정규화는 데이터 중복을 줄이고 이상 현상을 방지하기 위해 테이블을
+            구조적으로 분해하는 과정입니다. 시험이나 면접에서 자주 묻는
+            순서와 핵심 기준만 짧게 정리합니다.
+          </p>
+          <div class="meta-row">
+            <span>2026-03-10</span>
+            <span>DB / Normalization</span>
+          </div>
+        </header>
+
+        <section class="prose">
+          <h2>정규화 플로우차트</h2>
+          <pre class="mermaid" style="background-color: #ffffff; padding: 20px; border-radius: 8px;">
+graph TD
+    %% 노드 정의
+    UNF([비정규형 <br/> UNF : Unnormalized Form])
+    1NF([제 1 정규형 <br/> 1NF])
+    2NF([제 2 정규형 <br/> 2NF])
+    3NF([제 3 정규형 <br/> 3NF])
+    BCNF([보이스-코드 정규형 <br/> BCNF])
+    4NF([제 4 정규형 <br/> 4NF])
+    5NF([제 5 정규형 <br/> 5NF])
+
+    %% 엣지 및 설명
+    UNF ==>|1. 도메인이 원자값<br/>모든 속성 값이 원자값만 가지도록 분해| 1NF
+    1NF ==>|2. 부분 함수 종속 제거<br/>기본키의 일부에만 종속된 속성 분리| 2NF
+    2NF ==>|3. 이행적 함수 종속 제거<br/>A->B, B->C 일 때 A->C가 되는 관계 분리| 3NF
+    3NF ==>|4. 결정자 함수 종속 제거<br/>결정자이면서 후보키가 아닌 속성 분리| BCNF
+    BCNF ==>|5. 다치 종속 제거<br/>독립적인 다중 값 속성 분리| 4NF
+    4NF ==>|6. 조인 종속 제거<br/>서로 독립적인 릴레이션으로 분해| 5NF
+
+    %% 스타일 설정
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef start fill:#ffdfba,stroke:#ffb347,stroke-width:2px;
+    classDef step fill:#bae1ff,stroke:#6cb0ff,stroke-width:2px;
+    
+    class UNF start;
+    class 1NF,2NF,3NF,BCNF,4NF,5NF step;
+            </pre>
+
+          <h2>💡 정규화 단계별 핵심 요약</h2>
+          <p>암기 팁: <strong>도·부·이·결·다·조</strong></p>
+          <div style="overflow-x: auto; margin-top: 1rem; margin-bottom: 2rem;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; border: 2px solid #555;">
+              <thead>
+                <tr style="border-bottom: 2px solid #555; background-color: rgba(150, 150, 150, 0.2);">
+                  <th style="padding: 12px 16px; border-right: 1px solid #777;">정규화 단계</th>
+                  <th style="padding: 12px 16px; border-right: 1px solid #777;">암기 팁</th>
+                  <th style="padding: 12px 16px;">핵심 요약</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">비정규형 (UNF)</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;">-</td>
+                  <td style="padding: 12px 16px;">정규화가 진행되지 않은, 다중 값이나 반복 속성을 가진 초기 상태</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">제 1 정규형 (1NF)</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;"><strong>도</strong>
+                  </td>
+                  <td style="padding: 12px 16px;"><strong>도</strong>메인이 <strong>원자값</strong>만 가지도록 분해</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">제 2 정규형 (2NF)</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;"><strong>부</strong>
+                  </td>
+                  <td style="padding: 12px 16px;"><strong>부</strong>분 함수 종속 제거 (복합키의 일부에만 종속된 속성 분리)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">제 3 정규형 (3NF)</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;"><strong>이</strong>
+                  </td>
+                  <td style="padding: 12px 16px;"><strong>이</strong>행적 함수 종속 제거 (기본키가 아닌 속성 간의 종속 관계 분리)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">BCNF</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;"><strong>결</strong>
+                  </td>
+                  <td style="padding: 12px 16px;"><strong>결</strong>정자 함수 종속 제거 (모든 결정자가 후보키가 되도록 분리)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">제 4 정규형 (4NF)</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;"><strong>다</strong>
+                  </td>
+                  <td style="padding: 12px 16px;"><strong>다</strong>치 종속 제거 (독립적인 다중 값 속성 분리)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #777;">
+                  <td style="padding: 12px 16px; border-right: 1px solid #777;">제 5 정규형 (5NF)</td>
+                  <td style="padding: 12px 16px; border-right: 1px solid #777; text-align: center;"><strong>조</strong>
+                  </td>
+                  <td style="padding: 12px 16px;"><strong>조</strong>인 종속 제거 (의미 있는 무손실 분해가 불가능할 때까지 분해)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+            mermaid.initialize({ startOnLoad: true });
+          </script>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p>Runtime Notes</p>
+      <p>&copy; <span data-current-year></span></p>
+    </footer>
+  </div>
+</body>
+
+</html>
