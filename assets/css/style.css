@@ -728,7 +728,7 @@ pre {
 }
 
 .code-block .line-numbers-rows {
-  left: 0 !important;
+  left: -4.4em !important;
   width: 3.4em !important;
   border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   background: rgba(255, 255, 255, 0.02);
