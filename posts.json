@@ -1,5 +1,15 @@
 [
   {
+    "slug": "apple-silicon-mac-sts3-install",
+    "title": "실리콘 맥에서 STS3 설치하기: Spring Tool Suite 3 + x86 Java 11 설정",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "Spring Tool Suite 3",
+    "date": "2026-03-12",
+    "summary": "Apple Silicon Mac에서 STS3를 쓰기 위해 Intel용 배포본 설치, x86 Java 11 설정, STS.ini 수정, zsh alias 등록까지 정리.",
+    "tags": ["STS3", "Spring Tool Suite", "Java 11", "macOS", "Apple Silicon", "Rosetta"]
+  },
+  {
     "slug": "java-bufferedreader-stringtokenizer-stringbuilder",
     "title": "자바 코딩문제 입력 기본기: BufferedReader, StringTokenizer, StringBuilder",
     "sectionSlug": "coding-problem",
