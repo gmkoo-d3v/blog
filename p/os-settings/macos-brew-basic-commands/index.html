@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>맥 앱 관리가 낯설다면, Brew 기본 명령어부터 익히기</title>
+    <meta
+      name="description"
+      content="Windows와 다른 macOS 앱 관리 방식에 익숙해지기 위해 알아두면 좋은 Homebrew 기본 명령어를 설치, 삭제, 업데이트, 검색, 정리 흐름으로 정리한 글"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">OS 설정</p>
+            <h1>맥 앱 관리가 낯설다면, Brew 기본 명령어부터 익히기</h1>
+            <p class="lead">
+              Windows와 다른 macOS 앱 관리 방식에 익숙해지고 싶을 때,
+              Homebrew에서 가장 먼저 손에 익히면 좋은 기본 명령어를 한 번에
+              정리했습니다.
+            </p>
+            <div class="meta-row">
+              <span>2026-03-12</span>
+              <span>macOS / Homebrew</span>
+              <span>입문용 커맨드 정리</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#what-is-brew">Brew가 뭐냐면</a>
+            <a href="#install">설치</a>
+            <a href="#remove">제거</a>
+            <a href="#update">업데이트</a>
+            <a href="#search-and-list">검색과 목록 확인</a>
+            <a href="#manage">정리와 점검</a>
+            <a href="#summary">마무리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              Windows에 익숙한 사람이라면 프로그램을 설치할 때 보통 웹사이트에
+              들어가 설치 파일을 내려받고, 실행해서 직접 설치하는 흐름이
+              자연스럽습니다. 반면 macOS에서는 이런 방식과 함께
+              <code>Homebrew</code> 같은 패키지 관리 도구를 사용하는 문화가
+              꽤 익숙하게 자리 잡아 있습니다.
+            </p>
+            <p>
+              처음 맥을 쓰기 시작하면 터미널로 앱을 설치하고 관리한다는 개념이
+              조금 낯설 수 있습니다. 하지만 <code>brew</code>를 익혀두면 앱
+              설치, 삭제, 업데이트, 정리를 훨씬 더 단순하고 일관되게 처리할 수
+              있습니다.
+            </p>
+            <div class="callout">
+              <strong>이 글의 목표</strong>
+              <p>
+                복잡한 옵션을 한꺼번에 다루기보다, 맥에서 앱 관리 흐름에
+                익숙해지기 위해 가장 자주 쓰는 기본 커맨드만 먼저 손에 익히는
+                데 초점을 맞췄습니다.
+              </p>
+            </div>
+          </section>
+
+          <section id="what-is-brew" class="prose">
+            <h2>Brew가 뭐냐면</h2>
+            <p>
+              <code>Homebrew</code>는 macOS에서 패키지와 앱을 설치하고 관리할
+              수 있게 해주는 도구입니다. 터미널 명령어만으로 원하는 항목을
+              설치하거나, 필요 없는 앱을 지우고, 전체 목록을 확인하고,
+              업데이트까지 진행할 수 있습니다.
+            </p>
+            <p>
+              쉽게 말해 맥에서 앱 관리 흐름을 조금 더 체계적으로 바꿔주는
+              도구라고 보면 됩니다.
+            </p>
+          </section>
+
+          <section id="install" class="prose">
+            <h2>설치</h2>
+            <p>
+              가장 먼저 익히게 되는 명령어는 <code>install</code>입니다.
+              터미널에서 사용하는 패키지는 일반 설치 방식으로, macOS 앱은
+              <code>--cask</code> 옵션을 붙여 설치합니다.
+            </p>
+            <pre><code class="language-bash">brew install wget
+brew install --cask google-chrome</code></pre>
+            <ul>
+              <li><code>brew install [패키지]</code></li>
+              <li><code>brew install --cask [앱]</code></li>
+            </ul>
+            <p>
+              예를 들어 <code>wget</code>처럼 명령줄에서 쓰는 도구는
+              <code>install</code>로 설치하고, 크롬처럼 일반 앱은
+              <code>--cask</code>를 붙여 설치하면 됩니다.
+            </p>
+          </section>
+
+          <section id="remove" class="prose">
+            <h2>제거</h2>
+            <p>
+              설치한 항목이 더 이상 필요 없으면 <code>uninstall</code>로
+              삭제할 수 있습니다.
+            </p>
+            <pre><code class="language-bash">brew uninstall wget
+brew uninstall --cask google-chrome --zap</code></pre>
+            <ul>
+              <li><code>brew uninstall [패키지]</code></li>
+              <li><code>brew uninstall --cask [앱] --zap</code></li>
+            </ul>
+            <p>
+              특히 앱을 지울 때 붙는 <code>--zap</code> 옵션은 꽤 유용합니다.
+              앱 자체만 삭제하는 것이 아니라 관련 설정 파일까지 함께 정리할 때
+              도움이 됩니다.
+            </p>
+          </section>
+
+          <section id="update" class="prose">
+            <h2>업데이트</h2>
+            <p>
+              <code>brew</code>는 한 번 설치하고 끝나는 도구가 아니라 계속
+              관리하면서 쓰게 됩니다. 그래서 업데이트 관련 명령어도 자주
+              사용하게 됩니다.
+            </p>
+            <pre><code class="language-bash">brew update
+brew upgrade
+brew upgrade node</code></pre>
+            <ul>
+              <li><code>brew update</code></li>
+              <li><code>brew upgrade</code></li>
+              <li><code>brew upgrade [패키지]</code></li>
+            </ul>
+            <p>
+              <code>brew update</code>는 Homebrew 자체의 정보를 최신 상태로
+              갱신하고, <code>brew upgrade</code>는 설치된 패키지나 앱을 최신
+              버전으로 올리는 역할을 합니다.
+            </p>
+          </section>
+
+          <section id="search-and-list" class="prose">
+            <h2>검색과 목록 확인</h2>
+            <p>
+              무언가를 설치하고 싶을 때 정확한 이름이 기억나지 않거나, 지금 내
+              맥에 무엇이 설치되어 있는지 확인하고 싶을 때 아래 명령어를
+              사용하면 됩니다.
+            </p>
+            <pre><code class="language-bash">brew search chrome
+brew info node
+brew list
+brew list --cask</code></pre>
+            <ul>
+              <li><code>brew search [키워드]</code></li>
+              <li><code>brew info [패키지]</code></li>
+              <li><code>brew list</code></li>
+              <li><code>brew list --cask</code></li>
+            </ul>
+            <p>
+              <code>brew search</code>는 설치 가능한 항목을 찾을 때 쓰고,
+              <code>brew info</code>는 버전, 설치 정보, 의존성 같은 세부 내용을
+              보여줍니다. <code>brew list</code>와
+              <code>brew list --cask</code>는 현재 설치된 패키지와 앱을 각각
+              확인할 때 유용합니다.
+            </p>
+          </section>
+
+          <section id="manage" class="prose">
+            <h2>정리와 점검</h2>
+            <p>
+              오래 사용하다 보면 캐시나 이전 버전이 쌓일 수 있고, 가끔은 환경
+              상태를 점검하고 싶을 때도 있습니다. 그럴 때는 아래 명령어를 같이
+              알아두면 좋습니다.
+            </p>
+            <pre><code class="language-bash">brew cleanup
+brew doctor
+brew deps python</code></pre>
+            <ul>
+              <li><code>brew cleanup</code></li>
+              <li><code>brew doctor</code></li>
+              <li><code>brew deps [패키지]</code></li>
+            </ul>
+            <p>
+              <code>brew cleanup</code>은 오래된 캐시나 불필요한 파일을 정리할
+              때 사용하고, <code>brew doctor</code>는 현재 Homebrew 환경에
+              문제가 없는지 점검할 때 유용합니다.
+              <code>brew deps</code>는 특정 패키지가 어떤 의존성을 가지는지
+              확인할 때 사용할 수 있습니다.
+            </p>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>마무리</h2>
+            <p>
+              맥은 Windows와 앱 관리 방식이 조금 다르게 느껴질 수 있습니다.
+              그래서 처음에는 불편하게 느껴질 수 있지만, <code>brew</code>에
+              익숙해지면 설치, 삭제, 업데이트, 정리까지 훨씬 더 단순하게
+              관리할 수 있습니다.
+            </p>
+            <p>
+              처음부터 모든 명령어를 외울 필요는 없습니다. 아래 명령어부터
+              자연스럽게 익히는 것을 목표로 해도 충분합니다.
+            </p>
+            <pre><code class="language-bash">brew install
+brew uninstall
+brew update
+brew upgrade
+brew search
+brew list</code></pre>
+            <p>
+              맥이 아직 낯설다면, 복잡하게 생각하지 말고 필요한 앱 하나를 직접
+              <code>brew</code>로 설치해보는 것부터 시작해보면 됩니다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
