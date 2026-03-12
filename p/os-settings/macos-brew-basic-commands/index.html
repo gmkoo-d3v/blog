@@ -6,7 +6,7 @@
     <title>맥 앱 관리가 낯설다면, Brew 기본 명령어부터 익히기</title>
     <meta
       name="description"
-      content="Windows와 다른 macOS 앱 관리 방식에 익숙해지기 위해 알아두면 좋은 Homebrew 기본 명령어를 설치, 삭제, 업데이트, 검색, 정리 흐름으로 정리한 글"
+      content="Windows와 다른 macOS 앱 관리 방식에 익숙해지기 위해 알아두면 좋은 Homebrew 기본 명령어와 Brewfile을 이용한 일괄 설치 흐름을 정리한 글"
     />
     <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../../../assets/css/style.css" />
@@ -48,6 +48,7 @@
             <a href="#update">업데이트</a>
             <a href="#search-and-list">검색과 목록 확인</a>
             <a href="#manage">정리와 점검</a>
+            <a href="#brewfile">Brewfile로 한 번에 설치</a>
             <a href="#summary">마무리</a>
           </nav>
 
@@ -201,6 +202,36 @@ brew deps python</code></pre>
             </p>
           </section>
 
+          <section id="brewfile" class="prose">
+            <h2>Brewfile로 한 번에 설치</h2>
+            <p>
+              앱을 하나씩 설치하는 방식에 익숙해진 뒤에는
+              <code>Brewfile</code>로 여러 앱을 한 번에 설치하는 흐름도 같이
+              알아두면 편합니다. 새 맥을 세팅하거나 자주 쓰는 앱 조합을 다시
+              맞출 때 특히 유용합니다.
+            </p>
+            <p>
+              예를 들어 웹브라우저와 필수 유틸 정도를 한 번에 설치하고 싶다면
+              아래처럼 정리할 수 있습니다.
+            </p>
+            <pre><code class="language-ruby">cask "google-chrome"
+cask "firefox"
+cask "naver-whale"
+cask "brave-browser"
+cask "karabiner-elements"</code></pre>
+            <p>
+              이 내용을 <code>Brewfile</code>이라는 파일에 저장한 뒤 아래처럼
+              실행하면 됩니다.
+            </p>
+            <pre><code class="language-bash">brew bundle --file=./Brewfile</code></pre>
+            <p>
+              즉, <code>brew install --cask</code>를 여러 번 반복하는 대신
+              자주 쓰는 앱 목록을 파일로 관리해두고 한 번에 설치하는 방식입니다.
+              맥을 새로 세팅할 때도 훨씬 편하고, 어떤 앱을 기본으로 쓰는지
+              스스로 정리하기도 좋습니다.
+            </p>
+          </section>
+
           <section id="summary" class="prose">
             <h2>마무리</h2>
             <p>
@@ -218,7 +249,8 @@ brew uninstall
 brew update
 brew upgrade
 brew search
-brew list</code></pre>
+brew list
+brew bundle --file=./Brewfile</code></pre>
             <p>
               맥이 아직 낯설다면, 복잡하게 생각하지 말고 필요한 앱 하나를 직접
               <code>brew</code>로 설치해보는 것부터 시작해보면 됩니다.
