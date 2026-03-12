@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실리콘 맥에서 STS3 설치하기: Spring Tool Suite 3 + x86 Java 11 설정</title>
+    <meta
+      name="description"
+      content="Apple Silicon Mac에서 STS3를 설치할 때 필요한 Intel 빌드, x86 Java 11, STS.ini 수정, zsh alias 설정까지 한 번에 정리"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">OS 설정</p>
+            <h1>실리콘 맥에서 STS3 설치하기: Spring Tool Suite 3 + x86 Java 11 설정</h1>
+            <p class="lead">
+              Apple Silicon Mac에서 레거시 프로젝트 때문에 STS3를 써야 할 때 필요한
+              다운로드, x86 Java 11 설치, <code>STS.ini</code> 수정, 터미널 alias 설정까지
+              실제 흐름대로 정리했다.
+            </p>
+            <div class="meta-row">
+              <span>2026-03-12</span>
+              <span>macOS · Apple Silicon</span>
+              <span>STS3 · Java 11</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#download-sts3">STS3 다운로드</a>
+            <a href="#java11">x86 Java 11 설치</a>
+            <a href="#sts-ini">STS.ini 수정</a>
+            <a href="#alias">zsh alias 설정</a>
+            <a href="#verify">검증</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              STS3는 최신 Apple Silicon 네이티브 앱이 아니라 Intel 기준으로 배포된
+              레거시 도구라서, 실리콘 맥에서는 그냥 실행만 하면 끝나지 않는 경우가 많다.
+              핵심은 세 가지다. <strong>Intel용 STS3를 내려받고</strong>,
+              <strong>x86 Java 11 JDK를 설치한 뒤</strong>, <strong>STS가 그 Java를
+              정확히 바라보게</strong> 설정해야 한다.
+            </p>
+            <p>
+              레거시 Spring 프로젝트나 기존 워크스페이스 때문에 STS3를 계속 써야 한다면,
+              이런 설정 없이 Apple Silicon Mac에서 바로 실행하는 것은 생각보다 잘 되지 않는다.
+            </p>
+            <div class="callout">
+              <strong>먼저 확인할 점</strong>
+              <p>
+                STS3 macOS 배포 파일은 x86_64 기준이므로, Apple Silicon Mac에서는
+                Rosetta 2가 필요할 수 있다. STS3를 처음 열 때 Rosetta 설치 안내가 나오면
+                그대로 진행하면 된다.
+              </p>
+              <p>
+                설치 팝업이 뜨지 않으면 터미널에서
+                <code>softwareupdate --install-rosetta --agree-to-license</code>로 직접 설치할 수 있다.
+              </p>
+            </div>
+            <p>
+              참고로 이 글에서 앱 이름을 <code>STS3.app</code>으로 적은 이유는, 최신 STS와
+              Finder에서 헷갈리지 않게 직접 이름을 바꿔서 쓰는 흐름을 기준으로 정리했기 때문이다.
+              이름을 바꾸지 않았다면 아래 경로에서 앱 이름 부분만 원래 이름에 맞춰 바꾸면 된다.
+            </p>
+          </section>
+
+          <section id="download-sts3" class="prose">
+            <h2>1. STS3 다운로드 및 설치</h2>
+            <p>
+              먼저 Spring Tool Suite 3 안내 페이지에서 macOS용 STS3 배포본을 확인한 뒤,
+              아래 DMG를 직접 내려받아 설치한다.
+            </p>
+            <ul>
+              <li>
+                STS3 안내: <a href="https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3">https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3</a>
+              </li>
+              <li>
+                다운로드: <a href="https://download.springsource.com/release/STS/3.9.18.RELEASE/dist/e4.21/spring-tool-suite-3.9.18.RELEASE-e4.21.0-macosx-cocoa-x86_64.dmg">spring-tool-suite-3.9.18.RELEASE-e4.21.0-macosx-cocoa-x86_64.dmg</a>
+              </li>
+            </ul>
+            <p>
+              DMG를 실행해 애플리케이션으로 복사한 뒤, 나는 최신 STS와 구분하려고 앱 이름을
+              <code>STS3.app</code>으로 바꿔 두었다.
+            </p>
+            <figure class="figure-compact">
+              <img
+                src="../../../assets/images/posts/apple-silicon-mac-sts3-install/sts3-app-renamed.png"
+                alt="Applications 폴더에서 STS3.app으로 이름을 바꿔 둔 아이콘"
+              />
+              <figcaption>
+                최신 STS와 헷갈리지 않게 앱 이름을 <code>STS3.app</code>으로 바꿔 두면 구분이 쉽다.
+              </figcaption>
+            </figure>
+          </section>
+
+          <section id="java11" class="prose">
+            <h2>2. Azul x86 Java 11 LTS 설치</h2>
+            <p>
+              STS3가 사용할 JDK는 x86 Java 11로 맞추는 편이 가장 덜 꼬였다. Azul 다운로드
+              페이지에서 아래 조건으로 선택해 설치하면 된다.
+            </p>
+            <ul>
+              <li>Java version: Java 11 (LTS)</li>
+              <li>Operating System: macOS</li>
+              <li>Architecture: x86 64-bit</li>
+              <li>Package: JDK</li>
+            </ul>
+            <p>
+              다운로드 페이지:
+              <a href="https://www.azul.com/downloads/?version=java-11-lts&amp;os=macos&amp;architecture=x86-64-bit&amp;package=jdk#zulu">Azul Zulu Java 11 LTS for macOS x86_64</a>
+            </p>
+            <figure>
+              <img
+                src="../../../assets/images/posts/apple-silicon-mac-sts3-install/azul-zulu-java11-macos-x86-download.png"
+                alt="Azul 다운로드 페이지에서 Java 11 LTS, macOS, x86 64-bit, JDK 필터를 선택한 화면"
+              />
+              <figcaption>
+                Azul 다운로드 화면에서 <code>Java 11 (LTS)</code>, <code>macOS</code>,
+                <code>x86 64-bit</code>, <code>JDK</code> 조합으로 선택한다.
+              </figcaption>
+            </figure>
+            <p>
+              설치가 끝나면 보통 아래 경로에 JDK가 잡힌다.
+            </p>
+            <pre><code class="language-none">/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home</code></pre>
+            <div class="callout">
+              <strong>주의</strong>
+              <p>
+                Apple Silicon용 arm64 JDK가 이미 설치되어 있어도, STS3용 경로는 글에서
+                사용하는 x86 Java 11 경로로 명시해 두는 편이 안전하다.
+              </p>
+            </div>
+          </section>
+
+          <section id="sts-ini" class="prose">
+            <h2>3. STS.app 내부의 <code>STS.ini</code> 수정</h2>
+            <p>
+              애플리케이션 폴더에서 <code>STS3.app</code>을 우클릭한 뒤
+              <code>패키지 내용 보기</code>로 들어간다. 그다음 아래 파일을 연다.
+            </p>
+            <pre><code class="language-none">/Applications/STS3.app/Contents/Eclipse/STS.ini</code></pre>
+            <figure>
+              <img
+                src="../../../assets/images/posts/apple-silicon-mac-sts3-install/sts-ini-path.png"
+                alt="STS3.app의 Contents/Eclipse 폴더 안에 있는 STS.ini 위치 화면"
+              />
+              <figcaption>
+                Finder에서 <code>STS3.app -&gt; Contents -&gt; Eclipse -&gt; STS.ini</code> 경로로 들어간다.
+              </figcaption>
+            </figure>
+            <p>
+              파일 안에서 <code>-vmargs</code> 바로 위에 <code>--vm</code>과 Java 실행 파일
+              경로를 추가하고 저장한다.
+            </p>
+            <pre><code class="language-none">--vm
+/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home/bin/java
+-vmargs</code></pre>
+            <figure>
+              <img
+                src="../../../assets/images/posts/apple-silicon-mac-sts3-install/sts-ini-vm-config.png"
+                alt="STS.ini 파일 안에 --vm과 zulu-11 Java 경로를 추가한 화면"
+              />
+              <figcaption>
+                <code>-vmargs</code> 위에 <code>--vm</code>과
+                <code>/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home/bin/java</code>를 넣는다.
+              </figcaption>
+            </figure>
+            <p>
+              핵심은 <code>Home</code> 디렉터리가 아니라 <code>bin/java</code>까지 정확히 적는 것이다.
+              이렇게 해두면 STS3가 어떤 Java로 뜨는지 명확해져서 실행 실패를 줄일 수 있다.
+            </p>
+          </section>
+
+          <section id="alias" class="prose">
+            <h2>4. 터미널에서 <code>sts3</code> 명령으로 열기</h2>
+            <p>
+              Finder에서 매번 클릭하기 번거롭다면 <code>~/.zshrc</code>에 alias를 추가해두면 편하다.
+            </p>
+            <p>
+              앱 이름을 <code>STS3.app</code>이 아니라 원래 이름으로 두었다면, 아래 alias 경로도
+              실제 앱 이름에 맞춰 같이 바꿔야 한다.
+            </p>
+            <pre><code class="language-bash">open -e ~/.zshrc</code></pre>
+            <p>아래 한 줄을 추가하고 저장한다.</p>
+            <pre><code class="language-bash">alias sts3='/Applications/STS3.app/Contents/MacOS/STS >/dev/null 2>&1 &'</code></pre>
+            <p>변경 사항 반영:</p>
+            <pre><code class="language-bash">source ~/.zshrc</code></pre>
+            <p>이제 터미널에서 아래처럼 바로 실행할 수 있다.</p>
+            <pre><code class="language-bash">sts3</code></pre>
+          </section>
+
+          <section id="verify" class="prose">
+            <h2>검증</h2>
+            <p>x86 Java 11과 STS3 설정이 끝났다면 아래 순서로 확인하면 된다.</p>
+            <ol>
+              <li><code>/usr/libexec/java_home -V</code>로 <code>zulu-11.jdk</code>가 설치되어 있는지 본다.</li>
+              <li><code>/Applications/STS3.app/Contents/Eclipse/STS.ini</code>에 <code>--vm</code> 설정이 들어갔는지 확인한다.</li>
+              <li><code>source ~/.zshrc</code> 후 <code>sts3</code> 명령으로 앱이 열리는지 확인한다.</li>
+              <li>처음 실행 시 Rosetta 설치 창이 뜨면 설치를 완료한 뒤 다시 연다.</li>
+            </ol>
+            <div class="callout">
+              <strong>핵심 요약</strong>
+              <p>
+                실리콘 맥에서 STS3를 띄우는 핵심은 “STS3 Intel 앱 + x86 Java 11 + STS.ini에
+                명시적 VM 경로 지정” 조합이다. 여기까지 맞춰두면 레거시 Spring 프로젝트를
+                당장 열어야 할 때 가장 빠르게 복구할 수 있다.
+              </p>
+            </div>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>

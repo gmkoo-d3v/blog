@@ -563,6 +563,12 @@ pre {
   margin: 24px 0;
 }
 
+.prose figure.figure-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .prose img {
   display: block;
   width: 100%;
@@ -572,10 +578,18 @@ pre {
   box-shadow: var(--shadow);
 }
 
+.prose figure.figure-compact img {
+  width: min(280px, 100%);
+}
+
 .prose figcaption {
   margin-top: 10px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.prose figure.figure-compact figcaption {
+  max-width: 280px;
 }
 
 .prose pre {
