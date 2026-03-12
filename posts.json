@@ -1,5 +1,15 @@
 [
   {
+    "slug": "macos-brew-basic-commands",
+    "title": "맥 앱 관리가 낯설다면, Brew 기본 명령어부터 익히기",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "Homebrew Basics",
+    "date": "2026-03-12",
+    "summary": "Windows와 다른 macOS 앱 관리 방식에 익숙해지기 위해 알아두면 좋은 Homebrew 기본 명령어를 설치, 삭제, 업데이트, 검색, 정리 흐름으로 정리.",
+    "tags": ["Homebrew", "brew", "macOS", "앱 관리", "패키지 관리"]
+  },
+  {
     "slug": "apple-silicon-mac-sts3-install",
     "title": "실리콘 맥에서 STS3 설치하기: Spring Tool Suite 3 + x86 Java 11 설정",
     "sectionSlug": "os-settings",
