@@ -1,5 +1,15 @@
 [
   {
+    "slug": "sts5-lombok-java-version-troubleshooting",
+    "title": "예전 프로젝트 열려다 STS5로 한참 삽질한 이야기: Lombok인 줄 알았는데 결국 범인은 Java 25였다",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "STS5 Troubleshooting",
+    "date": "2026-03-13",
+    "summary": "과거 Spring 프로젝트를 STS5로 열다가 Lombok 강제 적용과 재서명만으로는 해결되지 않았고, 결국 프로젝트 Java 버전에 맞춰 compiler/JRE를 낮춰 해결한 경험 정리.",
+    "tags": ["macOS", "STS5", "Lombok", "Java"]
+  },
+  {
     "slug": "macos-brew-basic-commands",
     "title": "맥 앱 관리가 낯설다면, Brew 기본 명령어부터 익히기",
     "sectionSlug": "os-settings",
