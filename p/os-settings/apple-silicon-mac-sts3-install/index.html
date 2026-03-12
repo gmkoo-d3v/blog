@@ -108,6 +108,26 @@
                 최신 STS와 헷갈리지 않게 앱 이름을 <code>STS3.app</code>으로 바꿔 두면 구분이 쉽다.
               </figcaption>
             </figure>
+            <div class="callout">
+              <strong>이름을 바꾼 뒤 실행이 안 되면</strong>
+              <p>
+                macOS에서는 앱 번들 이름을 바꾼 뒤 서명 검증이 꼬여서 실행이 막히는 경우가 있다.
+                <code>STS3.app</code>처럼 직접 이름을 바꿨는데 열리지 않거나 손상 경고가 나오면
+                아래 순서로 속성 캐시를 지우고 다시 서명한 뒤 확인하면 된다.
+              </p>
+            </div>
+            <pre><code class="language-bash"># 1. 찌꺼기 제거
+xattr -cr /Applications/[앱이름].app
+
+# 2. 재서명
+sudo codesign --force --deep --sign - /Applications/[앱이름].app
+
+# 3. 확인
+codesign --verify /Applications/[앱이름].app && echo "OK"</code></pre>
+            <p>
+              예를 들어 앱 이름을 <code>STS3.app</code>으로 바꿨다면 위 명령의
+              <code>[앱이름]</code> 자리에 <code>STS3</code>를 넣으면 된다.
+            </p>
           </section>
 
           <section id="java11" class="prose">
