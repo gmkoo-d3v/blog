@@ -3,35 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts | Runtime Notes</title>
+    <title>Networking | Runtime Notes</title>
     <meta
       name="description"
-      content="Runtime Notes 글 목록. 개발 환경 설치와 버전 관리 문서를 운영체제별로 정리한다."
+      content="IP, 서브넷, 라우팅 같은 네트워크 기초 문서를 모아보는 Runtime Notes의 Networking 탭"
     />
-    <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <script defer src="../assets/js/site.js"></script>
-    <script defer src="../assets/js/posts.js"></script>
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <script defer src="../../assets/js/site.js"></script>
+    <script defer src="../../assets/js/posts.js"></script>
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header">
-        <a class="brand" href="../">Runtime Notes</a>
+        <a class="brand" href="../../">Runtime Notes</a>
         <nav class="site-nav" aria-label="주요 메뉴">
-          <a class="nav-link" href="../">Home</a>
-          <a class="nav-link is-active" href="./">Posts</a>
-          <a class="nav-link" href="../about/">About</a>
+          <a class="nav-link" href="../../">Home</a>
+          <a class="nav-link" href="../../posts/">Posts</a>
+          <a class="nav-link" href="../../about/">About</a>
         </nav>
       </header>
 
       <main class="content-layout">
         <div class="content-main">
           <section class="page-intro">
-            <p class="eyebrow">Archive</p>
-            <h1>모든 글</h1>
+            <p class="eyebrow">Networking</p>
+            <h1>네트워킹 관련 글</h1>
             <p class="lead">
-              운영체제별 설치 절차, 환경 변수 설정, 런타임 버전 전환 같은 내용을
-              실무 기준으로 정리합니다.
+              IP 주소 체계, 서브넷, 라우팅처럼 네트워크 기초 개념을 정리하는
+              탭이다.
             </p>
           </section>
 
@@ -39,10 +39,14 @@
             <div
               class="post-grid"
               data-post-list
-              data-root="../"
-              data-source="../posts.json"
+              data-root="../../"
+              data-source="../../posts.json"
               data-layout="grid"
               data-page-size="4"
+              data-filter-key="sectionSlug"
+              data-filter-value="networking"
+              data-empty-title="아직 네트워킹 글이 없습니다."
+              data-empty-summary="네트워킹 관련 글을 추가하면 이 탭에 자동으로 표시됩니다."
             ></div>
             <div class="pagination-bar" data-post-pagination></div>
           </section>
@@ -52,9 +56,9 @@
           <section class="content-card sidebar-card">
             <p class="eyebrow">Search</p>
             <div class="search-panel">
-              <label class="search-label" for="posts-search">글 검색</label>
+              <label class="search-label" for="networking-search">네트워킹 글 검색</label>
               <input
-                id="posts-search"
+                id="networking-search"
                 class="search-input"
                 type="search"
                 placeholder="제목, 요약, 태그 검색"
@@ -72,8 +76,9 @@
             <div
               class="sidebar-list"
               data-section-list
-              data-root="../"
-              data-source="../posts.json"
+              data-root="../../"
+              data-source="../../posts.json"
+              data-active-section="networking"
               data-static-sections="infra:Infra,networking:Networking,programming:Programming,coding-problem:코딩문제,db:DB,os-settings:OS Settings"
             ></div>
           </section>
@@ -83,18 +88,20 @@
             <div
               class="tag-cloud"
               data-tag-list
-              data-source="../posts.json"
-              data-root="../"
+              data-source="../../posts.json"
+              data-root="../../"
+              data-filter-key="sectionSlug"
+              data-filter-value="networking"
             ></div>
           </section>
 
           <section class="content-card sidebar-card">
             <p class="eyebrow">Browse</p>
             <div class="sidebar-list">
-              <a class="sidebar-link is-active" href="./">
+              <a class="sidebar-link" href="../../posts/">
                 <span>전체 글</span>
               </a>
-              <a class="sidebar-link" href="../about/">
+              <a class="sidebar-link" href="../../about/">
                 <span>About</span>
               </a>
             </div>

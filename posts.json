@@ -1,5 +1,15 @@
 [
   {
+    "slug": "ipv4-class-subnet-mask",
+    "title": "IPv4 클래스 구분과 서브넷 마스크 한 번에 정리",
+    "sectionSlug": "networking",
+    "sectionLabel": "Networking",
+    "category": "Network Basics",
+    "date": "2026-03-16",
+    "summary": "정처기 기준으로 IPv4 클래스 구분, 기본 서브넷 마스크, 255.255.255.0 = /24 같은 핵심 포인트를 표 중심으로 정리.",
+    "tags": ["Network", "IPv4", "Subnet Mask", "CIDR", "정처기"]
+  },
+  {
     "slug": "sts5-lombok-java-version-troubleshooting",
     "title": "예전 프로젝트 열려다 STS5로 한참 삽질한 이야기: Lombok인 줄 알았는데 결국 범인은 Java 25였다",
     "sectionSlug": "os-settings",
