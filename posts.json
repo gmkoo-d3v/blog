@@ -1,5 +1,15 @@
 [
   {
+    "slug": "macos-karabiner-shortcuts-settings",
+    "title": "맥 키보드 세팅 정리: Karabiner-Elements로 우측 Option/Control, 한영 전환, 단축어까지",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "Karabiner & macOS Setup",
+    "date": "2026-03-17",
+    "summary": "Karabiner-Elements로 우측 option/control을 F17/F18로 바꾸고, 입력 소스 전환, 단축어, 서비스, Dock과 마우스 설정까지 한 흐름으로 정리.",
+    "tags": ["macOS", "Karabiner-Elements", "Keyboard", "Input Source", "Shortcuts", "Dock"]
+  },
+  {
     "slug": "ipv4-class-subnet-mask",
     "title": "IPv4 클래스 구분과 서브넷 마스크 한 번에 정리",
     "sectionSlug": "networking",

@@ -560,7 +560,21 @@ pre {
 }
 
 .prose figure {
-  margin: 24px 0;
+  margin: 24px auto;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.figure-stack {
+  grid-template-columns: 1fr;
+  max-width: 100%;
+  margin: 24px auto;
+  gap: 28px;
 }
 
 .prose figure.figure-compact {
@@ -582,6 +596,10 @@ pre {
   width: min(280px, 100%);
 }
 
+.prose figure.figure-medium img {
+  width: min(420px, 100%);
+}
+
 .prose figcaption {
   margin-top: 10px;
   color: var(--muted);
@@ -590,6 +608,81 @@ pre {
 
 .prose figure.figure-compact figcaption {
   max-width: 280px;
+}
+
+.prose figure.figure-medium figcaption {
+  max-width: 420px;
+}
+
+.prose figure.figure-zoom {
+  align-items: stretch;
+}
+
+.prose .figure-grid figure.figure-compact img,
+.prose .figure-grid figure.figure-medium img {
+  width: 100%;
+}
+
+.prose .figure-grid figure.figure-compact figcaption,
+.prose .figure-grid figure.figure-medium figcaption {
+  max-width: none;
+}
+
+.prose .figure-stack figure.figure-compact img,
+.prose .figure-stack figure.figure-medium img {
+  width: min(720px, 100%);
+}
+
+.prose .figure-stack figure.figure-compact figcaption,
+.prose .figure-stack figure.figure-medium figcaption {
+  max-width: 720px;
+}
+
+.prose .figure-stack figure.figure-compact.figure-zoom img {
+  width: min(840px, 100%);
+}
+
+.prose .figure-stack figure.figure-compact.figure-zoom figcaption {
+  max-width: 840px;
+}
+
+.prose .figure-stack {
+  justify-items: center;
+}
+
+.prose .post-figure {
+  --figure-max: 760px;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.prose .post-figure img {
+  width: min(var(--figure-max), 100%);
+  margin-inline: auto;
+}
+
+.prose .post-figure figcaption {
+  width: min(var(--figure-max), 100%);
+  max-width: min(var(--figure-max), 100%);
+}
+
+.prose .post-figure--sm {
+  --figure-max: 460px;
+}
+
+.prose .post-figure--md {
+  --figure-max: 560px;
+}
+
+.prose .post-figure--lg {
+  --figure-max: 720px;
+}
+
+.prose .post-figure--xl {
+  --figure-max: 860px;
 }
 
 .table-wrap {
@@ -854,6 +947,10 @@ pre {
 
   .hero-copy {
     padding: 32px;
+  }
+
+  .figure-grid {
+    grid-template-columns: 1fr;
   }
 }
 

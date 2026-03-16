@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>맥 키보드 세팅 정리: Karabiner-Elements로 우측 Option/Control, 한영 전환, 단축어까지</title>
+    <meta
+      name="description"
+      content="Karabiner-Elements로 우측 option/control을 F17/F18로 바꾸고, macOS 입력 소스 전환, 단축어, 서비스, Dock과 마우스 설정까지 한 번에 정리한 글"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">OS 설정</p>
+            <h1>맥 키보드 세팅 정리: Karabiner-Elements로 우측 Option/Control, 한영 전환, 단축어까지</h1>
+            <p class="lead">
+              맥 기본 키 배열과 입력 전환 흐름이 손에 잘 안 맞을 때는, 키 하나만
+              바꾸는 식으로 끝내기보다 Karabiner, 입력 소스 단축키, 단축어,
+              서비스, Dock과 마우스 설정까지 한 번에 묶어두는 편이 훨씬 편했다.
+            </p>
+            <div class="meta-row">
+              <span>2026-03-17</span>
+              <span>macOS · Karabiner-Elements</span>
+              <span>입력 전환 · 앱 실행 · 개인 세팅</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#install">Karabiner 설치와 권한</a>
+            <a href="#remap">우측 Option/Control 리맵</a>
+            <a href="#input-source">입력 소스 전환 연결</a>
+            <a href="#shortcuts">단축어로 앱 열기</a>
+            <a href="#services">서비스 단축키 정리</a>
+            <a href="#dock-mouse">Dock과 마우스</a>
+            <a href="#summary">마무리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              이번 세팅의 핵심은 우측 <code>option</code>과
+              <code>control</code>을 그냥 남겨두지 않고, 충돌이 적은
+              <code>F17</code>, <code>F18</code>로 바꿔서 입력 전환과 빠른
+              실행에 재활용하는 것이다. 이렇게 해두면 왼손은 원래 단축키를
+              유지하고, 오른손 쪽 키만 별도 레이어처럼 쓸 수 있다.
+            </p>
+            <p>
+              여기에 macOS 기본 설정까지 같이 손보면 한영 전환, 앱 실행,
+              Finder 기준 서비스, Dock 동작이 훨씬 덜 거슬린다.
+            </p>
+            <div class="callout">
+              <strong>이 글의 기준</strong>
+              <p>
+                macOS 기본 단축키, 단축어 앱, 서비스 등을 간단하게 손보는 방법
+              </p>
+            </div>
+          </section>
+
+          <section id="install" class="prose">
+            <h2>1. Karabiner-Elements 설치와 권한 확인</h2>
+            <p>
+              설치는 가장 단순하게 가면 된다. Homebrew를 쓰고 있다면 아래처럼
+              설치하면 끝이다.
+            </p>
+            <pre><code class="language-bash">brew install --cask karabiner-elements</code></pre>
+            <p>
+              설치가 끝나면 Spotlight에서 <code>Karabiner-Elements</code>와
+              <code>Karabiner-EventViewer</code>가 함께 보인다.
+              EventViewer는 키가 실제로 어떤 이벤트로 들어오는지 확인할 때
+              꽤 유용하다.
+            </p>
+            <figure class="post-figure post-figure--lg">
+              <img
+                src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/karabiner-apps-search.png"
+                alt="Spotlight에서 Karabiner-Elements와 Karabiner-EventViewer가 검색되는 화면"
+              />
+              <figcaption>
+                설치 후 Spotlight에서 두 앱이 보이면 기본 실행 파일은 잘 들어온
+                상태다.
+              </figcaption>
+            </figure>
+            <p>
+              그리고 키 리맵이 안 먹을 때 가장 먼저 볼 항목이 확장 프로그램
+              권한이다. 시스템 설정에서 <code>Karabiner-VirtualHIDDevice-Manager</code>
+              가 허용돼 있어야 한다.
+            </p>
+            <figure class="post-figure post-figure--md">
+              <img
+                src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/karabiner-extension.png"
+                alt="시스템 설정 확장 프로그램에서 Karabiner-VirtualHIDDevice-Manager가 보이는 화면"
+              />
+              <figcaption>
+                입력 장치 확장이 막혀 있으면 Karabiner 설정이 저장돼도 실제 키
+                동작은 바뀌지 않는다.
+              </figcaption>
+            </figure>
+          </section>
+
+          <section id="remap" class="prose">
+            <h2>2. 우측 Option과 Control을 F17, F18로 바꾸기</h2>
+            <p>
+              이번 세팅의 중심은 여기다. <code>Karabiner-Elements Settings</code>
+              에서 <code>Simple Modifications</code>만 써도 원하는 흐름을 만들
+              수 있다.
+            </p>
+            <figure class="post-figure post-figure--xl">
+              <img
+                src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/karabiner-simple-modifications.png"
+                alt="Karabiner-Elements의 Simple Modifications에서 right_option과 right_control을 설정한 화면"
+              />
+              <figcaption>
+                전체 장치 기준으로 <code>right_option → f17</code>,
+                <code>right_control → f18</code> 두 개만 먼저 잡아도 체감이 크다.
+              </figcaption>
+            </figure>
+            <p>
+              세부 메뉴에서는 원래 키와 바꿀 키를 각각 골라 넣으면 된다.
+              스크린샷처럼 <code>right_option</code>과
+              <code>right_control</code>을 고르고, 대상 키는
+              <code>Function keys</code> 아래의 <code>f17</code>,
+              <code>f18</code>로 맞춘다.
+            </p>
+            <div class="figure-grid figure-stack">
+              <figure class="post-figure post-figure--md">
+                <img
+                  src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/karabiner-right-option-menu.png"
+                  alt="Karabiner에서 right_option을 선택하는 메뉴"
+                />
+                <figcaption>
+                  먼저 원래 키를 <code>right_option</code>으로 선택한다.
+                </figcaption>
+              </figure>
+              <figure class="post-figure post-figure--md">
+                <img
+                  src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/karabiner-right-control-menu.png"
+                  alt="Karabiner에서 f17을 선택하는 메뉴"
+                />
+                <figcaption>
+                  바꿀 키는 잘 쓰지 않는 <code>f17</code>,
+                  <code>f18</code>처럼 충돌이 적은 쪽이 편하다.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="callout">
+              <strong>왜 F17, F18인가</strong>
+              <p>
+                일반 키를 다른 일반 키로 바꾸면 기존 앱 단축키와 쉽게 충돌한다.
+                반면 <code>F17</code>, <code>F18</code>은 대부분의 앱에서 기본
+                사용 빈도가 낮아서 macOS 설정이나 단축어 쪽에 안전하게 연결하기
+                좋다.
+              </p>
+            </div>
+          </section>
+
+          <section id="input-source" class="prose">
+            <h2>3. macOS 입력 소스 전환을 F17, F18에 연결하기</h2>
+            <p>
+              Karabiner에서 리맵만 해두면 끝이 아니라, 이제 macOS 기본 단축키가
+              그 키를 실제 기능으로 쓰게 연결해야 한다. 시스템 설정에서
+              <code>키보드 → 키보드 단축키 → 입력 소스</code>로 들어가면 된다.
+            </p>
+            <figure class="post-figure post-figure--lg">
+              <img
+                src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/macos-input-source-shortcuts.png"
+                alt="macOS 키보드 단축키 설정에서 입력 소스 전환 키가 F18과 F17로 지정된 화면"
+              />
+              <figcaption>
+                스크린샷 기준으로 <code>이전 입력 소스 선택</code>은
+                <code>F18</code>, <code>입력 메뉴에서 다음 소스 선택</code>은
+                <code>F17</code>으로 잡혀 있다.
+              </figcaption>
+            </figure>
+            <p>
+              이렇게 해두면 오른손 우측 키만으로 한영 전환을 처리할 수 있다.
+              두 가지를 모두 둘 필요는 없고, 실제로는 자주 쓰는 방향 하나만
+              잡아도 충분하다. 다만 입력기가 여러 개라면 이전/다음 두 개를 같이
+              두는 편이 덜 답답하다.
+            </p>
+          </section>
+
+          <section id="shortcuts" class="prose">
+            <h2>4. 단축어 앱으로 앱 열기 흐름 만들기</h2>
+            <p>
+              키 리맵이 손에 익었다면 그다음은 실행 흐름을 줄이는 쪽이다.
+              스크린샷처럼 단축어 앱에서 새 빠른 동작을 만들고, 액션으로
+              <code>앱 열기</code>를 넣어두면 Spotlight와 서비스 메뉴 쪽으로
+              연결하기 좋다.
+            </p>
+            <div class="figure-grid figure-stack">
+              <figure class="post-figure post-figure--sm">
+                <img
+                  src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/shortcuts-open-app-search.png"
+                  alt="단축어 앱에서 앱 열기 액션을 검색하는 화면"
+                />
+                <figcaption>
+                  새 단축어를 만든 뒤 검색창에서 <code>앱 열기</code> 액션을 찾는다.
+                </figcaption>
+              </figure>
+              <figure class="post-figure post-figure--xl">
+                <img
+                  src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/shortcuts-open-app-setup.png"
+                  alt="단축어 앱에서 앱 열기 빠른 동작의 세부사항과 Spotlight 표시 옵션을 설정한 화면"
+                />
+                <figcaption>
+                  세부사항에서 <code>Spotlight에서 보기</code>,
+                  <code>빠른 동작으로 사용</code>, <code>서비스 메뉴</code>를
+                  켜 두면 호출 경로가 넓어진다.
+                </figcaption>
+              </figure>
+            </div>
+            <p>
+              여기서 중요한 건 복잡한 자동화를 만드는 게 아니라, 자주 여는 앱을
+              더 적은 손동작으로 호출할 수 있는 준비를 해두는 것이다. 이름을
+              짧게 잡아두면 Spotlight 검색에서도 훨씬 빨리 걸린다.
+            </p>
+          </section>
+
+          <section id="services" class="prose">
+            <h2>5. 서비스 단축키는 Finder 기준 작업만 남겨두기</h2>
+            <p>
+              시스템 설정의 <code>키보드 단축키 → 서비스</code>에는 생각보다
+              쓸 만한 항목이 많다. 나는 특히 파일과 폴더 섹션 위주로 정리해두는
+              편이다.
+            </p>
+            <figure class="post-figure post-figure--lg">
+              <img
+                src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/services-file-folder-shortcuts.png"
+                alt="서비스 설정에서 파일 및 폴더 관련 단축키를 지정한 화면"
+              />
+              <figcaption>
+                선택된 파일을 텍스트 편집기로 열기, 폴더에서 새 터미널 열기 같은
+                항목은 Finder에서 바로 체감된다.
+              </figcaption>
+            </figure>
+            <p>
+              추천하는 기준은 단순하다. Finder에서 자주 하는 일만 남기고, 안
+              쓰는 서비스는 과감히 끄는 것이다. 서비스가 너무 많으면 Spotlight나
+              메뉴 탐색이 지저분해지고, 단축키 충돌도 늘어난다.
+            </p>
+          </section>
+
+          <section id="dock-mouse" class="prose">
+            <h2>6. Dock과 마우스 설정도 같이 맞추면 체감이 더 좋아진다</h2>
+            <p>
+              입력 장치 세팅만 바꾸고 끝내기보다 Dock과 마우스도 같이 손보면
+              작업 흐름이 훨씬 자연스러워진다. 이 부분은 취향이 많이 타지만,
+              스크린샷 기준으로는 아래 조합이 꽤 무난하다.
+            </p>
+            <div class="figure-grid figure-stack">
+              <figure class="post-figure post-figure--lg">
+                <img
+                  src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/dock-settings.png"
+                  alt="macOS 데스크탑 및 Dock 설정 화면"
+                />
+                <figcaption>
+                  열려 있는 앱 표시, 앱 열 때 아이콘 움직이기, 최근 앱 보기는
+                  켜 두고, 바탕화면 클릭 동작은 원하는 수준으로 낮춰 둔다.
+                </figcaption>
+              </figure>
+              <figure class="post-figure post-figure--lg">
+                <img
+                  src="../../../assets/images/posts/os-settings/macos-karabiner-shortcuts-settings/mouse-settings.png"
+                  alt="macOS 마우스 설정 화면"
+                />
+                <figcaption>
+                  자연스러운 스크롤 여부와 이동 속도, 스크롤 속도는 초반에
+                  반드시 손에 맞춰 두는 편이 좋다.
+                </figcaption>
+              </figure>
+            </div>
+            <ul>
+              <li>열려 있는 응용 프로그램 표시를 켜 두면 Dock이 실행 상태 확인용으로 훨씬 편해진다.</li>
+              <li>자연스러운 스크롤은 Windows 감각이 익숙하면 처음에는 끄는 쪽이 적응이 빠르다.</li>
+              <li>더블 클릭 속도와 스크롤 속도는 기본값보다 약간 빠르게 두는 편이 답답함이 덜하다.</li>
+            </ul>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>마무리</h2>
+            <p>
+              맥 세팅은 하나의 마법 같은 옵션보다, 작은 설정 몇 개를 연결해
+              흐름을 만드는 쪽이 훨씬 효과가 좋다. 이번 구성에서는
+              <code>right_option</code>, <code>right_control</code>을
+              <code>F17</code>, <code>F18</code>로 바꾸고, 그 위에 입력 소스
+              전환과 단축어, 서비스 메뉴를 얹는 방식이 핵심이었다.
+            </p>
+            <p>
+              처음부터 모든 걸 한 번에 바꿀 필요는 없다. 가장 체감이 큰 것은
+              보통 <strong>우측 키 리맵 + 입력 소스 전환</strong> 두 가지다.
+              이 두 개가 손에 익은 뒤에 앱 실행과 Finder 서비스까지 조금씩
+              얹어가면 된다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
