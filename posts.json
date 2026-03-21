@@ -1,5 +1,15 @@
 [
   {
+    "slug": "ascii-code-summary",
+    "title": "정처기 아스키코드(ASCII) 필수 암기 정리",
+    "sectionSlug": "coding-problem",
+    "sectionLabel": "Coding Problem",
+    "category": "CS Basics",
+    "date": "2026-03-21",
+    "summary": "정처기 시험과 코딩에 자주 등장하는 필수 아스키코드(null, tab, lf, cr, space, 0, A, a) 값과 대소문자 변환 공식(소문자=대문자+32)을 표로 정리.",
+    "tags": ["정처기", "아스키코드", "ASCII", "CS", "Coding Problem"]
+  },
+  {
     "slug": "macos-karabiner-shortcuts-settings",
     "title": "맥 키보드 세팅 정리: Karabiner-Elements로 우측 Option/Control, 한영 전환, 단축어까지",
     "sectionSlug": "os-settings",
