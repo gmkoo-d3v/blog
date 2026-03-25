@@ -1,5 +1,15 @@
 [
   {
+    "slug": "github-git-private-email-settings",
+    "title": "Git 커밋 이메일 숨기기: GitHub 비공개 설정과 로컬·글로벌 Git 이메일 바꾸기",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "Git Email Privacy",
+    "date": "2026-03-25",
+    "summary": "GitHub 이메일 비공개 옵션을 켜는 방법과, 로컬·글로벌 Git user.email 설정을 비공개 주소나 프로젝트별 주소로 바꾸는 흐름을 정리.",
+    "tags": ["Git", "GitHub", "email", "privacy", "noreply", "macOS"]
+  },
+  {
     "slug": "ascii-code-summary",
     "title": "정처기 아스키코드(ASCII) 필수 암기 정리",
     "sectionSlug": "coding-problem",
