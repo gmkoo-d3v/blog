@@ -1,5 +1,15 @@
 [
   {
+    "slug": "supabase-dbeaver-connect",
+    "title": "Supabase DB를 DBeaver로 접속하기",
+    "sectionSlug": "db",
+    "sectionLabel": "DB",
+    "category": "Supabase & DBeaver",
+    "date": "2026-04-01",
+    "summary": "Supabase Connection String 화면에서 host, port, database, user 값을 확인하고 DBeaver PostgreSQL 연결에 그대로 입력하는 흐름 정리.",
+    "tags": ["Supabase", "DBeaver", "PostgreSQL", "DB", "Connection"]
+  },
+  {
     "slug": "github-git-private-email-settings",
     "title": "Git 커밋 이메일 숨기기: GitHub 비공개 설정과 로컬·글로벌 Git 이메일 바꾸기",
     "sectionSlug": "os-settings",

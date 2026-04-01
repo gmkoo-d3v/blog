@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supabase DB를 DBeaver로 접속하기</title>
+    <meta
+      name="description"
+      content="Supabase 프로젝트의 Connection String 화면에서 host, port, database, user 정보를 확인하고 DBeaver에서 PostgreSQL 연결을 만드는 흐름 정리."
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">DB</p>
+            <h1>Supabase DB를 DBeaver로 접속하기</h1>
+            <p class="lead">
+              Supabase에서 연결 정보를 확인하고, DBeaver에서 PostgreSQL 연결을 만들어
+              테이블을 바로 해볼 수 있다.
+            </p>
+            <div class="meta-row">
+              <span>2026-04-01</span>
+              <span>Supabase · DBeaver</span>
+              <span>PostgreSQL 연결 설정</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#prepare">준비</a>
+            <a href="#supabase">Supabase에서 값 확인</a>
+            <a href="#dbeaver">DBeaver 연결 생성</a>
+            <a href="#verify">연결 확인</a>
+            <a href="#summary">마무리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              Supabase는 내부적으로 PostgreSQL을 쓰기 때문에, 연결 정보만 정확히
+              가져오면 DBeaver 같은 DB 클라이언트에서 바로 붙을 수 있다.
+            </p>
+            <p>
+              핵심은 Supabase의 <code>Connection String</code> 화면에서
+              <code>host</code>, <code>port</code>, <code>database</code>,
+              <code>user</code> 값을 확인하고, DBeaver의 PostgreSQL 연결 설정에
+              그대로 옮겨 넣는 것이다.
+            </p>
+            <div class="callout">
+              <strong>먼저 기억할 점</strong>
+              <p>
+                이 글은 Supabase 화면의 <code>Transaction pooler</code> 기준으로
+                진행한다. 화면에 보이는 연결 문자열을 그대로 복사하기보다,
+                아래 파라미터를 펼쳐 각 항목을 나눠 넣으면 실수하기 훨씬 쉽다.
+              </p>
+            </div>
+          </section>
+
+          <section id="prepare" class="prose">
+            <h2>준비</h2>
+            <ul>
+              <li>Supabase 프로젝트 1개</li>
+              <li>DBeaver 설치</li>
+              <li>프로젝트의 DB 비밀번호</li>
+            </ul>
+            <p>
+              사용자명, 호스트, 포트는 Supabase 화면에서 확인할 수 있지만,
+              <strong>비밀번호는 기존에 설정한 DB 비밀번호</strong>를 직접 입력해야
+              한다. 비밀번호가 기억나지 않으면 Supabase Database Settings에서
+              재설정하면 된다.
+            </p>
+          </section>
+
+          <section id="supabase" class="prose">
+            <h2>Supabase에서 연결 정보 확인하기</h2>
+            <p>
+              프로젝트 화면에서 <code>Connect</code>를 열고
+              <code>Connection String</code> 탭으로 들어간다. 여기서
+              <code>Type</code>은 <code>URI</code>, <code>Source</code>는
+              <code>Primary Database</code>로 두고, <code>Method</code>는
+              <code>Transaction pooler</code>를 선택한다.
+            </p>
+
+            <figure class="post-figure post-figure--xl">
+              <img
+                src="../../../assets/images/posts/db/supabase-dbeaver-connect/supabase-connection-string.png"
+                alt="Supabase Connect to your project 화면에서 Connection String과 View parameters를 확인하는 모습"
+              />
+              <figcaption>
+                <code>View parameters</code>를 열면 DBeaver에 넣어야 할
+                <code>host</code>, <code>port</code>, <code>database</code>,
+                <code>user</code> 값이 항목별로 보인다.
+              </figcaption>
+            </figure>
+
+            <figure class="post-figure post-figure--sm">
+              <img
+                src="../../../assets/images/posts/db/supabase-dbeaver-connect/supabase-transaction-pooler.png"
+                alt="Supabase Connection String 화면에서 Method가 Transaction pooler로 선택된 모습"
+              />
+              <figcaption>
+                예시는 <code>Transaction pooler</code> 선택 기준으로 진행했다.
+              </figcaption>
+            </figure>
+
+            <p>이 화면에서 확인할 값은 아래 다섯 개다.</p>
+            <ul>
+              <li><code>Host</code>: Supabase가 제공하는 PostgreSQL 호스트</li>
+              <li><code>Port</code>: Pooler 포트</li>
+              <li><code>Database</code>: 보통 <code>postgres</code></li>
+              <li><code>User</code>: 프로젝트별 PostgreSQL 사용자명</li>
+              <li><code>Password</code>: 화면에 표시되지 않는 DB 비밀번호</li>
+            </ul>
+            <p>
+              연결 문자열 한 줄 전체를 다룰 수도 있지만, DBeaver에서는 보통
+              항목별 입력이 더 읽기 쉽고 수정도 편하다.
+            </p>
+          </section>
+
+          <section id="dbeaver" class="prose">
+            <h2>DBeaver에서 PostgreSQL 연결 만들기</h2>
+            <p>
+              DBeaver에서 새 데이터베이스 연결을 만들고 드라이버 목록에서
+              <code>PostgreSQL</code>을 선택한다.
+            </p>
+
+            <figure class="post-figure post-figure--lg">
+              <img
+                src="../../../assets/images/posts/db/supabase-dbeaver-connect/dbeaver-select-postgresql.png"
+                alt="DBeaver의 Connect to a database 화면에서 PostgreSQL 드라이버를 선택한 모습"
+              />
+              <figcaption>
+                새 연결 생성 화면에서 <code>PostgreSQL</code>을 선택하고
+                <code>Next</code>로 이동한다.
+              </figcaption>
+            </figure>
+
+            <p>
+              다음 화면의 <code>Main</code> 탭에서 Supabase에서 확인한 값을 그대로
+              입력한다.
+            </p>
+
+            <figure class="post-figure post-figure--lg">
+              <img
+                src="../../../assets/images/posts/db/supabase-dbeaver-connect/dbeaver-connection-settings.png"
+                alt="DBeaver PostgreSQL connection settings 화면에 host, database, username, password를 입력한 모습"
+              />
+              <figcaption>
+                <code>Host</code>, <code>Port</code>, <code>Database</code>,
+                <code>Username</code>, <code>Password</code>만 맞으면 기본 연결은
+                거의 끝난다.
+              </figcaption>
+            </figure>
+
+            <pre><code class="language-text">Host: Supabase 화면의 host 값
+Port: Supabase 화면의 port 값
+Database: postgres
+Username: Supabase 화면의 user 값
+Password: 프로젝트 DB 비밀번호</code></pre>
+
+            <p>
+              화면처럼 <code>Connect by: Host</code> 기준으로 넣으면 가장 직관적이다.
+              URL 모드도 가능하지만, 처음에는 어느 값이 어디에 들어가는지 보이는
+              Host 방식이 실수 줄이기에 좋다.
+            </p>
+          </section>
+
+          <section id="verify" class="prose">
+            <h2>연결 확인</h2>
+            <p>
+              값을 모두 넣은 뒤에는 <code>Test Connection ...</code>으로 먼저 확인한다.
+              테스트가 통과하면 <code>Finish</code>를 눌러 연결을 저장하면 된다.
+            </p>
+            <ul>
+              <li><code>Password authentication failed</code>: DB 비밀번호가 틀린 경우가 많다.</li>
+              <li><code>Unknown host</code> 또는 접속 실패: host, port 복사값을 다시 확인한다.</li>
+              <li><code>Database</code> 값 오류: 기본값이 <code>postgres</code>인지 다시 본다.</li>
+            </ul>
+            <p>
+              연결이 완료되면 DBeaver 왼쪽 Database Navigator에서 스키마와 테이블을
+              펼쳐 바로 조회할 수 있다.
+            </p>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>마무리</h2>
+            <p>
+              Supabase를 DBeaver로 연결하는 과정은 생각보다 단순하다. Supabase에서
+              연결 파라미터를 확인하고, DBeaver의 PostgreSQL 연결 설정에 같은 값을
+              옮겨 넣으면 끝이다.
+            </p>
+            <p>
+              특히 문자열 전체를 복사해 붙이는 방식보다, <code>View parameters</code>를
+              펼쳐 항목별로 확인하면서 입력하는 쪽이 훨씬 덜 헷갈린다. 나중에 host나
+              port를 다시 점검할 때도 이 방식이 가장 편하다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
