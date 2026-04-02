@@ -1,5 +1,25 @@
 [
   {
+    "slug": "database-integrity",
+    "title": "데이터베이스 무결성 정리: 개체·도메인·참조 무결성 한 번에 암기하기",
+    "sectionSlug": "db",
+    "sectionLabel": "DB",
+    "category": "Integrity",
+    "date": "2026-04-02",
+    "summary": "실기시험 대비용으로 데이터베이스 무결성과 무결성 제약조건, 개체 무결성, 도메인 무결성, 참조 무결성을 표와 예시로 정리한 암기 노트.",
+    "tags": ["정처기", "DB", "Integrity", "Entity Integrity", "Domain Integrity", "Referential Integrity"]
+  },
+  {
+    "slug": "security-terms-summary",
+    "title": "정처기 보안 용어 한 번에 정리: 세션 하이재킹부터 XSS까지",
+    "sectionSlug": "security",
+    "sectionLabel": "Security",
+    "category": "Security Basics",
+    "date": "2026-04-02",
+    "summary": "세션 하이재킹, ARP 스푸핑, 스미싱, APT, SQL 인젝션, XSS를 블로그형 설명과 시험 암기용 표로 한 번에 정리.",
+    "tags": ["정처기", "보안", "Security", "Session Hijacking", "ARP Spoofing", "XSS", "SQL Injection", "APT"]
+  },
+  {
     "slug": "supabase-dbeaver-connect",
     "title": "Supabase DB를 DBeaver로 접속하기",
     "sectionSlug": "db",

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>데이터베이스 무결성 정리: 개체·도메인·참조 무결성 한 번에 암기하기</title>
+    <meta
+      name="description"
+      content="데이터베이스 무결성과 무결성 제약조건, 개체 무결성, 도메인 무결성, 참조 무결성을 표와 예시로 정리한 암기 노트"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">DB</p>
+            <h1>데이터베이스 무결성 정리:<br />개체·도메인·참조 무결성 한 번에 암기하기</h1>
+            <p class="lead">
+              반복해서 보기 좋은 형태로, 데이터베이스 무결성의
+              개념부터 핵심 3대 무결성, 전체 종류, 예시, 초압축 암기표까지 한
+              흐름으로 정리했다.
+            </p>
+            <div class="meta-row">
+              <span>2026-04-02</span>
+              <span>DB / Integrity</span>
+              <span>데이터베이스, 무결성</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#constraint">무결성 제약조건</a>
+            <a href="#core-three">핵심 3대 무결성</a>
+            <a href="#types">무결성 종류 총정리</a>
+            <a href="#compare">비교 정리</a>
+            <a href="#example">예시</a>
+            <a href="#memory-table">암기 표</a>
+            <a href="#summary">정리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              데이터베이스에서 <strong>무결성(Integrity)</strong> 이란 저장된
+              데이터가 <strong>현실 세계의 실제 값과 일치하도록 정확성과 일관성을
+              유지하는 성질</strong>을 말한다.
+            </p>
+            <p>
+              쉽게 말하면 데이터가 틀리지 않고, 서로 모순되지 않으며, 정해진 규칙에
+              맞게 저장되어야 한다는 뜻이다.
+            </p>
+            <div class="callout">
+              <strong>시험 포인트</strong>
+              <p>
+                무결성 문제는 보통 <code>기본키</code>, <code>외래키</code>,
+                <code>속성값 범위</code>를 묻는 형태로 나온다. 그래서
+                <code>개체 무결성</code>, <code>도메인 무결성</code>,
+                <code>참조 무결성</code> 세 가지를 먼저 정확히 구분하는 것이
+                중요하다.
+              </p>
+            </div>
+          </section>
+
+          <section id="constraint" class="prose">
+            <h2>무결성 제약조건이란?</h2>
+            <p>
+              <strong>무결성 제약조건</strong>은 데이터베이스에 잘못된 데이터가
+              저장되는 것을 막기 위한 규칙이다. 이를 통해 데이터의
+              <strong>정확성, 일관성, 신뢰성</strong>을 유지할 수 있다.
+            </p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>구분</th>
+                    <th>의미</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>무결성</td>
+                    <td>데이터가 올바른 상태를 유지하는 성질</td>
+                  </tr>
+                  <tr>
+                    <td>무결성 제약조건</td>
+                    <td>그 올바른 상태를 지키기 위해 DB에 설정하는 규칙</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>무결성이 필요한 이유</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>이유</th>
+                    <th>설명</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>정확성 보장</td>
+                    <td>잘못된 데이터 입력을 막아 결과의 신뢰도를 높인다.</td>
+                  </tr>
+                  <tr>
+                    <td>일관성 유지</td>
+                    <td>데이터끼리 서로 충돌하거나 모순되는 상황을 방지한다.</td>
+                  </tr>
+                  <tr>
+                    <td>업무 규칙 반영</td>
+                    <td>현실 세계의 조건을 데이터베이스 구조에 그대로 적용한다.</td>
+                  </tr>
+                  <tr>
+                    <td>오류 예방</td>
+                    <td>조회, 수정, 삭제 과정에서 발생할 수 있는 논리 오류를 줄인다.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="core-three" class="prose">
+            <h2>핵심 3대 무결성</h2>
+            <p>
+              시험에서는 보통 <strong>개체 무결성</strong>,
+              <strong>도메인 무결성</strong>, <strong>참조 무결성</strong>을 가장
+              중요하게 다룬다.
+            </p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>종류</th>
+                    <th>핵심 내용</th>
+                    <th>암기 포인트</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>개체 무결성</td>
+                    <td>기본키는 <code>NULL</code> 불가, 중복 불가</td>
+                    <td>기본키 제약</td>
+                  </tr>
+                  <tr>
+                    <td>도메인 무결성</td>
+                    <td>속성값은 정해진 범위와 형식 안에서만 허용</td>
+                    <td>값의 범위 제약</td>
+                  </tr>
+                  <tr>
+                    <td>참조 무결성</td>
+                    <td>외래키는 <code>NULL</code> 이거나 참조 기본키 값과 일치</td>
+                    <td>외래키 제약</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>핵심 문장으로 바로 외우기</h3>
+            <ul>
+              <li>개체 무결성: <strong>기본키는 비어 있으면 안 되고, 중복되면 안 된다.</strong></li>
+              <li>도메인 무결성: <strong>속성값은 정해진 값의 범위를 벗어나면 안 된다.</strong></li>
+              <li>참조 무결성: <strong>외래키는 존재하지 않는 기본키 값을 참조하면 안 된다.</strong></li>
+            </ul>
+          </section>
+
+          <section id="types" class="prose">
+            <h2>무결성 종류 총정리</h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>종류</th>
+                    <th>의미</th>
+                    <th>핵심 키워드</th>
+                    <th>예시</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>개체 무결성<br /><code>Entity Integrity</code></td>
+                    <td>기본키를 구성하는 속성은 <code>NULL</code> 이거나 중복될 수 없다.</td>
+                    <td>기본키, 유일성</td>
+                    <td>학생 테이블의 <code>학번</code></td>
+                  </tr>
+                  <tr>
+                    <td>도메인 무결성<br /><code>Domain Integrity</code></td>
+                    <td>속성값은 미리 정의된 범위, 형식, 자료형 안에 있어야 한다.</td>
+                    <td>값의 범위, 형식 제한</td>
+                    <td>학년은 <code>1~4</code>만 허용</td>
+                  </tr>
+                  <tr>
+                    <td>참조 무결성<br /><code>Referential Integrity</code></td>
+                    <td>외래키 값은 <code>NULL</code> 이거나 참조 테이블의 기본키와 같아야 한다.</td>
+                    <td>외래키, 참조 관계</td>
+                    <td>수강 테이블의 <code>학번</code>은 학생 테이블의 <code>학번</code> 참조</td>
+                  </tr>
+                  <tr>
+                    <td>사용자 정의 무결성<br /><code>User-Defined Integrity</code></td>
+                    <td>사용자가 정한 업무 규칙을 만족해야 한다.</td>
+                    <td>업무 규칙</td>
+                    <td>최대 신청 학점 21학점 이하</td>
+                  </tr>
+                  <tr>
+                    <td>NULL 무결성</td>
+                    <td>특정 속성은 <code>NULL</code> 값을 가질 수 없다.</td>
+                    <td>필수 입력</td>
+                    <td>이름, 학번은 반드시 입력</td>
+                  </tr>
+                  <tr>
+                    <td>고유 무결성<br /><code>Unique Integrity</code></td>
+                    <td>특정 속성값은 각 튜플마다 서로 달라야 한다.</td>
+                    <td>중복 금지</td>
+                    <td>이메일 중복 불가</td>
+                  </tr>
+                  <tr>
+                    <td>키 무결성<br /><code>Key Integrity</code></td>
+                    <td>하나의 릴레이션에는 적어도 하나의 키가 존재해야 한다.</td>
+                    <td>식별 가능성</td>
+                    <td>각 행을 구별할 키 필요</td>
+                  </tr>
+                  <tr>
+                    <td>관계 무결성<br /><code>Relationship Integrity</code></td>
+                    <td>릴레이션 간 관계가 논리적으로 타당하게 유지되어야 한다.</td>
+                    <td>관계의 적절성</td>
+                    <td>부모-자식 릴레이션 관계 유지</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="compare" class="prose">
+            <h2>헷갈리는 개념 비교 정리</h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>무결성</th>
+                    <th>무엇을 검사하는가?</th>
+                    <th>한 줄 암기</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>개체 무결성</td>
+                    <td>기본키 자체가 올바른가</td>
+                    <td>기본키는 비어 있거나 중복되면 안 됨</td>
+                  </tr>
+                  <tr>
+                    <td>도메인 무결성</td>
+                    <td>속성값의 범위와 형식이 올바른가</td>
+                    <td>정해진 값만 입력 가능</td>
+                  </tr>
+                  <tr>
+                    <td>참조 무결성</td>
+                    <td>테이블 간 연결 관계가 올바른가</td>
+                    <td>외래키는 실제 존재하는 값만 참조</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout">
+              <strong>빠른 구분법</strong>
+              <p>
+                <code>기본키</code>가 보이면 개체 무결성,
+                <code>입력값 범위</code>가 보이면 도메인 무결성,
+                <code>외래키</code>와 <code>참조</code>가 보이면 참조 무결성으로
+                먼저 연결해서 생각하면 문제 풀이가 쉬워진다.
+              </p>
+            </div>
+          </section>
+
+          <section id="example" class="prose">
+            <h2>예시로 정리</h2>
+            <p>
+              학생 테이블과 수강 테이블이 있다고 가정하면, 세 가지 핵심 무결성을
+              한 번에 이해할 수 있다.
+            </p>
+
+            <h3>학생 테이블</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>학번</th>
+                    <th>이름</th>
+                    <th>학년</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2024001</td>
+                    <td>김철수</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>2024002</td>
+                    <td>이영희</td>
+                    <td>2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>수강 테이블</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>학번</th>
+                    <th>과목명</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2024001</td>
+                    <td>데이터베이스</td>
+                  </tr>
+                  <tr>
+                    <td>2024002</td>
+                    <td>운영체제</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>상황</th>
+                    <th>해당 무결성</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>학생 테이블의 <code>학번</code>은 중복되거나 <code>NULL</code>일 수 없다.</td>
+                    <td>개체 무결성</td>
+                  </tr>
+                  <tr>
+                    <td>학생 테이블의 <code>학년</code>은 <code>1, 2, 3, 4</code>만 가능하다.</td>
+                    <td>도메인 무결성</td>
+                  </tr>
+                  <tr>
+                    <td>수강 테이블의 <code>학번</code>은 학생 테이블에 존재하는 값이어야 한다.</td>
+                    <td>참조 무결성</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="memory-table" class="prose">
+            <h2>암기용 초압축 표</h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>종류</th>
+                    <th>암기 문장</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>개체 무결성</td>
+                    <td><strong>기본키는 <code>NULL</code> 불가, 중복 불가</strong></td>
+                  </tr>
+                  <tr>
+                    <td>도메인 무결성</td>
+                    <td><strong>속성값은 정해진 범위 내 값만 허용</strong></td>
+                  </tr>
+                  <tr>
+                    <td>참조 무결성</td>
+                    <td><strong>외래키는 <code>NULL</code> 또는 참조 기본키 값</strong></td>
+                  </tr>
+                  <tr>
+                    <td>사용자 정의 무결성</td>
+                    <td>업무 규칙은 사용자가 직접 정함</td>
+                  </tr>
+                  <tr>
+                    <td>NULL 무결성</td>
+                    <td>특정 속성은 <code>NULL</code> 금지</td>
+                  </tr>
+                  <tr>
+                    <td>고유 무결성</td>
+                    <td>특정 속성값 중복 금지</td>
+                  </tr>
+                  <tr>
+                    <td>키 무결성</td>
+                    <td>릴레이션에는 최소 1개 이상의 키 필요</td>
+                  </tr>
+                  <tr>
+                    <td>관계 무결성</td>
+                    <td>릴레이션 간 관계의 타당성 유지</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>정리</h2>
+            <p>
+              무결성은 데이터베이스의 데이터가 정확하고 일관되게 유지되도록 하는
+              성질이며, 이를 보장하기 위한 규칙이 무결성 제약조건이다.
+            </p>
+            <p>
+              실기시험 기준으로는 <strong>개체 무결성</strong>,
+              <strong>도메인 무결성</strong>, <strong>참조 무결성</strong> 세
+              가지를 먼저 확실하게 암기하고, 나머지 무결성은 보조 개념으로 연결해
+              두면 정리가 훨씬 쉬워진다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
