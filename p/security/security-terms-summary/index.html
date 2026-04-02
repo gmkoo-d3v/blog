@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>보안 용어 한 번에 정리: 세션 하이재킹부터 XSS까지</title>
+    <meta
+      name="description"
+      content="세션 하이재킹, ARP 스푸핑, 스미싱, APT, SQL 인젝션, XSS정리"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">Security</p>
+            <h1>보안 용어 한 번에 정리:<br />세션 하이재킹부터 XSS까지</h1>
+            <p class="lead">
+               보안 용어를 설명, 암기용 요약 표와 비교표까지 한 번에 정리.
+            </p>
+            <div class="meta-row">
+              <span>2026-04-02</span>
+              <span>Security Basics</span>
+              <span>보안, 세션 하이재킹, XSS</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#network">네트워크 공격</a>
+            <a href="#social">피싱·사회공학</a>
+            <a href="#web">웹·시스템 공격</a>
+            <a href="#memory-table">시험 암기용 요약 표</a>
+            <a href="#compare-table">표 형태 비교 정리</a>
+            <a href="#summary">정리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              보안 용어는 이름만 보면 비슷해 보여도, 실제로는
+              <strong>무엇을 노리는가</strong>에 따라 구분하면 훨씬 쉽게 외울 수
+              있다.
+            </p>
+            <p>
+              이번 글은 네트워크 공격, 사람을 속이는 공격, 웹 공격, 데이터 관리
+              개념으로 나눠서 정리했다.
+            </p>
+            <div class="callout">
+              <strong>빠른 암기 기준</strong>
+              <p>
+                네트워크를 노리면 <code>세션 하이재킹</code>,
+                <code>ARP 스푸핑</code>, <code>스니핑</code> 쪽이고, 사람을
+                속이면 <code>스미싱</code>, <code>스피어 피싱</code>,
+                <code>사회공학</code> 쪽으로 먼저 묶어두면 덜 헷갈린다.
+              </p>
+            </div>
+          </section>
+
+          <section id="network" class="prose">
+            <h2>네트워크 공격</h2>
+
+            <h3>세션 하이재킹(Session Hijacking)</h3>
+            <p>
+              사용자가 정상적으로 로그인한 뒤 만들어진 세션을 공격자가 가로채,
+              원래 사용자처럼 서버 자원에 접근하는 공격이다.
+            </p>
+            <p>
+              즉, 비밀번호를 직접 몰라도 <strong>인증이 끝난 연결 상태</strong>를
+              뺏으면 공격이 가능하다는 점이 핵심이다.
+            </p>
+
+            <h3>TCP 세션 하이재킹</h3>
+            <p>
+              TCP 통신 과정에 끼어들어 클라이언트와 서버 사이의 시퀀스 번호를
+              가로채는 방식이다. 보통 <code>3-way handshake</code>와
+              동기화된 시퀀스 번호가 시험 포인트로 함께 나온다.
+            </p>
+
+            <h3>ARP 스푸핑(Address Resolution Protocol spoofing)</h3>
+            <p>
+              ARP의 약점을 이용해 공격자가 자신의 MAC 주소를 마치 다른 장비의
+              주소인 것처럼 속이는 공격이다. 이렇게 되면 원래 피해자에게 가야 할
+              패킷을 가로채거나 통신을 방해할 수 있다.
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>용어</th>
+                    <th>의미</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>MAC</td>
+                    <td>네트워크 장비의 물리적 주소</td>
+                  </tr>
+                  <tr>
+                    <td>ARP</td>
+                    <td>IP 주소를 MAC 주소로 변환</td>
+                  </tr>
+                  <tr>
+                    <td>RARP</td>
+                    <td>MAC 주소를 IP 주소로 변환</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>스니핑(Sniffing)</h3>
+            <p>
+              네트워크 중간에서 오가는 패킷 정보를 몰래 엿듣는 공격이다. 직접
+              변조하지 않고 감청하는 방식이라 <strong>수동적 공격</strong>으로
+              분류된다.
+            </p>
+          </section>
+
+          <section id="social" class="prose">
+            <h2>피싱·사회공학</h2>
+
+            <h3>스미싱(Smishing)</h3>
+            <p>
+              문자메시지(SMS)로 링크 클릭이나 악성 앱 설치를 유도해 개인정보를
+              탈취하는 공격이다. 최근에는 택배, 청첩장, 경품 안내 같은 자연스러운
+              문구로 접근하는 경우가 많다.
+            </p>
+
+            <h3>사회공학(Social Engineering)</h3>
+            <p>
+              시스템의 기술적 취약점을 직접 공격하기보다, 사람의 심리와 신뢰를
+              이용해 정상 보안 절차를 무너뜨리는 비기술적 공격 방식이다.
+            </p>
+
+            <h3>스피어 피싱(Spear Phishing)</h3>
+            <p>
+              특정 개인이나 조직을 목표로 하는 표적형 피싱이다. 실제 업무 메일처럼
+              위장한 이메일을 보내 링크 클릭이나 첨부파일 실행을 유도한다.
+            </p>
+
+            <h3>큐싱(Qshing)</h3>
+            <p>
+              QR코드를 이용해 악성 앱 설치나 피싱 사이트 접속을 유도하는 금융사기
+              기법이다. 문자 기반이면 스미싱, QR 기반이면 큐싱으로 구분해 외우면
+              편하다.
+            </p>
+
+            <h3>타이포스쿼팅(Typosquatting)</h3>
+            <p>
+              유명 사이트와 비슷한 오타 도메인을 미리 등록해 사용자의 오입력을
+              노리는 방식이다. URL 하이재킹이라는 표현으로도 자주 나온다.
+            </p>
+          </section>
+
+          <section id="web" class="prose">
+            <h2>웹·시스템 공격</h2>
+
+            <h3>APT(Advanced Persistent Threat)</h3>
+            <p>
+              특정 기업이나 조직에 장기간 잠복하면서 지속적으로 공격하는
+              지능형 위협이다. 침투 후 바로 끝나는 것이 아니라, 내부 거점을 마련해
+              정보를 수집하고 외부로 유출하는 흐름이 특징이다.
+            </p>
+
+            <h3>무작위 대입 공격(Brute Force Attack)</h3>
+            <p>
+              가능한 값을 전부 시도해 비밀번호나 암호키를 찾아내는 공격이다.
+              단순하지만 비밀번호가 약할수록 매우 치명적이다.
+            </p>
+
+            <h3>SQL 인젝션(SQL Injection)</h3>
+            <p>
+              입력값 검증 취약점을 이용해 SQL문을 주입하고 데이터베이스를 조회,
+              수정, 삭제하는 공격이다. 웹 입력창을 통해 DB를 직접 노린다고
+              이해하면 쉽다.
+            </p>
+
+            <h3>XSS(Cross Site Scripting)</h3>
+            <p>
+              웹페이지에 악성 스크립트를 삽입해 사용자의 브라우저에서 실행되도록
+              만드는 공격이다. 서버 자체보다 <strong>사용자 브라우저</strong>가
+              공격 실행 지점이라는 점이 핵심이다.
+            </p>
+
+            <h3>다크 데이터(Dark Data)</h3>
+            <p>
+              특정 목적으로 수집했지만 이후 활용되지 않고 저장만 되어 있는
+              데이터다. 공격 기법은 아니지만, 관리되지 않은 데이터가 늘어날수록
+              비용과 보안 위험도 함께 커진다.
+            </p>
+          </section>
+
+          <section id="memory-table" class="prose">
+            <h2>시험 암기용 요약 표</h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>용어</th>
+                    <th>한 줄 요약</th>
+                    <th>핵심 키워드</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>세션 하이재킹</td>
+                    <td>인증 후 세션을 빼앗아 사용자 행세를 하는 공격</td>
+                    <td>세션 탈취, 인증 우회</td>
+                  </tr>
+                  <tr>
+                    <td>TCP 세션 하이재킹</td>
+                    <td>TCP 연결의 시퀀스 번호를 가로채는 공격</td>
+                    <td>3-way handshake, sequence number</td>
+                  </tr>
+                  <tr>
+                    <td>ARP 스푸핑</td>
+                    <td>MAC 주소를 속여 패킷을 가로채는 공격</td>
+                    <td>IP-MAC 변조, 중간 가로채기</td>
+                  </tr>
+                  <tr>
+                    <td>스미싱</td>
+                    <td>문자메시지로 링크 클릭이나 앱 설치를 유도하는 피싱</td>
+                    <td>SMS, 악성링크</td>
+                  </tr>
+                  <tr>
+                    <td>사회공학</td>
+                    <td>사람의 심리와 신뢰를 이용하는 공격</td>
+                    <td>사람 속이기, 비기술적 공격</td>
+                  </tr>
+                  <tr>
+                    <td>다크 데이터</td>
+                    <td>수집 후 활용되지 않고 쌓여 있는 데이터</td>
+                    <td>미사용 데이터</td>
+                  </tr>
+                  <tr>
+                    <td>타이포스쿼팅</td>
+                    <td>오타를 노리고 유사 도메인을 등록하는 공격</td>
+                    <td>URL 하이재킹, 오타 도메인</td>
+                  </tr>
+                  <tr>
+                    <td>스피어 피싱</td>
+                    <td>특정 대상을 노리는 맞춤형 이메일 피싱</td>
+                    <td>표적형, 이메일 공격</td>
+                  </tr>
+                  <tr>
+                    <td>APT</td>
+                    <td>장기간 잠복하며 정보를 빼내는 공격</td>
+                    <td>지능형, 지속적 공격</td>
+                  </tr>
+                  <tr>
+                    <td>무작위 대입 공격</td>
+                    <td>가능한 값을 전부 대입하는 공격</td>
+                    <td>Brute Force, 전수조사</td>
+                  </tr>
+                  <tr>
+                    <td>큐싱</td>
+                    <td>QR코드로 피싱 사이트나 악성 앱 설치를 유도</td>
+                    <td>QR 피싱</td>
+                  </tr>
+                  <tr>
+                    <td>SQL 인젝션</td>
+                    <td>SQL문을 주입해 DB를 공격하는 방식</td>
+                    <td>SQL 주입, DB 조작</td>
+                  </tr>
+                  <tr>
+                    <td>XSS</td>
+                    <td>악성 스크립트를 브라우저에서 실행시키는 공격</td>
+                    <td>스크립트 삽입, 브라우저 공격</td>
+                  </tr>
+                  <tr>
+                    <td>스니핑</td>
+                    <td>네트워크 패킷을 몰래 엿듣는 공격</td>
+                    <td>패킷 도청, 수동적 공격</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="compare-table" class="prose">
+            <h2>표 형태 비교 정리</h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>구분</th>
+                    <th>해당 용어</th>
+                    <th>비교 포인트</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>사람을 속이는 공격</td>
+                    <td>사회공학, 스미싱, 스피어 피싱, 큐싱</td>
+                    <td>사람의 심리와 신뢰를 이용</td>
+                  </tr>
+                  <tr>
+                    <td>네트워크 공격</td>
+                    <td>세션 하이재킹, TCP 세션 하이재킹, ARP 스푸핑, 스니핑</td>
+                    <td>통신 과정이나 패킷을 노림</td>
+                  </tr>
+                  <tr>
+                    <td>웹 공격</td>
+                    <td>SQL 인젝션, XSS</td>
+                    <td>웹 입력값과 브라우저 취약점 악용</td>
+                  </tr>
+                  <tr>
+                    <td>장기 잠복형 공격</td>
+                    <td>APT</td>
+                    <td>오랜 기간 침투 후 정보 유출</td>
+                  </tr>
+                  <tr>
+                    <td>주소/도메인 관련</td>
+                    <td>ARP 스푸핑, 타이포스쿼팅</td>
+                    <td>주소 체계나 도메인 혼동 악용</td>
+                  </tr>
+                  <tr>
+                    <td>데이터 관련 개념</td>
+                    <td>다크 데이터</td>
+                    <td>공격 기법이 아니라 관리 대상 개념</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>정리</h2>
+            <ul>
+              <li>세션 하이재킹은 인증 후 세션을 빼앗는 공격이다.</li>
+              <li>ARP 스푸핑은 MAC 주소를 속여 패킷 흐름을 가로챈다.</li>
+              <li>스미싱과 큐싱은 각각 문자와 QR코드를 이용한 피싱이다.</li>
+              <li>스피어 피싱은 특정 대상을 정한 표적형 이메일 공격이다.</li>
+              <li>SQL 인젝션은 DB를, XSS는 브라우저를 직접 노린다.</li>
+              <li>다크 데이터는 공격이 아니라 활용되지 않은 저장 데이터 개념이다.</li>
+            </ul>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
