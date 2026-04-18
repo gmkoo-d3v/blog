@@ -1,5 +1,15 @@
 [
   {
+    "slug": "apple-silicon-mac-docker-oracle-11g-install",
+    "title": "실리콘 맥(도커)에서 하는방법 Oracle 11g 실습하는 방법",
+    "sectionSlug": "os-settings",
+    "sectionLabel": "OS 설정",
+    "category": "Oracle 11g · Docker",
+    "date": "2026-04-18",
+    "summary": "실리콘 맥에서 Docker로 Oracle XE 11g를 실행하고 sqlplus 접속, SCOTT 생성, 샘플 테이블 입력, 복제까지 한 페이지로 정리한 가이드.",
+    "tags": ["Oracle", "Oracle 11g", "Docker", "Apple Silicon", "macOS", "sqlplus", "SCOTT"]
+  },
+  {
     "slug": "database-integrity",
     "title": "데이터베이스 무결성 정리: 개체·도메인·참조 무결성 한 번에 암기하기",
     "sectionSlug": "db",
@@ -66,7 +76,7 @@
     "sectionLabel": "Networking",
     "category": "Network Basics",
     "date": "2026-03-16",
-    "summary": "정처기 기준으로 IPv4 클래스 구분, 기본 서브넷 마스크, 255.255.255.0 = /24 같은 핵심 포인트를 표 중심으로 정리.",
+    "summary": "정처기 기준으로 IPv4 클래스 구분, 기본 서브넷 마스크, 255.255.255.0 = /24와 255.255.254.0 = /23 같은 핵심 포인트를 표 중심으로 정리.",
     "tags": ["Network", "IPv4", "Subnet Mask", "CIDR", "정처기"]
   },
   {

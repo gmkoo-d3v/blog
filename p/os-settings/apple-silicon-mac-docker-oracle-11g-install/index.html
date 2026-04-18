@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실리콘 맥(도커)에서 하는방법 Oracle 11g 실습하는 방법</title>
+    <meta
+      name="description"
+      content="Apple Silicon Mac에서 Docker로 Oracle XE 11g를 실행하고 sqlplus 접속, SCOTT 생성, 샘플 테이블 입력, 추가계정에 복제까지 한 페이지로 정리한 가이드"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">OS 설정</p>
+            <h1>실리콘 맥(도커)에서 하는방법 Oracle 11g 실습하는 방법</h1>
+            <p class="lead">
+              실리콘 맥에서 Oracle 11g 실습 환경을 만들 때는 직접 설치보다 Docker가 훨씬
+              덜 피곤하다. 이 글은 <code>Oracle XE 11g</code> 실행부터
+              <code>sqlplus</code> 접속, <code>SCOTT</code> 생성, 샘플 테이블 입력,
+              <code>추가계정에</code> 복제까지 한 페이지에서 끝나게 정리했다.
+            </p>
+            <div class="meta-row">
+              <span>2026-04-18</span>
+              <span>Apple Silicon · Docker</span>
+              <span>Oracle XE 11g</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#overview">개요</a>
+            <a href="#prerequisites">준비물</a>
+            <a href="#cleanup">기존 컨테이너 정리</a>
+            <a href="#pull-image">이미지 다운로드</a>
+            <a href="#run-container">컨테이너 실행</a>
+            <a href="#check-logs">로그 확인</a>
+            <a href="#connect">sqlplus 접속</a>
+            <a href="#create-scott">SCOTT 생성</a>
+            <a href="#scott-data">SCOTT 테이블 생성</a>
+            <a href="#create-additionalaccount">추가계정 생성</a>
+            <a href="#clone-additionalaccount">추가계정 복제</a>
+            <a href="#verify">최종 확인</a>
+            <a href="#dbeaver">DBeaver 연결</a>
+            <a href="#summary">마무리</a>
+          </nav>
+
+          <section id="overview" class="prose">
+            <h2>개요</h2>
+            <p>
+              실리콘 맥에서 Oracle 11g를 바로 설치하려고 하면 버전 호환과 아키텍처 문제로
+              생각보다 시간을 많이 쓰게 된다. 특히 Apple Silicon 환경은 예전 x86 기준
+              설치 흐름과 잘 맞지 않는 경우가 많아서, 실습 목적이라면 Docker로 먼저
+              띄우는 편이 훨씬 단순하다.
+            </p>
+            <p>
+              이번 글의 목표는 "실습 환경을 한 번에 재현하는 것"이다. 그래서
+              컨테이너만 띄우고 끝내지 않고, 바로 <code>SCOTT</code> 계정을 만들고
+              대표 샘플 테이블인 <code>EMP</code>, <code>DEPT</code>,
+              <code>BONUS</code>, <code>SALGRADE</code>까지 넣은 뒤,
+              같은 구조를 <code>추가계정</code> 계정으로 복제하는 흐름까지 이어서 간다.
+            </p>
+            <div class="callout">
+              <strong>핵심 포인트</strong>
+              <p>
+                실리콘 맥에서는 <code>--platform linux/amd64</code> 옵션이 사실상 핵심이다.
+                이 옵션이 빠지면 Oracle 11g 이미지 실행 단계에서부터 꼬일 수 있다.
+              </p>
+              <p>
+                그리고 이 글에서는 예시 비밀번호를 모두 <code>password</code>로 통일했다.
+                실습이 끝나면 본인 환경에 맞는 비밀번호로 바꿔 쓰면 된다.
+              </p>
+            </div>
+          </section>
+
+          <section id="prerequisites" class="prose">
+            <h2>먼저 준비할 것</h2>
+            <p>
+              시작하기 전에 <code>Docker Desktop</code>이 설치되어 있어야 한다. 아직
+              설치하지 않았다면 Docker Desktop부터 먼저 올려두고, 터미널에서 Docker가
+              정상 동작하는지만 한 번 확인하면 된다.
+            </p>
+            <pre><code class="language-bash">docker --version</code></pre>
+            <p>
+              버전 정보가 잘 나오면 준비는 끝이다. 이제 Oracle 11g 실습용 컨테이너를
+              띄우면 된다.
+            </p>
+            <div class="callout">
+              <strong>이번 글에서 맞출 최종 구조</strong>
+              <p>
+                <code>SCOTT</code>은 교재용, <code>추가 계정</code>는 부트캠프 실습용으로 두고,
+                두 계정 모두 같은 샘플 데이터를 보게 만드는 구성을 기준으로 설명한다.
+              </p>
+            </div>
+          </section>
+
+          <section id="cleanup" class="prose">
+            <h2>1. 기존 Oracle 컨테이너가 있다면 정리하기</h2>
+            <p>
+              예전에 테스트하다가 같은 이름의 컨테이너를 만들어둔 경우가 있다. 이런 경우에는
+              이름 충돌 때문에 실행이 깔끔하지 않을 수 있어서 먼저 정리하고 가는 편이 좋다.
+            </p>
+            <pre><code class="language-bash">docker rm -f oracle-xe 2&gt;/dev/null</code></pre>
+            <p>
+              이미 컨테이너가 없으면 그냥 조용히 넘어가고, 있으면 강제로 삭제한다. 실습 환경을
+              처음부터 다시 맞출 때 자주 쓰는 한 줄이다.
+            </p>
+          </section>
+
+          <section id="pull-image" class="prose">
+            <h2>2. Oracle XE 11g 이미지 내려받기</h2>
+            <p>
+              다음으로 실습에 사용할 이미지를 받아온다. 여기서는
+              <code>gvenzl/oracle-xe:11-slim</code> 태그를 기준으로 진행한다.
+            </p>
+            <pre><code class="language-bash">docker pull gvenzl/oracle-xe:11-slim</code></pre>
+            <p>
+              처음 받는 경우에는 이미지 다운로드에 조금 시간이 걸릴 수 있다. 한 번 받아두면
+              다음부터는 훨씬 빠르게 재사용할 수 있다.
+            </p>
+          </section>
+
+          <section id="run-container" class="prose">
+            <h2>3. 실리콘 맥에서 Oracle 11g 컨테이너 실행하기</h2>
+            <p>
+              이제 실제로 컨테이너를 띄운다. 실리콘 맥에서는 아래 명령처럼
+              <code>amd64</code> 플랫폼을 명시하는 부분을 꼭 넣어야 한다.
+            </p>
+            <pre><code class="language-bash">docker run -d \
+  --platform linux/amd64 \
+  --name oracle-xe \
+  -p 1521:1521 \
+  -e ORACLE_PASSWORD=password \
+  gvenzl/oracle-xe:11-slim</code></pre>
+            <p>옵션을 짧게 보면 아래 정도만 기억하면 된다.</p>
+            <ul>
+              <li><code>--platform linux/amd64</code>: Apple Silicon에서 x86 이미지 실행</li>
+              <li><code>--name oracle-xe</code>: 컨테이너 이름 지정</li>
+              <li><code>-p 1521:1521</code>: Oracle 기본 포트 연결</li>
+              <li><code>-e ORACLE_PASSWORD=password</code>: <code>system</code> 계정 비밀번호 지정</li>
+            </ul>
+            <div class="callout">
+              <strong>포트가 이미 사용 중이라면</strong>
+              <p>
+                로컬에서 이미 <code>1521</code> 포트를 쓰는 Oracle이나 다른 DB가 떠 있다면
+                충돌이 날 수 있다. 그럴 때는 기존 프로세스를 내리거나, 실습용으로
+                호스트 포트를 다른 값으로 바꿔서 실행하면 된다.
+              </p>
+            </div>
+          </section>
+
+          <section id="check-logs" class="prose">
+            <h2>4. DB가 다 올라왔는지 로그로 확인하기</h2>
+            <p>
+              컨테이너가 실행됐다고 해서 바로 접속 가능한 것은 아니다. Oracle은 기동에 시간이
+              조금 걸리기 때문에 로그를 보면서 준비가 끝나는 시점을 확인하는 편이 안전하다.
+            </p>
+            <pre><code class="language-bash">docker logs -f oracle-xe</code></pre>
+            <p>
+              로그가 계속 흘러가다가 데이터베이스 준비가 끝나는 흐름이 보이면 그때 접속하면 된다.
+              처음 실행에서는 몇 분 정도 걸릴 수 있으니 조급하게 다시 띄우기보다 잠깐 기다리는
+              편이 낫다.
+            </p>
+          </section>
+
+          <section id="connect" class="prose">
+            <h2>5. sqlplus로 접속하기</h2>
+            <p>
+              컨테이너가 다 올라왔으면 이제 내부로 들어가서 <code>sqlplus</code>에 접속한다.
+              여기서부터는 Oracle 안에서 계정과 테이블을 세팅하면 된다.
+            </p>
+            <pre><code class="language-bash">docker exec -it oracle-xe bash
+sqlplus system/password</code></pre>
+            <p>
+              정상적으로 접속되면 Oracle 11g 실습용 서버가 잘 올라온 것이다. 이제 바로
+              <code>SCOTT</code> 계정부터 만들어보면 된다.
+            </p>
+          </section>
+
+          <section id="create-scott" class="prose">
+            <h2>6. SCOTT 계정 만들기</h2>
+            <p>
+              교재 예제에서 가장 많이 쓰는 계정이 <code>SCOTT</code>이다. 먼저
+              <code>system</code> 계정으로 접속한 상태에서 아래 명령을 실행한다.
+            </p>
+            <pre><code class="language-sql">CREATE USER scott IDENTIFIED BY tiger;
+GRANT CONNECT, RESOURCE TO scott;
+ALTER USER scott ACCOUNT UNLOCK;
+GRANT UNLIMITED TABLESPACE TO scott;</code></pre>
+            <p>
+              여기까지 하면 <code>SCOTT</code> 계정 자체는 만들어진다. 이제 실제 실습용
+              테이블과 데이터를 넣어주면 된다.
+            </p>
+          </section>
+
+          <section id="scott-data" class="prose">
+            <h2>7. SCOTT 테이블과 샘플 데이터 넣기</h2>
+            <p>
+              아래 SQL은 대표적인 Oracle 실습용 샘플 구조다. <code>DEPT</code>를 먼저 만들고,
+              그다음 <code>EMP</code>, <code>BONUS</code>, <code>SALGRADE</code>를 순서대로
+              넣으면 된다.
+            </p>
+            <pre><code class="language-sql">CONNECT scott/tiger;
+
+CREATE TABLE dept (
+  deptno NUMBER(2) PRIMARY KEY,
+  dname VARCHAR2(14),
+  loc VARCHAR2(13)
+);
+
+INSERT INTO dept VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO dept VALUES (20, 'RESEARCH', 'DALLAS');
+INSERT INTO dept VALUES (30, 'SALES', 'CHICAGO');
+INSERT INTO dept VALUES (40, 'OPERATIONS', 'BOSTON');
+
+CREATE TABLE emp (
+  empno NUMBER(4) PRIMARY KEY,
+  ename VARCHAR2(10),
+  job VARCHAR2(9),
+  mgr NUMBER(4),
+  hiredate DATE,
+  sal NUMBER(7,2),
+  comm NUMBER(7,2),
+  deptno NUMBER(2),
+  FOREIGN KEY (deptno) REFERENCES dept(deptno)
+);
+
+INSERT INTO emp VALUES (7369, 'SMITH', 'CLERK', 7902, DATE '1980-12-17', 800, NULL, 20);
+INSERT INTO emp VALUES (7499, 'ALLEN', 'SALESMAN', 7698, DATE '1981-02-20', 1600, 300, 30);
+INSERT INTO emp VALUES (7521, 'WARD', 'SALESMAN', 7698, DATE '1981-02-22', 1250, 500, 30);
+INSERT INTO emp VALUES (7566, 'JONES', 'MANAGER', 7839, DATE '1981-04-02', 2975, NULL, 20);
+INSERT INTO emp VALUES (7654, 'MARTIN', 'SALESMAN', 7698, DATE '1981-09-28', 1250, 1400, 30);
+INSERT INTO emp VALUES (7698, 'BLAKE', 'MANAGER', 7839, DATE '1981-05-01', 2850, NULL, 30);
+INSERT INTO emp VALUES (7782, 'CLARK', 'MANAGER', 7839, DATE '1981-06-09', 2450, NULL, 10);
+INSERT INTO emp VALUES (7788, 'SCOTT', 'ANALYST', 7566, DATE '1987-04-19', 3000, NULL, 20);
+INSERT INTO emp VALUES (7839, 'KING', 'PRESIDENT', NULL, DATE '1981-11-17', 5000, NULL, 10);
+INSERT INTO emp VALUES (7844, 'TURNER', 'SALESMAN', 7698, DATE '1981-09-08', 1500, 0, 30);
+INSERT INTO emp VALUES (7876, 'ADAMS', 'CLERK', 7788, DATE '1987-05-23', 1100, NULL, 20);
+INSERT INTO emp VALUES (7900, 'JAMES', 'CLERK', 7698, DATE '1981-12-03', 950, NULL, 30);
+INSERT INTO emp VALUES (7902, 'FORD', 'ANALYST', 7566, DATE '1981-12-03', 3000, NULL, 20);
+INSERT INTO emp VALUES (7934, 'MILLER', 'CLERK', 7782, DATE '1982-01-23', 1300, NULL, 10);
+
+CREATE TABLE bonus (
+  ename VARCHAR2(10),
+  job VARCHAR2(9),
+  sal NUMBER,
+  comm NUMBER
+);
+
+CREATE TABLE salgrade (
+  grade NUMBER,
+  losal NUMBER,
+  hisal NUMBER
+);
+
+INSERT INTO salgrade VALUES (1, 700, 1200);
+INSERT INTO salgrade VALUES (2, 1201, 1400);
+INSERT INTO salgrade VALUES (3, 1401, 2000);
+INSERT INTO salgrade VALUES (4, 2001, 3000);
+INSERT INTO salgrade VALUES (5, 3001, 9999);
+
+COMMIT;</code></pre>
+            <div class="callout">
+              <strong>순서가 중요한 이유</strong>
+              <p>
+                <code>EMP</code>는 <code>DEPT</code>를 참조하므로, 부서 테이블을 먼저 만들고
+                데이터를 넣은 뒤 사원 테이블을 생성하는 편이 가장 깔끔하다.
+              </p>
+            </div>
+          </section>
+
+          <section id="create-additionalaccount" class="prose">
+            <h2>8. 추가 계정 만들기</h2>
+            <p>
+              이제 실습용 계정을 하나 더 만든다. 실습 편의를 위해
+              비밀번호는 <code>password</code>로 맞춘다.
+            </p>
+            <pre><code class="language-sql">CONNECT system/password;
+
+CREATE USER 추가 계정 IDENTIFIED BY "password";
+GRANT CONNECT, RESOURCE TO 추가 계정;
+ALTER USER 추가 계정 ACCOUNT UNLOCK;
+GRANT UNLIMITED TABLESPACE TO 추가 계정;</code></pre>
+          </section>
+
+          <section id="clone-additionalaccount" class="prose">
+            <h2>9. SCOTT 데이터를 추가아이디로 복제하기</h2>
+            <p>
+              여기까지 왔으면 이제 핵심 단계다. 교재는 <code>SCOTT</code> 기준으로 풀고,
+              부트캠프 실습은 <code>추가계정</code> 기준으로 풀 수 있게 데이터를 그대로 복제한다.
+            </p>
+            <pre><code class="language-sql">CONNECT 추가계정/"password";
+
+CREATE TABLE dept AS SELECT * FROM scott.dept;
+CREATE TABLE emp AS SELECT * FROM scott.emp;
+CREATE TABLE bonus AS SELECT * FROM scott.bonus;
+CREATE TABLE salgrade AS SELECT * FROM scott.salgrade;
+
+ALTER TABLE dept ADD PRIMARY KEY (deptno);
+ALTER TABLE emp ADD PRIMARY KEY (empno);
+ALTER TABLE emp ADD FOREIGN KEY (deptno) REFERENCES dept(deptno);</code></pre>
+            <div class="callout">
+              <strong>하나만 기억할 점</strong>
+              <p>
+                <code>CREATE TABLE ... AS SELECT ...</code>는 데이터를 빠르게 복사할 때는 좋지만,
+                모든 제약조건을 자동으로 복사하지는 않는다. 그래서 실습용으로 구조를 최대한
+                맞추려면 뒤에 PK/FK를 다시 추가해주는 편이 좋다.
+              </p>
+            </div>
+          </section>
+
+          <section id="verify" class="prose">
+            <h2>10. 최종 확인</h2>
+            <p>
+              마지막으로 <code>SCOTT</code>과 <code>추가계정</code>의 데이터 건수가 같은지만
+              보면 실습 환경이 거의 맞춰졌다고 보면 된다.
+            </p>
+            <pre><code class="language-sql">CONNECT scott/tiger;
+SELECT COUNT(*) FROM emp;
+
+CONNECT 추가계정/"password";
+SELECT COUNT(*) FROM emp;</code></pre>
+            <p>
+              정상이라면 둘 다 <code>14</code>가 나온다. 이 숫자가 같으면 최소한
+              <code>EMP</code> 데이터 복제는 제대로 된 것이다.
+            </p>
+          </section>
+
+          <section id="dbeaver" class="prose">
+            <h2>11. DBeaver 연결 정보</h2>
+            <p>
+              터미널에서 확인이 끝났다면 이제 GUI 툴로 붙여서 쓰면 훨씬 편하다. DBeaver에서는
+              아래처럼 연결하면 된다.
+            </p>
+            <pre><code class="language-none">SCOTT
+Host: localhost
+Port: 1521
+Database/SID: XE
+Username: scott
+Password: tiger
+
+복제된 계정
+Host: localhost
+Port: 1521
+Database/SID: XE
+Username: 추가계정
+Password: password</code></pre>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>마무리</h2>
+            <p>
+              실리콘 맥에서 Oracle 11g 실습 환경을 만들 때는 직접 설치에 매달리기보다 Docker로
+              먼저 띄우는 쪽이 훨씬 현실적이다. 특히
+              <code>--platform linux/amd64</code>만 정확히 챙기면 설치 흐름 자체는 생각보다
+              단순하다.
+            </p>
+            <p>
+              순서를 한 줄로 줄이면 이렇다. Docker로 Oracle XE 11g 실행,
+              <code>sqlplus</code> 접속, <code>SCOTT</code> 생성, 샘플 테이블 입력,
+              <code>추가계정</code> 생성, 그리고 데이터 복제. 이렇게 맞춰두면 교재용 계정과
+              실습용 계정을 깔끔하게 분리하면서도 같은 데이터를 기준으로 연습할 수 있다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
