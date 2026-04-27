@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeetCode 258 Add Digits 풀이: Digital Root와 mod 9 이해하기</title>
+    <meta
+      name="description"
+      content="LeetCode 258 Add Digits 문제를 재귀 풀이와 O(1) Digital Root 공식으로 풀고, 왜 자릿수 합이 mod 9와 연결되는지 38 예제로 정리"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">Coding Problem</p>
+            <h1>LeetCode 258 Add Digits 풀이<br />Digital Root와 mod 9</h1>
+            <p class="lead">
+              숫자의 각 자릿수를 한 자리 수가 될 때까지 더하는 문제를 재귀로 먼저 풀고,
+              왜 <code>(num - 1) % 9 + 1</code> 공식으로 O(1)에 해결되는지 정리한다.
+            </p>
+            <div class="meta-row">
+              <span>2026-04-26</span>
+              <span>LeetCode 258</span>
+              <span>Java, Math, Digital Root</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#problem">문제 이해</a>
+            <a href="#recursive">재귀 풀이</a>
+            <a href="#mod-review">mod 복습</a>
+            <a href="#why-nine">왜 9인가</a>
+            <a href="#thirty-eight">38 mod 9 계산</a>
+            <a href="#edge-case">엣지 케이스</a>
+            <a href="#constant-time">O(1) 풀이</a>
+            <a href="#summary">정리</a>
+          </nav>
+
+          <section id="problem" class="prose">
+            <h2>문제 이해</h2>
+            <p>
+              LeetCode 258번 <strong>Add Digits</strong>는 정수 <code>num</code>의 각 자릿수를 계속 더해서
+              한 자리 숫자가 될 때까지 반복한 뒤, 그 최종 값을 반환하는 문제다.
+            </p>
+            <pre><code class="language-text">num = 38
+38 -&gt; 3 + 8 = 11
+11 -&gt; 1 + 1 = 2
+
+answer = 2</code></pre>
+            <div class="callout">
+              <strong>목표</strong>
+              <p>
+                먼저 문제 정의 그대로 재귀 풀이를 만든 뒤, 마지막에는 반복문과 재귀 없이
+                <code>O(1)</code>로 푸는 Digital Root 공식을 사용한다.
+              </p>
+            </div>
+          </section>
+
+          <section id="recursive" class="prose">
+            <h2>재귀 풀이</h2>
+            <p>
+              가장 직관적인 방법은 문제 설명 그대로 구현하는 것이다. 숫자가 한 자리면 그대로 반환하고,
+              두 자리 이상이면 자릿수 합을 구한 뒤 다시 <code>addDigits</code>를 호출한다.
+            </p>
+            <pre><code class="language-java">class Solution {
+    public int addDigits(int num) {
+        if (num &lt; 10) {
+            return num;
+        }
+
+        int sum = 0;
+
+        while (num &gt; 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+
+        return addDigits(sum);
+    }
+}</code></pre>
+            <p>실행 흐름은 다음과 같다.</p>
+            <pre><code class="language-text">addDigits(38)
+-&gt; 3 + 8 = 11
+-&gt; addDigits(11)
+-&gt; 1 + 1 = 2
+-&gt; addDigits(2)
+-&gt; 2 반환</code></pre>
+            <p>
+              이 풀이는 이해하기 쉽지만 Follow-up 조건인
+              <strong>반복문이나 재귀 없이 O(1)로 풀기</strong>에는 해당하지 않는다.
+            </p>
+          </section>
+
+          <section id="mod-review" class="prose">
+            <h2>mod 복습</h2>
+            <p>
+              <code>mod</code>는 나누고 남은 <strong>나머지</strong>를 의미한다.
+            </p>
+            <pre><code class="language-text">7 mod 3  = 1
+10 mod 3 = 1
+9 mod 9  = 0
+38 mod 9 = 2</code></pre>
+            <p>
+              핵심 성질은 <code>A mod N</code>이 항상 <code>0</code>부터 <code>N - 1</code> 사이의 값을
+              반환한다는 점이다. 따라서 어떤 수를 <code>9</code>로 나누면 나머지는 항상 <code>0~8</code> 사이가 된다.
+            </p>
+          </section>
+
+          <section id="why-nine" class="prose">
+            <h2>왜 하필 9인가?</h2>
+            <p>
+              10진법에서는 <code>10</code>, <code>100</code>, <code>1000</code>을 모두 <code>9</code>로 나누면
+              나머지가 <code>1</code>이다.
+            </p>
+            <pre><code class="language-text">10 mod 9   = 1
+100 mod 9  = 1
+1000 mod 9 = 1
+
+10^n ≡ 1 (mod 9)</code></pre>
+            <p>
+              <code>≡</code>는 합동(congruent)이라는 뜻이다. 쉽게 말해
+              <strong>mod 9 세계에서는 같은 값으로 취급된다</strong>는 의미다.
+            </p>
+          </section>
+
+          <section id="thirty-eight" class="prose">
+            <h2>38 mod 9 계산</h2>
+            <p>
+              <code>38</code>을 자릿수로 분해하면 다음과 같다.
+            </p>
+            <pre><code class="language-text">38 = 3 × 10 + 8</code></pre>
+            <p>여기에 <code>mod 9</code>를 씌운다.</p>
+            <pre><code class="language-text">38 mod 9
+= (3 × 10 + 8) mod 9</code></pre>
+            <p>
+              덧셈과 곱셈에는 mod를 적용할 수 있다. 정확히는 계산 결과에 다시
+              <code>mod 9</code>를 씌우는 형태로 생각하면 된다.
+            </p>
+            <pre><code class="language-text">(3 × 10 + 8) mod 9
+= ((3 × 10) mod 9 + 8 mod 9) mod 9
+= ((3 mod 9 × 10 mod 9) mod 9 + 8 mod 9) mod 9</code></pre>
+            <p>이제 <code>10 mod 9 = 1</code>을 대입한다.</p>
+            <pre><code class="language-text">= ((3 × 1) mod 9 + 8) mod 9
+= (3 + 8) mod 9
+= 11 mod 9
+= 2</code></pre>
+            <div class="callout">
+              <strong>핵심</strong>
+              <p>
+                <code>38 mod 9</code>는 결국 <code>(3 + 8) mod 9</code>와 같다.
+                그래서 자릿수를 계속 더해도 <code>mod 9</code> 값은 변하지 않는다.
+              </p>
+            </div>
+          </section>
+
+          <section id="edge-case" class="prose">
+            <h2>엣지 케이스</h2>
+            <p>
+              일반적으로는 <code>num % 9</code>로 답을 구할 수 있을 것처럼 보인다.
+              하지만 두 가지 케이스를 조심해야 한다.
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>입력</th>
+                    <th><code>num % 9</code></th>
+                    <th>실제 정답</th>
+                    <th>설명</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>0</code></td>
+                    <td><code>0</code></td>
+                    <td><code>0</code></td>
+                    <td>그대로 0 반환</td>
+                  </tr>
+                  <tr>
+                    <td><code>9</code></td>
+                    <td><code>0</code></td>
+                    <td><code>9</code></td>
+                    <td>9의 배수는 최종값이 9</td>
+                  </tr>
+                  <tr>
+                    <td><code>18</code></td>
+                    <td><code>0</code></td>
+                    <td><code>9</code></td>
+                    <td><code>1 + 8 = 9</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>38</code></td>
+                    <td><code>2</code></td>
+                    <td><code>2</code></td>
+                    <td>일반 케이스</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              따라서 <code>0</code>은 별도로 처리하고, 나머지는
+              <code>(num - 1) % 9 + 1</code> 공식을 사용한다.
+            </p>
+          </section>
+
+          <section id="constant-time" class="prose">
+            <h2>O(1) 풀이</h2>
+            <p>
+              Digital Root 공식은 다음과 같다.
+            </p>
+            <pre><code class="language-text">num == 0 ? 0 : (num - 1) % 9 + 1</code></pre>
+            <p>최종 Java 코드는 다음과 같다.</p>
+            <pre><code class="language-java">class Solution {
+    public int addDigits(int num) {
+        if (num == 0) {
+            return 0;
+        }
+
+        return (num - 1) % 9 + 1;
+    }
+}</code></pre>
+            <p>실행 흐름을 확인해 보자.</p>
+            <pre><code class="language-text">num = 38
+-&gt; (38 - 1) % 9 + 1
+-&gt; 37 % 9 + 1
+-&gt; 1 + 1
+-&gt; 2
+
+num = 9
+-&gt; (9 - 1) % 9 + 1
+-&gt; 8 % 9 + 1
+-&gt; 8 + 1
+-&gt; 9
+
+num = 0
+-&gt; if문에서 바로 0 반환</code></pre>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>정리</h2>
+            <ul>
+              <li><code>mod</code>는 나누고 남은 나머지다.</li>
+              <li>10진법에서 <code>10^n mod 9 = 1</code>이다.</li>
+              <li>그래서 원래 숫자와 자릿수 합은 <code>mod 9</code> 값이 같다.</li>
+              <li>재귀 풀이는 문제 정의와 가장 비슷해서 이해하기 쉽다.</li>
+              <li>최적 풀이는 <code>num == 0 ? 0 : (num - 1) % 9 + 1</code>이다.</li>
+              <li>시간 복잡도는 <code>O(1)</code>, 공간 복잡도도 <code>O(1)</code>이다.</li>
+            </ul>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>

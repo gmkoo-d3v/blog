@@ -1,5 +1,15 @@
 [
   {
+    "slug": "leetcode-add-digits",
+    "title": "LeetCode 258 Add Digits 풀이: Digital Root와 mod 9 이해하기",
+    "sectionSlug": "coding-problem",
+    "sectionLabel": "Coding Problem",
+    "category": "LeetCode 258",
+    "date": "2026-04-26",
+    "summary": "Add Digits 문제를 재귀 풀이와 O(1) Digital Root 공식으로 풀고, 38 mod 9 예제로 자릿수 합과 mod 9의 관계를 정리.",
+    "tags": ["LeetCode", "Add Digits", "Java", "Digital Root", "mod", "Coding Problem"]
+  },
+  {
     "slug": "apple-silicon-mac-docker-oracle-11g-install",
     "title": "실리콘 맥(도커)에서 하는방법 Oracle 11g 실습하는 방법",
     "sectionSlug": "os-settings",
