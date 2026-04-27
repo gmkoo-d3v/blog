@@ -251,6 +251,17 @@ pre {
   text-decoration: underline;
 }
 
+.prose .post-link {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose .post-link:hover {
+  color: #1d4ed8;
+}
+
 .feature-list,
 .prose ol,
 .prose ul {
