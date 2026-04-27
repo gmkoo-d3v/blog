@@ -1,5 +1,15 @@
 [
   {
+    "slug": "leetcode-reverse-bits",
+    "title": "LeetCode 190 Reverse Bits 풀이: 비트 뒤집기 이해하기",
+    "sectionSlug": "coding-problem",
+    "sectionLabel": "Coding Problem",
+    "category": "LeetCode 190",
+    "date": "2026-04-27",
+    "summary": "Reverse Bits 문제를 n & 1, shift, OR 연산으로 한 비트씩 읽는 풀이부터 분할정복 비트 스왑과 8비트 캐시 최적화까지 정리.",
+    "tags": ["LeetCode", "Reverse Bits", "Java", "Bit Manipulation", "Coding Problem"]
+  },
+  {
     "slug": "leetcode-add-digits",
     "title": "LeetCode 258 Add Digits 풀이: Digital Root와 mod 9 이해하기",
     "sectionSlug": "coding-problem",

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeetCode 190 Reverse Bits 풀이: 비트 뒤집기 이해하기</title>
+    <meta
+      name="description"
+      content="LeetCode 190 Reverse Bits 문제를 n &amp; 1, shift, OR 연산으로 한 비트씩 읽고 쌓는 방식부터 분할정복 비트 스왑과 8비트 캐시 최적화까지 정리"
+    />
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <script defer src="../../../assets/js/site.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="../../../">Runtime Notes</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="nav-link" href="../../../">Home</a>
+          <a class="nav-link" href="../../../posts/">Posts</a>
+          <a class="nav-link" href="../../../about/">About</a>
+        </nav>
+      </header>
+
+      <main class="post-main">
+        <article class="post-article">
+          <header class="post-header">
+            <p class="eyebrow">Coding Problem</p>
+            <h1>LeetCode 190 Reverse Bits 풀이<br />비트 뒤집기 이해하기</h1>
+            <p class="lead">
+              <code>n &amp; 1</code>은 비트를 없애는 연산이 아니라 맨 오른쪽 비트를 읽는 연산이다.
+              이 값을 <code>result</code>에 한 칸씩 밀어 넣으면 32비트 전체가 좌우 반전된다.
+            </p>
+            <div class="meta-row">
+              <span>2026-04-27</span>
+              <span>LeetCode 190</span>
+              <span>Java, Bit Manipulation</span>
+            </div>
+          </header>
+
+          <nav class="toc-card" aria-label="문서 목차">
+            <a href="#problem">문제 이해</a>
+            <a href="#and-one">n &amp; 1 이해</a>
+            <a href="#shift">shift 이해</a>
+            <a href="#reverse-flow">왜 뒤집히는가</a>
+            <a href="#solution">기본 풀이</a>
+            <a href="#unsigned-shift">&gt;&gt; vs &gt;&gt;&gt;</a>
+            <a href="#divide-conquer">분할정복 풀이</a>
+            <a href="#cache">Follow-up 캐시</a>
+            <a href="#summary">정리</a>
+          </nav>
+
+          <section id="problem" class="prose">
+            <h2>문제 이해</h2>
+            <p>
+              LeetCode 190번
+              (<a class="post-link" href="https://leetcode.com/problems/reverse-bits/description/" target="_blank" rel="noopener noreferrer">link</a>)은
+              32비트 정수의 비트 순서를 완전히 반대로 뒤집는 문제다.
+              왼쪽 끝 비트는 오른쪽 끝으로, 오른쪽 끝 비트는 왼쪽 끝으로 이동한다.
+            </p>
+            <pre><code class="language-text">입력:
+0000 0010 1001 0100 0001 1110 1001 1100
+
+출력:
+0011 1001 0111 1000 0010 1001 0100 0000</code></pre>
+            <p>
+              4비트로 줄여 보면 더 쉽다. <code>1011</code>을 뒤집으면 <code>1101</code>이다.
+            </p>
+            <pre><code class="language-text">원본: 1 0 1 1
+결과: 1 1 0 1
+
+원본 bit[0] -&gt; 결과 bit[3]
+원본 bit[1] -&gt; 결과 bit[2]
+원본 bit[2] -&gt; 결과 bit[1]
+원본 bit[3] -&gt; 결과 bit[0]</code></pre>
+          </section>
+
+          <section id="and-one" class="prose">
+            <h2><code>n &amp; 1</code> 이해</h2>
+            <p>
+              <code>&amp;</code>는 두 비트가 모두 <code>1</code>인 자리만 <code>1</code>로 만든다.
+            </p>
+            <pre><code class="language-text">  1010
+&amp; 0011
+------
+  0010</code></pre>
+            <p>
+              그래서 어떤 수를 <code>1</code>과 <code>&amp;</code> 하면 맨 오른쪽 비트만 확인할 수 있다.
+              <code>1</code>의 이진수는 <code>...0001</code>이기 때문이다.
+            </p>
+            <pre><code class="language-text">  1011
+&amp; 0001
+------
+  0001  // 맨 오른쪽 비트가 1
+
+  1010
+&amp; 0001
+------
+  0000  // 맨 오른쪽 비트가 0</code></pre>
+            <div class="callout">
+              <strong>중요</strong>
+              <p>
+                <code>n &amp; 1</code>은 <code>n</code>에서 비트를 제거하는 연산이 아니다.
+                정확히는 <strong>맨 오른쪽 비트 값을 읽어서 복사</strong>하는 연산이다.
+                <code>n</code> 자체는 이 줄에서 바뀌지 않는다.
+              </p>
+            </div>
+            <pre><code class="language-text">n   = 1011
+bit = n &amp; 1  // bit = 1
+
+// 이 시점에도 n은 여전히 1011이다.</code></pre>
+          </section>
+
+          <section id="shift" class="prose">
+            <h2>shift 이해</h2>
+            <p>
+              <code>&lt;&lt;</code>는 왼쪽으로 밀고, <code>&gt;&gt;</code> 또는 <code>&gt;&gt;&gt;</code>는 오른쪽으로 민다.
+            </p>
+            <pre><code class="language-text">n = 00000101  // 5
+
+n &lt;&lt; 1 = 0000 1010  // 10
+n &gt;&gt; 1 = 0000 0010  // 2</code></pre>
+            <p>
+              Reverse Bits 풀이에서는 두 방향의 shift를 동시에 사용한다.
+            </p>
+            <ul>
+              <li><code>n</code>은 오른쪽으로 민다. 다음에 읽을 비트가 맨 오른쪽으로 오게 한다.</li>
+              <li><code>result</code>는 왼쪽으로 민다. 새로 읽은 비트를 붙일 자리를 만든다.</li>
+            </ul>
+          </section>
+
+          <section id="reverse-flow" class="prose">
+            <h2>왜 뒤집히는가</h2>
+            <p>
+              4비트 예시 <code>1011</code>로 직접 추적해 보자.
+            </p>
+            <pre><code class="language-text">초기
+n      = 1011
+result = 0000
+
+i = 0
+bit    = 1011 &amp; 0001 = 1
+result = 0000 &lt;&lt; 1 = 0000
+result = 0000 | 0001 = 0001
+n      = 1011 &gt;&gt; 1 = 0101
+
+i = 1
+bit    = 0101 &amp; 0001 = 1
+result = 0001 &lt;&lt; 1 = 0010
+result = 0010 | 0001 = 0011
+n      = 0101 &gt;&gt; 1 = 0010
+
+i = 2
+bit    = 0010 &amp; 0001 = 0
+result = 0011 &lt;&lt; 1 = 0110
+result = 0110 | 0000 = 0110
+n      = 0010 &gt;&gt; 1 = 0001
+
+i = 3
+bit    = 0001 &amp; 0001 = 1
+result = 0110 &lt;&lt; 1 = 1100
+result = 1100 | 0001 = 1101</code></pre>
+            <p>
+              핵심은 읽는 방향과 쌓는 방향이 반대라는 점이다.
+              <code>n</code>에서는 오른쪽 비트부터 읽고, <code>result</code>에는 왼쪽으로 밀면서 쌓는다.
+            </p>
+            <pre><code class="language-text">n에서 읽는 순서:
+bit[0] -&gt; bit[1] -&gt; bit[2] -&gt; bit[3]
+
+result에 자리 잡는 순서:
+bit[3] -&gt; bit[2] -&gt; bit[1] -&gt; bit[0]</code></pre>
+            <div class="callout">
+              <strong>한 줄 결론</strong>
+              <p>
+                오른쪽에서 읽은 값을 왼쪽으로 밀어 넣기 때문에 결과적으로 좌우가 뒤집힌다.
+              </p>
+            </div>
+          </section>
+
+          <section id="solution" class="prose">
+            <h2>기본 풀이</h2>
+            <p>
+              실제 문제는 32비트이므로 같은 작업을 32번 반복하면 된다.
+            </p>
+            <pre><code class="language-java">public class Solution {
+    public int reverseBits(int n) {
+        int result = 0;
+
+        for (int i = 0; i &lt; 32; i++) {
+            int bit = n &amp; 1;
+            result = (result &lt;&lt; 1) | bit;
+            n &gt;&gt;= 1;
+        }
+
+        return result;
+    }
+}</code></pre>
+            <p>각 줄의 역할은 다음과 같다.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>코드</th>
+                    <th>의미</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>int bit = n &amp; 1;</code></td>
+                    <td><code>n</code>의 맨 오른쪽 비트를 읽는다.</td>
+                  </tr>
+                  <tr>
+                    <td><code>result &lt;&lt; 1</code></td>
+                    <td><code>result</code>를 왼쪽으로 밀어서 새 비트가 들어갈 자리를 만든다.</td>
+                  </tr>
+                  <tr>
+                    <td><code>| bit</code></td>
+                    <td>비어 있는 맨 오른쪽 자리에 방금 읽은 비트를 붙인다.</td>
+                  </tr>
+                  <tr>
+                    <td><code>n &gt;&gt;= 1</code></td>
+                    <td><code>n</code>을 오른쪽으로 밀어서 다음 비트를 준비한다.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              이 기본 풀이처럼 <strong>무조건 32번 반복</strong>하는 구조에서는
+              <code>n &gt;&gt;= 1</code>을 써도 각 반복에서 읽는 맨 오른쪽 비트는 원래의
+              <code>bit[0]</code>부터 <code>bit[31]</code>까지 순서대로 나온다.
+              따라서 이 코드도 정답이다.
+            </p>
+          </section>
+
+          <section id="unsigned-shift" class="prose">
+            <h2><code>&gt;&gt;</code> 와 <code>&gt;&gt;&gt;</code> 차이점</h2>
+            <p>
+              Java에서 <code>&gt;&gt;</code>는 산술 오른쪽 shift다. 음수이면 맨 왼쪽을 <code>1</code>로 채운다.
+              <code>&gt;&gt;&gt;</code>는 논리 오른쪽 shift다. 부호와 상관없이 맨 왼쪽을 <code>0</code>으로 채운다.
+            </p>
+            <pre><code class="language-text">&gt;&gt;   : 부호 유지
+&gt;&gt;&gt;  : 0으로 채움, unsigned처럼 다룸</code></pre>
+            <p>
+              기본 루프 풀이는 32번 고정 반복이라 <code>n &amp; 1</code>로 원래 비트를 순서대로 읽는 구조 자체는 유지된다.
+              그래서 그 풀이에서는 <code>&gt;&gt;</code>를 써도 정답이 나온다.
+              그래도 문제 의도가 "32비트를 unsigned 값처럼 뒤집기"에 가깝기 때문에
+              분할정복처럼 마스크로 꺼낸 값을 오른쪽으로 크게 이동시킬 때는 <code>&gt;&gt;&gt;</code>를 쓰는 편이 더 명확하다.
+            </p>
+            <div class="callout">
+              <strong>부호 확장</strong>
+              <p>
+                부호비트는 맨 왼쪽 한 자리지만, <code>&gt;&gt;</code>를 하면 빈자리가 그 부호비트와 같은 값으로 채워진다.
+                이 규칙을 <strong>sign extension</strong>이라고 한다.
+              </p>
+            </div>
+            <pre><code class="language-text">num = 1111 0000 1111 0000 1111 0000 1111 0000
+      ^
+      맨 왼쪽이 1이면 Java int에서는 음수로 해석된다.
+
+num &gt;&gt; 16
+= 1111 1111 1111 1111 1111 0000 1111 0000
+  ^^^^^^^^^^^^^^^^^^^
+  빈자리가 부호비트 1로 채워진다.
+
+num &gt;&gt;&gt; 16
+= 0000 0000 0000 0000 1111 0000 1111 0000
+  ^^^^^^^^^^^^^^^^^^^
+  빈자리가 무조건 0으로 채워진다.</code></pre>
+            <p>
+              비트 뒤집기에서는 숫자의 부호를 유지하려는 것이 아니라 비트 패턴 자체를 이동시키는 것이 목적이다.
+              그래서 오른쪽으로 밀 때는 <code>&gt;&gt;&gt;</code>가 의도를 더 정확히 드러낸다.
+            </p>
+          </section>
+
+          <section id="divide-conquer" class="prose">
+            <h2>분할정복 풀이</h2>
+            <p>
+              한 비트씩 32번 옮기는 대신, 큰 덩어리부터 점점 작은 덩어리로 쪼개며 서로 교환할 수도 있다.
+              32비트는 <code>2^5</code>이므로 <code>16비트 -&gt; 8비트 -&gt; 4비트 -&gt; 2비트 -&gt; 1비트</code>
+              순서로 5번 스왑하면 완전히 뒤집힌다.
+            </p>
+            <h3>10진수로 먼저 생각하기</h3>
+            <p>
+              비트가 아직 낯설면 10진수 숫자 <code>12345678</code>을 뒤집는 과정으로 먼저 보면 된다.
+              목표는 <code>87654321</code>을 만드는 것이다.
+            </p>
+            <pre><code class="language-text">1234 5678  // 원본
+5678 1234
+7856 3412
+8765 4321  // 뒤집힌 결과</code></pre>
+            <p>
+              첫 단계에서는 숫자를 절반으로 나눈다.
+              <code>1234|5678</code>에서 앞 4자리는 오른쪽으로 보내고, 뒤 4자리는 왼쪽으로 보낸다.
+            </p>
+            <pre><code class="language-text">1234|5678
+    swap
+5678|1234</code></pre>
+            <p>
+              다음에는 2자리씩 나눠서 옆 덩어리와 바꾼다.
+            </p>
+            <pre><code class="language-text">56|78|12|34
+swap  swap
+78|56|34|12</code></pre>
+            <p>
+              마지막에는 1자리씩 나눠서 인접한 자리끼리 바꾼다.
+            </p>
+            <pre><code class="language-text">7|8|5|6|3|4|1|2
+swap swap swap swap
+8|7|6|5|4|3|2|1</code></pre>
+            <p>
+              비트 분할정복 풀이도 이 생각과 같다.
+              큰 덩어리를 먼저 바꾸고, 그 다음 더 작은 덩어리를 바꾸고, 마지막에는 1비트씩 바꾼다.
+            </p>
+            <h3>8비트로 축소해서 보기</h3>
+            <p>
+              32비트는 길어서 처음부터 보기 어렵다. 그래서 8비트 숫자
+              <code>0001 0111</code>을 <code>1110 1000</code>으로 뒤집는다고 생각해 보자.
+              8은 <code>2^3</code>이므로 3단계면 끝난다.
+            </p>
+            <pre><code class="language-text">00010111  // 원본
+0111 0001
+1101 0100
+1110 1000  // 뒤집힌 결과</code></pre>
+            <p>
+              1단계는 4비트씩 나눠서 교환한다.
+            </p>
+            <pre><code class="language-text">0001|0111
+swap
+0111|0001</code></pre>
+            <p>
+              이때 앞 4비트만 남기려면 <code>0xf0</code> 마스크를 사용한다.
+              <code>f</code>는 <code>1111</code>, <code>0</code>은 <code>0000</code>이다.
+            </p>
+            <pre><code class="language-text">  0001 0111
+&amp; 1111 0000  // 0xf0
+-----------
+  0001 0000
+
+(num &amp; 0xf0) &gt;&gt;&gt; 4
+= 0000 0001</code></pre>
+            <p>
+              뒤 4비트만 남기려면 <code>0x0f</code> 마스크를 사용하고, 이 값은 왼쪽으로 4칸 민다.
+            </p>
+            <pre><code class="language-text">  0001 0111
+&amp; 0000 1111  // 0x0f
+-----------
+  0000 0111
+
+(num &amp; 0x0f) &lt;&lt; 4
+= 0111 0000</code></pre>
+            <p>
+              이제 두 결과를 <code>|</code>로 합치면 첫 번째 교환이 끝난다.
+            </p>
+            <pre><code class="language-text">  0000 0001
+| 0111 0000
+-----------
+  0111 0001</code></pre>
+            <p>
+              2단계는 2비트씩 교환한다. <code>0xcc</code>는 <code>1100 1100</code>,
+              <code>0x33</code>은 <code>0011 0011</code>이다.
+            </p>
+            <pre><code class="language-text">num = 0111 0001
+
+  01 11 00 01
+&amp; 11 00 11 00  // 0xcc
+--------------
+  01 00 00 00
+
+(num &amp; 0xcc) &gt;&gt;&gt; 2
+= 00 01 00 00
+
+  01 11 00 01
+&amp; 00 11 00 11  // 0x33
+--------------
+  00 11 00 01
+
+(num &amp; 0x33) &lt;&lt; 2
+= 11 00 01 00
+
+  00 01 00 00
+| 11 00 01 00
+--------------
+  11 01 01 00</code></pre>
+            <p>
+              3단계는 1비트씩 교환한다. <code>0xaa</code>는 <code>1010 1010</code>,
+              <code>0x55</code>는 <code>0101 0101</code>이다.
+            </p>
+            <pre><code class="language-text">num = 1101 0100
+
+  1 1 0 1 0 1 0 0
+&amp; 1 0 1 0 1 0 1 0  // 0xaa
+------------------
+  1 0 0 0 0 0 0 0
+
+(num &amp; 0xaa) &gt;&gt;&gt; 1
+= 0 1 0 0 0 0 0 0
+
+  1 1 0 1 0 1 0 0
+&amp; 0 1 0 1 0 1 0 1  // 0x55
+------------------
+  0 1 0 1 0 1 0 0
+
+(num &amp; 0x55) &lt;&lt; 1
+= 1 0 1 0 1 0 0 0
+
+  0 1 0 0 0 0 0 0
+| 1 0 1 0 1 0 0 0
+------------------
+  1 1 1 0 1 0 0 0</code></pre>
+            <p>
+              그래서 <code>00010111</code>은 최종적으로 <code>11101000</code>이 된다.
+              32비트 풀이도 같은 방식으로 단계 수만 늘어난다.
+            </p>
+            <pre><code class="language-text">8비트 : 4비트 교환 -&gt; 2비트 교환 -&gt; 1비트 교환
+32비트: 16비트 교환 -&gt; 8비트 교환 -&gt; 4비트 교환 -&gt; 2비트 교환 -&gt; 1비트 교환</code></pre>
+            <pre><code class="language-java">public class Solution {
+    public int reverseBits(int num) {
+        num = ((num &amp; 0xffff0000) &gt;&gt;&gt; 16) | ((num &amp; 0x0000ffff) &lt;&lt; 16);
+        num = ((num &amp; 0xff00ff00) &gt;&gt;&gt; 8)  | ((num &amp; 0x00ff00ff) &lt;&lt; 8);
+        num = ((num &amp; 0xf0f0f0f0) &gt;&gt;&gt; 4)  | ((num &amp; 0x0f0f0f0f) &lt;&lt; 4);
+        num = ((num &amp; 0xcccccccc) &gt;&gt;&gt; 2)  | ((num &amp; 0x33333333) &lt;&lt; 2);
+        num = ((num &amp; 0xaaaaaaaa) &gt;&gt;&gt; 1)  | ((num &amp; 0x55555555) &lt;&lt; 1);
+
+        return num;
+    }
+}</code></pre>
+            <p>
+              16진수 마스크는 4자리 비트 단위로 읽으면 훨씬 편하다.
+              16진수 한 자리는 정확히 2진수 4비트다.
+            </p>
+            <pre><code class="language-text">f = 1111
+c = 1100
+a = 1010
+5 = 0101
+3 = 0011
+0 = 0000</code></pre>
+            <p>마스크를 4비트씩 띄어 쓰면 패턴이 바로 보인다.</p>
+            <pre><code class="language-text">0xffff0000 = 1111 1111 1111 1111 0000 0000 0000 0000
+0x0000ffff = 0000 0000 0000 0000 1111 1111 1111 1111
+
+0xff00ff00 = 1111 1111 0000 0000 1111 1111 0000 0000
+0x00ff00ff = 0000 0000 1111 1111 0000 0000 1111 1111
+
+0xf0f0f0f0 = 1111 0000 1111 0000 1111 0000 1111 0000
+0x0f0f0f0f = 0000 1111 0000 1111 0000 1111 0000 1111
+
+0xcccccccc = 1100 1100 1100 1100 1100 1100 1100 1100
+0x33333333 = 0011 0011 0011 0011 0011 0011 0011 0011
+
+0xaaaaaaaa = 1010 1010 1010 1010 1010 1010 1010 1010
+0x55555555 = 0101 0101 0101 0101 0101 0101 0101 0101</code></pre>
+            <p>
+              첫 줄만 자세히 보면 나머지도 같은 구조다.
+              상위 16비트는 오른쪽으로 내리고, 하위 16비트는 왼쪽으로 올린 뒤 <code>|</code>로 합친다.
+            </p>
+            <pre><code class="language-text">num
+= 1011 0110 1100 1010 | 0001 1110 1001 1100
+
+num &amp; 0xffff0000
+= 1011 0110 1100 1010 | 0000 0000 0000 0000
+
+(num &amp; 0xffff0000) &gt;&gt;&gt; 16
+= 0000 0000 0000 0000 | 1011 0110 1100 1010
+
+num &amp; 0x0000ffff
+= 0000 0000 0000 0000 | 0001 1110 1001 1100
+
+(num &amp; 0x0000ffff) &lt;&lt; 16
+= 0001 1110 1001 1100 | 0000 0000 0000 0000
+
+둘을 | 로 합치면
+= 0001 1110 1001 1100 | 1011 0110 1100 1010</code></pre>
+            <p>
+              이후 줄들은 같은 아이디어를 더 작은 단위에 적용한다.
+            </p>
+            <pre><code class="language-text">1단계: [ABCD|EFGH] -&gt; [EFGH|ABCD]    16비트 단위 교환
+2단계: [EF|GH|AB|CD] -&gt; [FE|HG|BA|DC] 8비트 단위 교환
+3단계: 각 8비트 안에서 앞 4비트와 뒤 4비트 교환
+4단계: 각 4비트 안에서 앞 2비트와 뒤 2비트 교환
+5단계: 인접한 1비트끼리 교환</code></pre>
+            <div class="callout">
+              <strong>핵심</strong>
+              <p>
+                큰 덩어리부터 절반씩 쪼개며 교환한다.
+                그래서 루프 풀이는 32번 반복하고, 이 방식은 5단계로 끝난다.
+              </p>
+            </div>
+          </section>
+
+          <section id="cache" class="prose">
+            <h2>Follow-up 캐시</h2>
+            <p>
+              같은 함수가 수백만 번 호출된다면 매번 32번 반복하는 대신 8비트 단위 결과를 미리 계산해 둘 수 있다.
+              8비트는 가능한 값이 <code>0~255</code>라서 캐시 크기가 256칸이면 충분하다.
+            </p>
+            <pre><code class="language-text">32비트:
+[BYTE3][BYTE2][BYTE1][BYTE0]
+
+뒤집은 결과:
+[rev(BYTE0)][rev(BYTE1)][rev(BYTE2)][rev(BYTE3)]</code></pre>
+            <pre><code class="language-java">public class Solution {
+    private static final int[] REVERSED_BYTE = buildCache();
+
+    public int reverseBits(int n) {
+        return (REVERSED_BYTE[n &amp; 0xFF] &lt;&lt; 24)
+             | (REVERSED_BYTE[(n &gt;&gt;&gt; 8) &amp; 0xFF] &lt;&lt; 16)
+             | (REVERSED_BYTE[(n &gt;&gt;&gt; 16) &amp; 0xFF] &lt;&lt; 8)
+             | REVERSED_BYTE[(n &gt;&gt;&gt; 24) &amp; 0xFF];
+    }
+
+    private static int[] buildCache() {
+        int[] cache = new int[256];
+
+        for (int i = 0; i &lt; cache.length; i++) {
+            cache[i] = reverseOneByte(i);
+        }
+
+        return cache;
+    }
+
+    private static int reverseOneByte(int value) {
+        int result = 0;
+
+        for (int i = 0; i &lt; 8; i++) {
+            result = (result &lt;&lt; 1) | (value &amp; 1);
+            value &gt;&gt;&gt;= 1;
+        }
+
+        return result;
+    }
+}</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>방식</th>
+                    <th>호출당 작업</th>
+                    <th>특징</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>기본 루프</td>
+                    <td>32회 반복</td>
+                    <td>가장 단순하고 기본 답안으로 좋다.</td>
+                  </tr>
+                  <tr>
+                    <td>8비트 캐시</td>
+                    <td>테이블 조회 4회</td>
+                    <td>반복 호출이 매우 많을 때 유리하다.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="summary" class="prose">
+            <h2>정리</h2>
+            <ul>
+              <li><code>n &amp; 1</code>은 <code>n</code>의 맨 오른쪽 비트를 읽는 연산이다.</li>
+              <li><code>n &amp; 1</code>만으로는 <code>n</code>이 변하지 않는다.</li>
+              <li><code>n &gt;&gt;= 1</code>을 하면 다음 비트가 맨 오른쪽으로 온다.</li>
+              <li><code>result &lt;&lt; 1</code>은 새 비트를 붙일 자리를 만드는 작업이다.</li>
+              <li>오른쪽에서 읽고 왼쪽으로 쌓기 때문에 전체 비트 순서가 뒤집힌다.</li>
+              <li>32비트 문제이므로 같은 작업을 32번 반복하면 전체 reverse가 끝난다.</li>
+              <li>분할정복 방식은 16, 8, 4, 2, 1비트 단위로 스왑해서 5단계에 뒤집는다.</li>
+              <li><code>&gt;&gt;</code>는 부호 확장을 하고, <code>&gt;&gt;&gt;</code>는 빈자리를 0으로 채운다.</li>
+            </ul>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>Runtime Notes</p>
+        <p>&copy; <span data-current-year></span></p>
+      </footer>
+    </div>
+  </body>
+</html>
