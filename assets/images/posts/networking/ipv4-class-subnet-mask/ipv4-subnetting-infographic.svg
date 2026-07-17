@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">IPv4 Subnetting</title>
+  <desc id="desc">An eight-bit subnetting diagram for mask 192 and IP 157.</desc>
+  <defs>
+    <radialGradient id="background" cx="50%" cy="42%" r="72%">
+      <stop offset="0" stop-color="#102a3b" />
+      <stop offset="0.58" stop-color="#091927" />
+      <stop offset="1" stop-color="#050d17" />
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#113047" stop-opacity="0.72" />
+      <stop offset="1" stop-color="#07131f" stop-opacity="0.78" />
+    </linearGradient>
+    <filter id="cyan-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="green-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { fill: #eef6f8; font-size: 47px; font-weight: 700; letter-spacing: -1px; }
+      .heading { fill: #eef6f8; font-size: 29px; font-weight: 700; }
+      .power { fill: #e7f0f4; font-size: 27px; font-weight: 650; }
+      .bit { fill: #e8f3f5; font-size: 37px; font-weight: 600; }
+      .bit-cyan { fill: #5eeaf0; }
+      .bit-green { fill: #7eff20; }
+      .label { fill: #e7f0f4; font-size: 24px; font-weight: 600; }
+      .value { fill: #17e7ed; font-size: 32px; font-weight: 700; }
+      .caption { fill: #e8f3f5; font-size: 24px; font-weight: 600; }
+      .caption-green { fill: #7eff20; }
+      .cyan-stroke { fill: url(#panel); stroke: #19e6ef; stroke-width: 2.5; }
+      .green-stroke { fill: #10272a; stroke: #72f51b; stroke-width: 2.5; }
+      .cell-line { stroke: #19e6ef; stroke-width: 1.5; }
+      .cell-line-green { stroke: #72f51b; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect width="640" height="640" fill="url(#background)" />
+  <text class="title" x="320" y="78" text-anchor="middle">IPv4 Subnetting</text>
+
+  <g aria-label="Powers of 2 table">
+    <rect class="cyan-stroke" x="35" y="120" width="570" height="162" rx="10" filter="url(#cyan-glow)" />
+    <line class="cell-line" x1="35" y1="174" x2="605" y2="174" />
+    <text class="heading" x="320" y="157" text-anchor="middle">Powers of 2</text>
+
+    <line class="cell-line" x1="106.25" y1="174" x2="106.25" y2="282" />
+    <line class="cell-line" x1="177.5" y1="174" x2="177.5" y2="282" />
+    <line class="cell-line" x1="248.75" y1="174" x2="248.75" y2="282" />
+    <line class="cell-line" x1="320" y1="174" x2="320" y2="282" />
+    <line class="cell-line" x1="391.25" y1="174" x2="391.25" y2="282" />
+    <line class="cell-line" x1="462.5" y1="174" x2="462.5" y2="282" />
+    <line class="cell-line" x1="533.75" y1="174" x2="533.75" y2="282" />
+
+    <text class="power" x="70.625" y="238" text-anchor="middle">128</text>
+    <text class="power" x="141.875" y="238" text-anchor="middle">64</text>
+    <text class="power" x="213.125" y="238" text-anchor="middle">32</text>
+    <text class="power" x="284.375" y="238" text-anchor="middle">16</text>
+    <text class="power" x="355.625" y="238" text-anchor="middle">8</text>
+    <text class="power" x="426.875" y="238" text-anchor="middle">4</text>
+    <text class="power" x="498.125" y="238" text-anchor="middle">2</text>
+    <text class="power" x="569.375" y="238" text-anchor="middle">1</text>
+  </g>
+
+  <g aria-label="Mask 192 binary 11000000">
+    <rect class="green-stroke" x="46" y="350" width="122" height="62" rx="9" filter="url(#green-glow)" />
+    <path class="cyan-stroke" d="M168 350 H534 Q542 350 542 358 V404 Q542 412 534 412 H168 Z" filter="url(#cyan-glow)" />
+
+    <line class="cell-line-green" x1="107" y1="350" x2="107" y2="412" />
+    <line class="cell-line" x1="229" y1="350" x2="229" y2="412" />
+    <line class="cell-line" x1="290" y1="350" x2="290" y2="412" />
+    <line class="cell-line" x1="351" y1="350" x2="351" y2="412" />
+    <line class="cell-line" x1="412" y1="350" x2="412" y2="412" />
+    <line class="cell-line" x1="473" y1="350" x2="473" y2="412" />
+
+    <text class="bit bit-green" x="76.5" y="394" text-anchor="middle">1</text>
+    <text class="bit bit-green" x="137.5" y="394" text-anchor="middle">1</text>
+    <text class="bit" x="198.5" y="394" text-anchor="middle">0</text>
+    <text class="bit" x="259.5" y="394" text-anchor="middle">0</text>
+    <text class="bit" x="320.5" y="394" text-anchor="middle">0</text>
+    <text class="bit" x="381.5" y="394" text-anchor="middle">0</text>
+    <text class="bit" x="442.5" y="394" text-anchor="middle">0</text>
+    <text class="bit" x="503.5" y="394" text-anchor="middle">0</text>
+
+    <text class="label" x="560" y="376">Mask</text>
+    <text class="value" x="560" y="408">192</text>
+  </g>
+
+  <g aria-label="IP 157 binary 10011101">
+    <rect class="green-stroke" x="46" y="446" width="122" height="62" rx="9" filter="url(#green-glow)" />
+    <path class="cyan-stroke" d="M168 446 H534 Q542 446 542 454 V500 Q542 508 534 508 H168 Z" filter="url(#cyan-glow)" />
+
+    <line class="cell-line-green" x1="107" y1="446" x2="107" y2="508" />
+    <line class="cell-line" x1="229" y1="446" x2="229" y2="508" />
+    <line class="cell-line" x1="290" y1="446" x2="290" y2="508" />
+    <line class="cell-line" x1="351" y1="446" x2="351" y2="508" />
+    <line class="cell-line" x1="412" y1="446" x2="412" y2="508" />
+    <line class="cell-line" x1="473" y1="446" x2="473" y2="508" />
+
+    <text class="bit bit-green" x="76.5" y="490" text-anchor="middle">1</text>
+    <text class="bit bit-green" x="137.5" y="490" text-anchor="middle">0</text>
+    <text class="bit bit-cyan" x="198.5" y="490" text-anchor="middle">0</text>
+    <text class="bit bit-cyan" x="259.5" y="490" text-anchor="middle">1</text>
+    <text class="bit bit-cyan" x="320.5" y="490" text-anchor="middle">1</text>
+    <text class="bit bit-cyan" x="381.5" y="490" text-anchor="middle">1</text>
+    <text class="bit bit-cyan" x="442.5" y="490" text-anchor="middle">0</text>
+    <text class="bit bit-cyan" x="503.5" y="490" text-anchor="middle">1</text>
+
+    <text class="label" x="574" y="472">IP</text>
+    <text class="value" x="560" y="504">157</text>
+  </g>
+
+  <line x1="168" y1="330" x2="168" y2="526" stroke="#55f4f5" stroke-width="4" stroke-linecap="round" filter="url(#cyan-glow)" />
+
+  <g aria-label="Network and host bit labels">
+    <path d="M46 530 V540 H168 V530" fill="none" stroke="#72f51b" stroke-width="2" />
+    <path d="M176 530 V540 H542 V530" fill="none" stroke="#e7f0f4" stroke-width="2" />
+    <text class="caption caption-green" x="107" y="570" text-anchor="middle">Network</text>
+    <text class="caption caption-green" x="107" y="598" text-anchor="middle">Bits</text>
+    <text class="caption" x="359" y="570" text-anchor="middle">Host Bits</text>
+  </g>
+</svg>
