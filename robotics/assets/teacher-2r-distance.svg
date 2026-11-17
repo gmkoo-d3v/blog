@@ -1,0 +1,55 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 320" width="980" height="320" role="img" aria-labelledby="t2r-title t2r-desc" font-family="Malgun Gothic, 'Apple SD Gothic Neo', sans-serif">
+<title id="t2r-title">같은 0.4m·0.3m 팔의 세 자세에서 손끝 좌표와 어깨–손끝 직선거리</title>
+<desc id="t2r-desc">왼쪽: 어깨 0도 팔꿈치 0도에서 손끝 (0.7, 0)m, 거리 0.7m. 가운데: 어깨만 90도 돌린 (90, 0)에서 손끝 (0, 0.7)m, 거리는 0.7m로 같고 손끝은 반지름 0.7m인 원 위를 지난다. 오른쪽: 팔꿈치만 90도 굽힌 (0, 90)에서 손끝 (0.4, 0.3)m, 거리는 0.5m로 줄어든다.</desc>
+<rect width="980" height="320" fill="#ffffff"/>
+
+<!-- panel A: [0,0] -->
+<path d="M45 231H283M45 197H283M45 163H283M45 129H283M45 95H283M45 61H283M45 27H283M79 265V27M113 265V27M147 265V27M181 265V27M215 265V27M249 265V27M283 265V27" fill="none" stroke="#e3e9e5" stroke-width="1"/>
+<path d="M45 265H292M45 265V20" fill="none" stroke="#7d8d84" stroke-width="1.5"/>
+<text x="45" y="14" font-size="13" font-weight="700" fill="#286b5d">① [0, 0] — 곧게 폄</text>
+<text x="45" y="283" text-anchor="middle" font-size="11" fill="#5c6c72">0</text>
+<text x="113" y="283" text-anchor="middle" font-size="11" fill="#5c6c72">.2</text>
+<text x="181" y="283" text-anchor="middle" font-size="11" fill="#5c6c72">.4</text>
+<text x="249" y="283" text-anchor="middle" font-size="11" fill="#5c6c72">.6</text>
+<text x="39" y="201" text-anchor="end" font-size="11" fill="#5c6c72">.2</text>
+<text x="39" y="133" text-anchor="end" font-size="11" fill="#5c6c72">.4</text>
+<text x="39" y="65" text-anchor="end" font-size="11" fill="#5c6c72">.6</text>
+<text x="292" y="250" text-anchor="end" font-size="11" fill="#5c6c72">x (m)</text>
+<text x="14" y="150" transform="rotate(-90 14 150)" text-anchor="middle" font-size="11" fill="#5c6c72">y (m)</text>
+<line x1="45" y1="265" x2="181" y2="265" stroke="#286b5d" stroke-width="5" stroke-linecap="round"/>
+<line x1="181" y1="265" x2="283" y2="265" stroke="#ce7229" stroke-width="5" stroke-linecap="round"/>
+<circle cx="45" cy="265" r="4.5" fill="#20343d"/>
+<circle cx="181" cy="265" r="4" fill="#20343d"/>
+<circle cx="283" cy="265" r="5.5" fill="#207bb0"/>
+<text x="113" y="250" text-anchor="middle" font-size="11" fill="#5c6c72">0.4 m</text>
+<text x="232" y="250" text-anchor="middle" font-size="11" fill="#5c6c72">0.3 m</text>
+<text x="164" y="305" text-anchor="middle" font-size="12" fill="#207bb0">손끝 (0.7, 0) · r = 0.7 m</text>
+
+<!-- panel B: [90,0] -->
+<path d="M385 231H623M385 197H623M385 163H623M385 129H623M385 95H623M385 61H623M385 27H623M419 265V27M453 265V27M487 265V27M521 265V27M555 265V27M589 265V27M623 265V27" fill="none" stroke="#e3e9e5" stroke-width="1"/>
+<path d="M385 265H632M385 265V20" fill="none" stroke="#7d8d84" stroke-width="1.5"/>
+<text x="385" y="14" font-size="13" font-weight="700" fill="#286b5d">② [90, 0] — 어깨만 90°</text>
+<path d="M385 265H521M521 265H623" fill="none" stroke="#c2cdc6" stroke-width="4" stroke-dasharray="5 5"/>
+<path d="M623 265A238 238 0 0 0 385 27" fill="none" stroke="#e0a56a" stroke-width="1.5" stroke-dasharray="3 4"/>
+<text x="560" y="80" text-anchor="middle" font-size="11" fill="#5c6c72">손끝이 지나는 원</text>
+<line x1="385" y1="265" x2="385" y2="129" stroke="#286b5d" stroke-width="5" stroke-linecap="round"/>
+<line x1="385" y1="129" x2="385" y2="27" stroke="#ce7229" stroke-width="5" stroke-linecap="round"/>
+<circle cx="385" cy="265" r="4.5" fill="#20343d"/>
+<circle cx="385" cy="129" r="4" fill="#20343d"/>
+<circle cx="385" cy="27" r="5.5" fill="#207bb0"/>
+<text x="504" y="305" text-anchor="middle" font-size="12" fill="#207bb0">손끝 (0, 0.7) · r = 0.7 m</text>
+
+<!-- panel C: [0,90] -->
+<path d="M725 231H963M725 197H963M725 163H963M725 129H963M725 95H963M725 61H963M725 27H963M759 265V27M793 265V27M827 265V27M861 265V27M895 265V27M929 265V27M963 265V27" fill="none" stroke="#e3e9e5" stroke-width="1"/>
+<path d="M725 265H972M725 265V20" fill="none" stroke="#7d8d84" stroke-width="1.5"/>
+<text x="725" y="14" font-size="13" font-weight="700" fill="#286b5d">③ [0, 90] — 팔꿈치만 90°</text>
+<line x1="725" y1="265" x2="861" y2="265" stroke="#286b5d" stroke-width="5" stroke-linecap="round"/>
+<line x1="861" y1="265" x2="861" y2="163" stroke="#ce7229" stroke-width="5" stroke-linecap="round"/>
+<path d="M849 265V253H861" fill="none" stroke="#20343d" stroke-width="1.5"/>
+<line x1="725" y1="265" x2="861" y2="163" stroke="#207bb0" stroke-width="2" stroke-dasharray="4 5"/>
+<circle cx="725" cy="265" r="4.5" fill="#20343d"/>
+<circle cx="861" cy="265" r="4" fill="#20343d"/>
+<circle cx="861" cy="163" r="5.5" fill="#207bb0"/>
+<text x="803" y="202" font-size="13" font-style="italic" fill="#207bb0">r</text>
+<text x="844" y="305" text-anchor="middle" font-size="12" fill="#207bb0">손끝 (0.4, 0.3) · r = 0.5 m</text>
+</svg>

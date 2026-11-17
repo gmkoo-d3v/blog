@@ -1,0 +1,81 @@
+<p class="lead">먼저 평면의 화살표를 돌립니다. 그 장면에서 출발해 공간의 회전을 적고 고르게 잇는 방법을 봅니다.</p>
+
+<section class="pdf-page" id="day1-p55" data-source="lecture-day1-revised" data-pdf-page="55">
+<h2>오른쪽3, 위로2를 한 줄에 적어 봅니다</h2>
+<div id="complex-plane-demo" data-complex-plane-demo></div><aside class="figure-guide"><ol class="visual-steps"><li>위 그림의 <strong>처음으로 → i를 한 번 곱하기</strong>를 누릅니다. 주황 화살표가 오른쪽에서 위로 가고 흐린 파랑은 이전 자리입니다. 축과 길이는 그대로, 방향만 90° 바뀝니다.</li><li>네 번 누르면 오른쪽→위→왼쪽→아래→오른쪽입니다. 두 번의 결과가 왼쪽 −1이므로 i²=−1이라고 적습니다.</li><li>아래 그림에서 <strong>z=3, 60°</strong>를 고릅니다. 파란 원래 화살표는 고정이고 주황 결과가 (1.5,2.598)에 있습니다. 길이 1인 회전 수를 곱했으므로 둘 다 길이 3입니다.</li></ol></aside>
+<details><summary>복소수와 회전행렬을 식으로 연결</summary><div class="inside">
+<p>원점에서 오른쪽3칸, 위로2칸 가면 (3,2)입니다. 원점에서 그 점으로 화살표를 그려도 됩니다. 이것을 <strong>3+2i</strong>라고 적으면 같은 두 숫자를 담을 수 있습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>표시</th><th>뜻</th></tr></thead><tbody><tr><td style="color:#135f9a">3 · 실수 부분</td><td>가로로3, 오른쪽</td></tr><tr><td style="color:#17613a">2i · 허수 부분</td><td>세로로2, 위쪽</td></tr><tr><td>3+2i · 복소수</td><td>두 숫자를 한 수에 함께 적음</td></tr></tbody></table></div>
+<p><strong>복소수</strong>는 이렇게 두 숫자를 한 수로 묶어 계산하는 방법입니다. <strong>i</strong>는 그림에서 위로 한 칸인 자리에 놓습니다. 이름이 “허수”라고 해서 없는 방향을 상상할 필요는 없습니다. 이제 곱셈 규칙을 붙이면 회전을 계산할 수 있습니다.</p>
+
+<p>먼저 <strong>처음으로</strong>를 눌러 오른쪽 화살표1을 봅니다. <strong>i를 한 번 곱하기</strong>를 한 번씩 누르고 돌아간 자리를 보세요. 오른쪽1 → 위i → 왼쪽−1 → 아래−i → 다시1입니다. 곱할 때마다 반시계90° 돕니다. 아직 모르는 결과를 먼저 맞힐 필요는 없습니다.</p>
+<div class="formula">1 × i = i<br>i × i = −1, 즉 i²=−1<br>1 → i → −1 → −i → 1</div>
+<p>두 번 돌리면 왼쪽이어서 i²=−1이고, 네 번이면 처음입니다. −1은 잘못된 값이 아니라 오른쪽의 반대쪽입니다.</p>
+<h3>60°도 곱셈으로 돌려 봅니다</h3>
+<p>시범 아래쪽에서 <strong>z=3</strong>과 <strong>60°</strong>를 누릅니다. z는 오른쪽으로 길이3인 화살표입니다. 결과는 <strong>1.5+2.598i</strong>, 좌표로는 (1.5,2.598)입니다. 앞 수업 손그림의 길이3 막대를60° 돌린 바로 그 예입니다.</p>
+<p>60° 방향의 길이1 화살표는 가로 cos60°=0.5, 세로 sin60°≈0.866입니다. 이렇게 길이1인 수 <strong>cosθ+i sinθ</strong>를 곱하면 θ만큼 돌고 원래 길이는 유지합니다.</p>
+<div class="formula">3(cos60°+i sin60°)=1.5+2.598076i<br>(a+bi)(cosθ+i sinθ)<br>=(a cosθ−b sinθ)+i(a sinθ+b cosθ)</div>
+<p>가로 결과와 세로 결과가 익숙한 회전행렬의 두 줄입니다.</p>
+<div class="formula">[x′,y′]ᵀ=[[cosθ,−sinθ],[sinθ,cosθ]] [a,b]ᵀ</div>
+<p><strong>모든 복소수 곱셈이 회전만 하는 것은 아닙니다.</strong> 곱하는 수의 길이가1이어야 길이가 유지됩니다.2i는90° 회전과 길이 두 배를 함께 만듭니다. 오른쪽3에 i를 곱하면 위3i,2i를 곱하면 위6i입니다.</p>
+<p>여기까지는 평면입니다. 앞·왼쪽·위가 있는 물체의3차원 자세에는 더 넓은 계산 도구가 필요합니다. 다음의 쿼터니언은 그 일을 하는 네 숫자의 묶음입니다.</p>
+</div></details></section>
+
+<section class="pdf-page" id="day1-p56" data-source="lecture-day1-revised" data-pdf-page="56">
+<h2>네 숫자로 z축90° 회전을 적습니다</h2><p>책상에 앞을 표시한 막대를 놓고 위에서 봅니다. 가운데 축은 붙잡고 막대만 왼쪽으로 돌립니다. 이 <strong>한 번의 90° 회전</strong>을 쿼터니언 네 칸에 적겠습니다.</p><figure class="figure"><svg style="display:block;width:100%;height:auto;max-height:310px" viewBox="0 0 640 255" role="img" aria-label="책상을 위에서 볼 때 고정된 z축 주위로 앞 막대가 오른쪽 x에서 위쪽 y로 90도 회전한다"><defs><marker id="eli5-day1-q-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c05220"/></marker></defs><rect width="640" height="255" fill="#f4f9fc"/><path d="M120 205H530M170 225V35" stroke="#91a7b9" stroke-width="2"/><path d="M170 205H310" stroke="#8ea6b8" stroke-width="16" stroke-dasharray="12 6"/><path d="M170 205V65" stroke="#c05220" stroke-width="16"/><circle cx="170" cy="205" r="10" fill="#173c51"/><path d="M280 205A110 110 0 0 0 170 95" stroke="#c05220" stroke-width="3" fill="none" marker-end="url(#eli5-day1-q-arrow)"/><g fill="#173c51" font-family="sans-serif" font-size="24"><text x="330" y="198">시작 +x</text><text x="188" y="60">끝 +y</text><text x="266" y="113">90°</text><text x="25" y="237">고정 축 z</text></g></svg><figcaption>위에서 본 한 회전입니다. 회색이 출발 방향, 주황이 최종 방향입니다. 아래 그래프는 이 물체 각도를 저장 숫자로 바꿔 그립니다.</figcaption></figure>
+<figure class="figure"><a href="../../source-library/local-day1/02-frames-rotations/s47_quaternion_half_angle.png"><img loading="lazy" src="../../source-library/local-day1/02-frames-rotations/s47_quaternion_half_angle.png" alt="z회전의 반각으로 만든 w와z 성분,360도에서 부호가 바뀌는 도식"></a><figcaption>기존 반각 그림에서90° 자리의 w와z가 모두 약0.7071임을 먼저 봅니다.360°에서 숫자의 부호가 바뀌어도 물체 자세는 처음과 같습니다.</figcaption></figure><aside class="figure-guide"><ol class="visual-steps"><li>가로축은 물체를 z축 둘레로 돌린 실제 각도입니다. 보라 곡선은 w, 파란 곡선은 z 성분입니다. 몸의 z축은 고정한 채 회전각만 늘립니다.</li><li>90°의 검은 점 두 개가 모두 약 0.707입니다. 360°에서는 (w,z)=(-1,0)이지만 물체 자세는 처음과 같습니다. 720°에서 숫자도 처음으로 돌아옵니다.</li><li>반각은 <strong>앞뒤에서 감싸 곱하는 전체 규칙</strong>에 맞춘 저장법입니다. 곱 하나마다 물체가 실제로 45°씩 돈다는 뜻은 아닙니다.</li></ol></aside>
+<details><summary>반각·단위 쿼터니언·감싸 곱하기</summary><div class="inside">
+<p>물체의 앞 화살표 (1,0,0)을 위쪽 z축 둘레로90° 돌려 (0,1,0)에 놓겠습니다. 같은 회전을 <strong>쿼터니언 q=(w,x,y,z)</strong>로 적으면 약 (0.7071,0,0,0.7071)입니다.</p>
+<p><strong>쿼터니언</strong>은 복소수를 넓힌 숫자 체계입니다. 회전에서는 실수 칸 하나와 방향에 관한 칸 세 개를 함께 씁니다. 네 숫자가 네 개의 독립 회전이나 물리 공간의 네 번째 축은 아닙니다.</p>
+<div class="tablewrap"><table><thead><tr><th>칸</th><th>이번 값</th><th>역할</th></tr></thead><tbody><tr><td style="color:#135f9a">w</td><td>cos45°≈0.7071</td><td>반각에서 만든 실수 부분</td></tr><tr><td style="color:#17613a">(x,y,z)</td><td>(0,0,sin45°)≈(0,0,0.7071)</td><td>단위축×반각의 사인</td></tr></tbody></table></div>
+<p><a href="../../assets/day1/gimbal_quaternion_lab.html">기존 회전 조작실</a>의 <strong>쿼터니언으로 회전</strong> 단계에서 물체축을 보고 회전축 하나를 골라 움직여 보세요. 보조 조작실은 <strong>x,y,z,w</strong> 순서로 표시합니다. 이 수업의 <strong>w,x,y,z</strong>와 순서가 다르므로 칸 이름을 보고 대조합니다.</p>
+
+<p><strong>단위축</strong>은 방향을 유지하고 길이를1로 맞춘 화살표입니다. 그 축을 k=(kₓ,kᵧ,k_z), 실제 회전각을 θ라고 하면 다음 규칙으로 만듭니다.</p>
+<div class="formula">q=(cos(θ/2),kₓsin(θ/2),kᵧsin(θ/2),k_zsin(θ/2))<br>w²+x²+y²+z²=1 · 단위 쿼터니언<br>z축90°: k=(0,0,1), θ/2=45°</div>
+<p>네 수의 제곱합이1인 것이 <strong>단위 쿼터니언</strong>의 조건입니다.90° 예에서는0.7071²+0.7071²≈1입니다. 표시값을 반올림해 작은 차이가 날 수 있습니다.</p>
+<h3>뒤의 세 숫자는 회전벡터와 다릅니다</h3>
+<p>같은 z축90°의 <strong>회전벡터</strong>는 (0,0,π/2)≈(0,0,1.5708)rad입니다. 쿼터니언의 뒤 세 수는 (0,0,0.7071)입니다. 전자는 축×각도, 후자는 축×sin(반각)이므로 그대로 복사해 바꿔 쓸 수 없습니다.</p>
+<h3>왜 실제90°인데 만들 때45°를 쓸까요?</h3>
+<p>평면의 복소수는 한 번 곱했습니다. 쿼터니언으로 화살표를 돌릴 때는 <strong>앞뒤에서 감싸 곱하는 규칙</strong>을 씁니다. 전체 결과가 θ만큼 돌도록 q를 반각으로 만듭니다.</p>
+<div class="formula">돌릴 화살표 v → p=(0,vₓ,vᵧ,v_z)<br>p′=q p q⁻¹<br>z축90°인 q: (1,0,0) → (0,1,0)</div>
+<p>p는 화살표를 계산에 넣으려고 첫 칸에0을 붙인 것입니다. 최종 p′의 뒤 세 수가 돌아간 화살표입니다. <strong>중간 q p가 언제나3차원 벡터라거나, 앞뒤 곱이 각각 실제45° 회전이라고 나누어 해석하지 않습니다.</strong> 전체 q p q⁻¹이90°를 만듭니다.</p>
+<details><summary>기호와 소프트웨어 순서 · 선택 상세</summary><div class="inside"><p>쿼터니언을 w+xi+yj+zk라고도 씁니다. i,j,k는 곱셈 규칙을 가진 기호입니다. ij=k이지만 ji=−k이므로 순서가 중요합니다. 이 규칙을 전부 외우기보다 축·각도·입출력을 먼저 연결합니다.</p><p>이 수업의 도구와 MuJoCo quat/xquat은wxyz, SciPy 기본 as_quat()은xyzw입니다. scalar_first=True이면wxyz입니다. 같은 값이라도 다른 칸에 넣으면 다른 회전이 됩니다.</p></div></details>
+</div></details></section>
+
+<section class="pdf-page" id="day1-p57" data-source="lecture-day1-revised" data-pdf-page="57">
+<h2>두 회전 잇기와 같은 자세의 두 표기</h2>
+<p>앞을 향한 막대를 그 막대 자체의 x축으로 돌리면 앞 방향은 그대로입니다. 이어 고정 z축으로 돌리면 왼쪽으로 갑니다. 이 순서를 쿼터니언 곱으로 이어 적습니다.</p><details><summary>해밀턴 곱과 q·−q의 같은 자세</summary><div class="inside">
+<p>앞 (1,0,0)을 x축으로90° 돌리면 x축 위이므로 그대로입니다. 그다음 z축으로90° 돌리면 (0,1,0)입니다. 회전을 이어 붙일 때 쿼터니언도 곱합니다.</p>
+<pre><code>q_z = 축각_쿼터니언([0,0,1], 90)
+q_x = 축각_쿼터니언([1,0,0], 90)
+합성 = 곱(q_z, q_x)  # 이 도구에서는 x 먼저, z 나중</code></pre>
+<p>이 해밀턴 곱은 행렬 Rz@Rx와 대응하며 배열 원소별 곱 <code>q_z*q_x</code>와 다릅니다. 순서를 바꾸면 일반적으로 자세도 달라집니다.</p>
+<p>q와−q는 다른 숫자로 같은 회전을 적습니다. (0.7071,0,0,0.7071)과 (−0.7071,0,0,−0.7071)은 모두 앞 (1,0,0)을 (0,1,0)으로 보냅니다. 숫자 네 칸이 다르다고 자세도 다르다고 판정하지 않습니다.</p>
+<details><summary>두 자세의 차이를 구하는 식</summary><div class="inside"><div class="formula">단위 q₁,q₂의 자세 차이=2 arccos(clamp(|q₁·q₂|,0,1))</div><p>절댓값은 q와−q가 같은 자세임을 반영합니다. clamp는 작은 수치 오차로1을 넘는 일을 막습니다. 결과는 두 자세 사이의 회전각이며 공간에서 이동한 거리가 아닙니다.</p></div></details>
+</div></details></section>
+
+<section class="pdf-page" id="day1-p58" data-source="lecture-day1-revised" data-pdf-page="58">
+<h2>길이와 틀린 자세는 다른 문제입니다</h2>
+<p>똑같은 방향을 향하는 화살표도 숫자 길이는 조금 흐트러질 수 있습니다. 정규화는 그 길이를 맞춥니다. <strong>엉뚱한 방향을 올바른 방향으로 돌려 주는 보정</strong>은 아닙니다.</p><details><summary>정규화 코드와 센서 오차 구분</summary><div class="inside">
+<p>반올림하며 회전을 많이 이으면 q의 길이가1에서 벗어날 수 있습니다.0이 아닌 q를 자기 길이로 나눠 길이1로 맞추는 것이 <strong>정규화</strong>입니다.</p>
+<pre><code>q = q / np.linalg.norm(q)  # 0이 아닌 q의 길이를1로 맞춤</code></pre>
+<p>교안의 float32 반복 예는 길이1.000397을 정규화해1로 맞춥니다. 하지만 센서가 실제보다5° 더 돌았다고 잘못 알려 줬다면 길이1인 잘못된 자세일 수 있습니다. 정규화가 센서 치우침까지 없애지는 않습니다.</p>
+</div></details></section>
+
+<section class="pdf-page" id="day1-p59" data-source="lecture-day1-revised" data-pdf-page="59">
+<h2>같은 시간마다 같은 각도만큼 돌고 싶습니다</h2>
+<div id="interpolation-demo" data-interpolation-demo></div><aside class="figure-guide"><ol class="visual-steps"><li>주황 앞과 노란 윗면을 보며 <strong>재생</strong>을 누릅니다. 양쪽은 같은 자세로 출발해 같은 자세에 도착하지만 중간 움직임이 다를 수 있습니다. 드래그는 보는 눈만 옮깁니다.</li><li>아래 표는 같은 시간 네 칸에서 실제로 돈 각도입니다. 기본 예의 왼쪽 값은 커지고 오른쪽 SLERP 값은 같습니다. <strong>고정된 두 단위 쿼터니언 사이의 짧은 구면 호를 시간에 비례해</strong> 따라가기 때문입니다.</li><li><strong>한 축만 돌리기: 둘 다 일정</strong>을 고르면 왼쪽도 일정합니다. 오일러 방식이 언제나 빨라지는 것은 아닙니다.</li></ol></aside>
+<details><summary>SLERP의 조건과 보간 비교</summary><div class="inside">
+<p>시계바늘이 원호를 고르게 따라가는 모습을 떠올려 보세요. 같은1초마다 같은 각도만큼 돌면 고르게 움직입니다.3차원 물체도 출발·도착 자세 사이를 그렇게 잇고 싶습니다. 중간 자세를 만들어 잇는 일을 <strong>보간</strong>이라고 합니다.</p>
+<p>한 방법은 롤·피치·요 숫자를 각각 같은 비율로 바꾸는 것입니다. 다른 방법은 두 자세를 단위 쿼터니언으로 적고 짧은 회전 경로를 같은 시간 비율로 따라가는 <strong>SLERP</strong>입니다. 이름은 <strong>spherical linear interpolation</strong>, 구면 선형 보간입니다.</p>
+
+<p>따라 하기: 기본 예에서 <strong>처음으로 → 재생</strong>을 누르고 주황 앞부분과 노란 윗면을 봅니다. 동시에 출발해 같은 자세에 도착하지만 중간 움직임이 다릅니다.4초를 네 칸으로 나눈 표에서 각1초 동안 실제로 돌아간 각도를 읽습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>같은1초 구간</th><th>오일러 세 수 선형 변화</th><th>SLERP</th></tr></thead><tbody><tr><td>첫째</td><td>36.44°</td><td>39.70°</td></tr><tr><td>둘째</td><td>39.89°</td><td>39.70°</td></tr><tr><td>셋째</td><td>42.50°</td><td>39.70°</td></tr><tr><td>넷째</td><td>44.12°</td><td>39.70°</td></tr></tbody></table></div>
+<p>이 예의 오일러 회전량은 커집니다. <strong>항상 커지는 것은 아닙니다.</strong> 예제 선택을 <strong>다른 예: 오일러 회전각이 점점 작아짐</strong>으로 바꾸면 줄어들고, <strong>한 축만 돌리기: 둘 다 일정</strong>에서는 모두22.50°씩 돕니다.</p>
+<p>숫자는 같은 시간 간격의 <strong>두 자세 사이 실제 회전각</strong>입니다. 화면 픽셀이나 물체 중심의 이동거리m가 아닙니다. 회전량을 시간으로 나누면 평균 각속도입니다. 여기서는 한 칸이1초라 숫자가 각각°/s와 대응합니다.</p>
+<p><strong>단위 길이의 두 끝점과 시간에 선형인 진행률 t</strong>로 SLERP를 하면 두 자세 사이의 각속도가 일정합니다. 쿼터니언을 쓴다는 사실만으로 항상 고른 것은 아닙니다. t를 처음 느리게, 나중 빠르게 바꾸면 같은 경로에서도 속도가 달라집니다.</p>
+<p>이 보간이 실제 기계식 짐벌의 축 정렬을 없애거나, 장애물·모터 한계까지 해결하지는 않습니다.</p>
+<details><summary>원호 비유에서 구면의 식으로 · 선택 상세</summary><div class="inside"><p>단위 쿼터니언은 네 수의 제곱합이1인 점입니다. 그 구면에서 두 끝을 잇는 호를 같은 비율로 따라갑니다. q와−q가 같은 자세이므로 짧은 경로에 맞게 끝점 부호를 고릅니다.</p><div class="formula">q(t)=sin((1−t)Ω)/sinΩ · q₀ + sin(tΩ)/sinΩ · q₁<br>cosΩ=q₀·q₁, 0≤t≤1</div><p>이는 단위 끝점·짧은 경로 부호를 사용한 식입니다. 아주 가까운 끝점은 안정적인 근사와 정규화를 씁니다. 지금은 식을 외우기보다 시범의 같은 시간·같은 회전각을 먼저 연결합니다.</p><p><a href="../../assets/day1/gimbal_quaternion_lab.html">기존 조작실의 보간 경로 비교</a>도 같은 질문을 다른 출발·도착으로 보여 줍니다. 시범 조건이 다르면 숫자까지 같을 필요는 없습니다.</p></div></details>
+</div></details></section>
+
+<details class="sources"><summary>수업 근거와 수치의 범위</summary><div class="inside"><p>1일차 수정 교안55–59쪽과 교과서2.6–2.7(PDF72–79쪽)을 재구성했습니다. 복소수 시범과4초·4구간 보간 비교는 추가한 학습 예이며 교안 원문 출력이 아닙니다.</p><p>교안59쪽의 별도 ZYX=[170,60,−120]° 예는10구간에서 오일러 총256.6°, SLERP 총133.6°와 구간당 약13.4°를 제시합니다. 이 페이지36.44° 등은 새 시범 조건의 값입니다.</p><p>반각 그림과 보조 조작실은 기존 학습 생성물을 재사용했습니다. 그림의 예전 슬라이드 번호는 수정 교안과 다를 수 있습니다. 숫자·시각화 설명이며 실물 로봇이나 모든 교안 실험을 새로 실행했다는 뜻은 아닙니다.</p></div></details>

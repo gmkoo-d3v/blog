@@ -1,0 +1,410 @@
+[
+  {
+    "page": 1,
+    "lesson": "day2-01-questions",
+    "title": "로봇팔에게 묻는 두 가지 질문",
+    "href": "pages/day2-01-questions.html#pdf-p01"
+  },
+  {
+    "page": 2,
+    "lesson": "day2-01-questions",
+    "title": "로봇팔에게 묻는 두 가지 질문",
+    "href": "pages/day2-01-questions.html#pdf-p02"
+  },
+  {
+    "page": 3,
+    "lesson": "day2-01-questions",
+    "title": "로봇팔에게 묻는 두 가지 질문",
+    "href": "pages/day2-01-questions.html#pdf-p03"
+  },
+  {
+    "page": 4,
+    "lesson": "day2-01-questions",
+    "title": "로봇팔에게 묻는 두 가지 질문",
+    "href": "pages/day2-01-questions.html#pdf-p04"
+  },
+  {
+    "page": 5,
+    "lesson": "day2-01-questions",
+    "title": "로봇팔에게 묻는 두 가지 질문",
+    "href": "pages/day2-01-questions.html#pdf-p05"
+  },
+  {
+    "page": 6,
+    "lesson": "day2-02-two-links",
+    "title": "막대 두 개로 손끝과 작업 공간 찾기",
+    "href": "pages/day2-02-two-links.html#pdf-p06"
+  },
+  {
+    "page": 7,
+    "lesson": "day2-02-two-links",
+    "title": "막대 두 개로 손끝과 작업 공간 찾기",
+    "href": "pages/day2-02-two-links.html#pdf-p07"
+  },
+  {
+    "page": 8,
+    "lesson": "day2-02-two-links",
+    "title": "막대 두 개로 손끝과 작업 공간 찾기",
+    "href": "pages/day2-02-two-links.html#pdf-p08"
+  },
+  {
+    "page": 9,
+    "lesson": "day2-03-spatial-arm",
+    "title": "관절 여섯 개도 작은 변환을 이어 붙입니다",
+    "href": "pages/day2-03-spatial-arm.html#pdf-p09"
+  },
+  {
+    "page": 10,
+    "lesson": "day2-03-spatial-arm",
+    "title": "관절 여섯 개도 작은 변환을 이어 붙입니다",
+    "href": "pages/day2-03-spatial-arm.html#pdf-p10"
+  },
+  {
+    "page": 11,
+    "lesson": "day2-03-spatial-arm",
+    "title": "관절 여섯 개도 작은 변환을 이어 붙입니다",
+    "href": "pages/day2-03-spatial-arm.html#pdf-p11"
+  },
+  {
+    "page": 12,
+    "lesson": "day2-03-spatial-arm",
+    "title": "관절 여섯 개도 작은 변환을 이어 붙입니다",
+    "href": "pages/day2-03-spatial-arm.html#pdf-p12"
+  },
+  {
+    "page": 13,
+    "lesson": "day2-04-fk-practice",
+    "title": "순기구학 실습을 손계산으로 풀어 보기",
+    "href": "pages/day2-04-fk-practice.html#pdf-p13"
+  },
+  {
+    "page": 14,
+    "lesson": "day2-04-fk-practice",
+    "title": "순기구학 실습을 손계산으로 풀어 보기",
+    "href": "pages/day2-04-fk-practice.html#pdf-p14"
+  },
+  {
+    "page": 15,
+    "lesson": "day2-04-fk-practice",
+    "title": "순기구학 실습을 손계산으로 풀어 보기",
+    "href": "pages/day2-04-fk-practice.html#pdf-p15"
+  },
+  {
+    "page": 16,
+    "lesson": "day2-05-inverse",
+    "title": "손끝에서 거꾸로 관절각 찾기",
+    "href": "pages/day2-05-inverse.html#pdf-p16"
+  },
+  {
+    "page": 17,
+    "lesson": "day2-05-inverse",
+    "title": "손끝에서 거꾸로 관절각 찾기",
+    "href": "pages/day2-05-inverse.html#pdf-p17"
+  },
+  {
+    "page": 18,
+    "lesson": "day2-05-inverse",
+    "title": "손끝에서 거꾸로 관절각 찾기",
+    "href": "pages/day2-05-inverse.html#pdf-p18"
+  },
+  {
+    "page": 19,
+    "lesson": "day2-06-jacobian",
+    "title": "조금 돌렸을 때 얼마나 움직일까",
+    "href": "pages/day2-06-jacobian.html#pdf-p19"
+  },
+  {
+    "page": 20,
+    "lesson": "day2-06-jacobian",
+    "title": "조금 돌렸을 때 얼마나 움직일까",
+    "href": "pages/day2-06-jacobian.html#pdf-p20"
+  },
+  {
+    "page": 21,
+    "lesson": "day2-06-jacobian",
+    "title": "조금 돌렸을 때 얼마나 움직일까",
+    "href": "pages/day2-06-jacobian.html#pdf-p21"
+  },
+  {
+    "page": 22,
+    "lesson": "day2-06-jacobian",
+    "title": "조금 돌렸을 때 얼마나 움직일까",
+    "href": "pages/day2-06-jacobian.html#pdf-p22"
+  },
+  {
+    "page": 23,
+    "lesson": "day2-07-numerical-ik",
+    "title": "목표에 조금씩 다가가는 역기구학",
+    "href": "pages/day2-07-numerical-ik.html#pdf-p23"
+  },
+  {
+    "page": 24,
+    "lesson": "day2-07-numerical-ik",
+    "title": "목표에 조금씩 다가가는 역기구학",
+    "href": "pages/day2-07-numerical-ik.html#pdf-p24"
+  },
+  {
+    "page": 25,
+    "lesson": "day2-07-numerical-ik",
+    "title": "목표에 조금씩 다가가는 역기구학",
+    "href": "pages/day2-07-numerical-ik.html#pdf-p25"
+  },
+  {
+    "page": 26,
+    "lesson": "day2-07-numerical-ik",
+    "title": "목표에 조금씩 다가가는 역기구학",
+    "href": "pages/day2-07-numerical-ik.html#pdf-p26"
+  },
+  {
+    "page": 27,
+    "lesson": "day2-07-numerical-ik",
+    "title": "목표에 조금씩 다가가는 역기구학",
+    "href": "pages/day2-07-numerical-ik.html#pdf-p27"
+  },
+  {
+    "page": 28,
+    "lesson": "day2-07-numerical-ik",
+    "title": "목표에 조금씩 다가가는 역기구학",
+    "href": "pages/day2-07-numerical-ik.html#pdf-p28"
+  },
+  {
+    "page": 29,
+    "lesson": "day2-08-singularity",
+    "title": "팔을 쭉 펴면 왜 계산이 어려워질까",
+    "href": "pages/day2-08-singularity.html#pdf-p29"
+  },
+  {
+    "page": 30,
+    "lesson": "day2-08-singularity",
+    "title": "팔을 쭉 펴면 왜 계산이 어려워질까",
+    "href": "pages/day2-08-singularity.html#pdf-p30"
+  },
+  {
+    "page": 31,
+    "lesson": "day2-08-singularity",
+    "title": "팔을 쭉 펴면 왜 계산이 어려워질까",
+    "href": "pages/day2-08-singularity.html#pdf-p31"
+  },
+  {
+    "page": 32,
+    "lesson": "day2-08-singularity",
+    "title": "팔을 쭉 펴면 왜 계산이 어려워질까",
+    "href": "pages/day2-08-singularity.html#pdf-p32"
+  },
+  {
+    "page": 33,
+    "lesson": "day2-08-singularity",
+    "title": "팔을 쭉 펴면 왜 계산이 어려워질까",
+    "href": "pages/day2-08-singularity.html#pdf-p33"
+  },
+  {
+    "page": 34,
+    "lesson": "day2-09-limits",
+    "title": "관절의 한계와 남는 자유도",
+    "href": "pages/day2-09-limits.html#pdf-p34"
+  },
+  {
+    "page": 35,
+    "lesson": "day2-09-limits",
+    "title": "관절의 한계와 남는 자유도",
+    "href": "pages/day2-09-limits.html#pdf-p35"
+  },
+  {
+    "page": 36,
+    "lesson": "day2-09-limits",
+    "title": "관절의 한계와 남는 자유도",
+    "href": "pages/day2-09-limits.html#pdf-p36"
+  },
+  {
+    "page": 37,
+    "lesson": "day2-10-path",
+    "title": "한 점에서 선과 하트로 이어 가기",
+    "href": "pages/day2-10-path.html#pdf-p37"
+  },
+  {
+    "page": 38,
+    "lesson": "day2-10-path",
+    "title": "한 점에서 선과 하트로 이어 가기",
+    "href": "pages/day2-10-path.html#pdf-p38"
+  },
+  {
+    "page": 39,
+    "lesson": "day2-11-kinematics-check",
+    "title": "특이점 실습과 기구학 전체 정리",
+    "href": "pages/day2-11-kinematics-check.html#pdf-p39"
+  },
+  {
+    "page": 40,
+    "lesson": "day2-11-kinematics-check",
+    "title": "특이점 실습과 기구학 전체 정리",
+    "href": "pages/day2-11-kinematics-check.html#pdf-p40"
+  },
+  {
+    "page": 41,
+    "lesson": "day2-11-kinematics-check",
+    "title": "특이점 실습과 기구학 전체 정리",
+    "href": "pages/day2-11-kinematics-check.html#pdf-p41"
+  },
+  {
+    "page": 42,
+    "lesson": "day2-42-mujoco",
+    "title": "컴퓨터 속 실험실과 장면 조립",
+    "href": "pages/day2-42-mujoco.html#pdf-p42"
+  },
+  {
+    "page": 43,
+    "lesson": "day2-42-mujoco",
+    "title": "컴퓨터 속 실험실과 장면 조립",
+    "href": "pages/day2-42-mujoco.html#pdf-p43"
+  },
+  {
+    "page": 44,
+    "lesson": "day2-42-mujoco",
+    "title": "컴퓨터 속 실험실과 장면 조립",
+    "href": "pages/day2-42-mujoco.html#pdf-p44"
+  },
+  {
+    "page": 45,
+    "lesson": "day2-42-mujoco",
+    "title": "컴퓨터 속 실험실과 장면 조립",
+    "href": "pages/day2-42-mujoco.html#pdf-p45"
+  },
+  {
+    "page": 46,
+    "lesson": "day2-46-state",
+    "title": "상태의 칸, 크기, 한 걸음의 의미",
+    "href": "pages/day2-46-state.html#pdf-p46"
+  },
+  {
+    "page": 47,
+    "lesson": "day2-46-state",
+    "title": "상태의 칸, 크기, 한 걸음의 의미",
+    "href": "pages/day2-46-state.html#pdf-p47"
+  },
+  {
+    "page": 48,
+    "lesson": "day2-46-state",
+    "title": "상태의 칸, 크기, 한 걸음의 의미",
+    "href": "pages/day2-46-state.html#pdf-p48"
+  },
+  {
+    "page": 49,
+    "lesson": "day2-49-check",
+    "title": "낙하와 마찰로 채점하고 장면 찍기",
+    "href": "pages/day2-49-check.html#pdf-p49"
+  },
+  {
+    "page": 50,
+    "lesson": "day2-49-check",
+    "title": "낙하와 마찰로 채점하고 장면 찍기",
+    "href": "pages/day2-49-check.html#pdf-p50"
+  },
+  {
+    "page": 51,
+    "lesson": "day2-49-check",
+    "title": "낙하와 마찰로 채점하고 장면 찍기",
+    "href": "pages/day2-49-check.html#pdf-p51"
+  },
+  {
+    "page": 52,
+    "lesson": "day2-49-check",
+    "title": "낙하와 마찰로 채점하고 장면 찍기",
+    "href": "pages/day2-49-check.html#pdf-p52"
+  },
+  {
+    "page": 53,
+    "lesson": "day2-49-check",
+    "title": "낙하와 마찰로 채점하고 장면 찍기",
+    "href": "pages/day2-49-check.html#pdf-p53"
+  },
+  {
+    "page": 54,
+    "lesson": "day2-49-check",
+    "title": "낙하와 마찰로 채점하고 장면 찍기",
+    "href": "pages/day2-49-check.html#pdf-p54"
+  },
+  {
+    "page": 55,
+    "lesson": "day2-55-actuator",
+    "title": "로봇의 위치를 읽고 모터에 목표 주기",
+    "href": "pages/day2-55-actuator.html#pdf-p55"
+  },
+  {
+    "page": 56,
+    "lesson": "day2-55-actuator",
+    "title": "로봇의 위치를 읽고 모터에 목표 주기",
+    "href": "pages/day2-55-actuator.html#pdf-p56"
+  },
+  {
+    "page": 57,
+    "lesson": "day2-55-actuator",
+    "title": "로봇의 위치를 읽고 모터에 목표 주기",
+    "href": "pages/day2-55-actuator.html#pdf-p57"
+  },
+  {
+    "page": 58,
+    "lesson": "day2-55-actuator",
+    "title": "로봇의 위치를 읽고 모터에 목표 주기",
+    "href": "pages/day2-55-actuator.html#pdf-p58"
+  },
+  {
+    "page": 59,
+    "lesson": "day2-59-sensor",
+    "title": "센서, 충돌, 시뮬레이션 안정성",
+    "href": "pages/day2-59-sensor.html#pdf-p59"
+  },
+  {
+    "page": 60,
+    "lesson": "day2-59-sensor",
+    "title": "센서, 충돌, 시뮬레이션 안정성",
+    "href": "pages/day2-59-sensor.html#pdf-p60"
+  },
+  {
+    "page": 61,
+    "lesson": "day2-59-sensor",
+    "title": "센서, 충돌, 시뮬레이션 안정성",
+    "href": "pages/day2-59-sensor.html#pdf-p61"
+  },
+  {
+    "page": 62,
+    "lesson": "day2-62-push",
+    "title": "두 관절 팔로 상자를 밀어 보기",
+    "href": "pages/day2-62-push.html#pdf-p62"
+  },
+  {
+    "page": 63,
+    "lesson": "day2-62-push",
+    "title": "두 관절 팔로 상자를 밀어 보기",
+    "href": "pages/day2-62-push.html#pdf-p63"
+  },
+  {
+    "page": 64,
+    "lesson": "day2-62-push",
+    "title": "두 관절 팔로 상자를 밀어 보기",
+    "href": "pages/day2-62-push.html#pdf-p64"
+  },
+  {
+    "page": 65,
+    "lesson": "day2-62-push",
+    "title": "두 관절 팔로 상자를 밀어 보기",
+    "href": "pages/day2-62-push.html#pdf-p65"
+  },
+  {
+    "page": 66,
+    "lesson": "day2-66-review",
+    "title": "확인 문제와 2일차 전체 연결",
+    "href": "pages/day2-66-review.html#pdf-p66"
+  },
+  {
+    "page": 67,
+    "lesson": "day2-66-review",
+    "title": "확인 문제와 2일차 전체 연결",
+    "href": "pages/day2-66-review.html#pdf-p67"
+  },
+  {
+    "page": 68,
+    "lesson": "day2-66-review",
+    "title": "확인 문제와 2일차 전체 연결",
+    "href": "pages/day2-66-review.html#pdf-p68"
+  }
+]

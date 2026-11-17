@@ -1,0 +1,80 @@
+<p class="lead">책상 위 컵을 향해 팔을 뻗는 장면에서 시작합니다. 사람이 조절하는 것은 어깨와 팔꿈치를 얼마나 돌리느냐이고, 확인하고 싶은 것은 손끝이 어디에 도착했느냐입니다. 이번 6차시는 그 두 가지를 오가다가, 마지막에는 “어깨 각도가 달라지면 거리도 달라지나?”라는 질문에 숫자로 답할 수 있는 지점까지 갑니다.</p>
+
+<section class="pdf-page" id="pdf-p01" data-pdf-page="1"><h2>팔을 돌리면 무엇이 바뀌고 무엇이 그대로인가</h2>
+<figure class="figure"><img src="assets/teacher-2r-distance.svg" alt="같은 0.4미터·0.3미터 팔을 세 자세로 그린 도식. 어깨 0도 팔꿈치 0도에서 손끝 (0.7, 0) 거리 0.7미터, 어깨만 90도 돌린 자세에서 손끝 (0, 0.7) 거리 0.7미터, 팔꿈치만 90도 굽힌 자세에서 손끝 (0.4, 0.3) 거리 0.5미터"><figcaption>회색 점선은 ①의 자세, 주황 점선은 손끝이 지나는 원입니다. 어깨만 돌리면 손끝은 같은 반지름 위를 옮겨 갑니다.</figcaption></figure>
+<aside class="figure-guide"><h3>같은 막대에서 어깨와 팔꿈치를 따로 바꿉니다</h3><ol class="visual-steps"><li>초록 막대 0.4m와 주황 막대 0.3m는 길이가 고정입니다. 검은 점은 관절, 파란 점은 손끝, x는 오른쪽·y는 위쪽입니다.</li><li>①→②는 어깨만 90° 돌립니다. 회색 점선은 이전 자세, 주황 점선은 손끝이 지나가는 원입니다. 손끝 좌표는 (0.7,0)→(0,0.7)로 바뀌어도 거리는 0.7m입니다.</li><li>①→③은 어깨를 고정하고 팔꿈치만 90° 굽힙니다. 두 막대의 삼각형 모양이 달라져 파란 대각선 r이 0.5m로 줄어듭니다. √(0.4²+0.3²)=0.5가 그 선의 길이입니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>책상 위에 위팔 0.4m, 아래팔 0.3m짜리 팔을 눕혀 둡니다. 이 두 길이는 오늘 수업 내내 고정입니다. 여러분이 바꾸는 것은 각도 두 개뿐입니다. 어깨를 얼마나 돌렸는지를 <strong>어깨각 q<sub>1</sub></strong>, 팔꿈치를 위팔에서 얼마나 더 꺾었는지를 <strong>팔꿈치각 q<sub>2</sub></strong>라고 부르겠습니다. 두 값을 묶어 <strong>관절값 q</strong>라고 합니다.</p>
+<p>세 자세를 차례로 만들어 봅니다. ① <strong>[q<sub>1</sub>,q<sub>2</sub>]=[0,0]</strong>은 어깨도 팔꿈치도 돌리지 않은 상태입니다. 두 막대가 오른쪽으로 나란히 누워 손끝은 <strong>(0.7, 0)</strong>m입니다. ② <strong>[90,0]</strong>은 팔꿈치를 그대로 둔 채 어깨만 90° 돌립니다. 팔 전체가 위로 서고 손끝은 <strong>(0, 0.7)</strong>m입니다. ③ <strong>[0,90]</strong>은 반대로 어깨는 두고 팔꿈치만 90° 굽힙니다. 위팔은 오른쪽에 그대로 있고 아래팔만 위로 꺾여 손끝은 <strong>(0.4, 0.3)</strong>m입니다.</p>
+
+
+<p>여기서 숫자가 세 종류 나옵니다. 서로 다른 양이므로 섞이면 안 됩니다.</p>
+<div class="tablewrap"><table><thead><tr><th>무엇</th><th>이 팔에서의 값</th><th>각도를 바꾸면</th></tr></thead><tbody><tr><td>링크 길이 L<sub>1</sub>, L<sub>2</sub> (m)</td><td>0.4, 0.3</td><td>로봇을 새로 만들지 않는 한 그대로</td></tr><tr><td>손끝 좌표 (x, y) (m)</td><td>(0.7,0) → (0,0.7) → (0.4,0.3)</td><td>자세에 따라 달라짐. 다른 관절값이 같은 좌표를 만들 수도 있음</td></tr><tr><td>어깨–손끝 직선거리 r = √(x²+y²) (m)</td><td>0.7 → 0.7 → 0.5</td><td>어깨만 돌리면 그대로, 팔꿈치를 굽힌 정도에 따라 바뀜</td></tr></tbody></table></div>
+<p>②에서 y가 0.7로 나온 것은 거리가 0.7로 커진 사건이 아닙니다. ①에서 이미 0.7이던 거리가 위쪽으로 옮겨 갔고, 그래서 x는 0.7에서 0이 되고 y는 0에서 0.7이 되었습니다. <strong>좌표가 바뀐 것과 거리가 바뀐 것은 다른 사건</strong>입니다. ③은 반대 경우입니다. 어깨는 손대지 않았는데 팔꿈치를 굽히자 거리가 0.5로 줄었습니다.</p>
+<p>이유는 한 줄로 정리됩니다. 두 링크와 어깨–손끝 선분은 삼각형을 이룹니다.</p>
+<div class="formula">r² = L<sub>1</sub>² + L<sub>2</sub>² + 2 L<sub>1</sub> L<sub>2</sub> cos q<sub>2</sub></div>
+<p>이 식에는 <strong>q<sub>1</sub>이 없습니다</strong>. 어깨를 돌리면 삼각형이 통째로 회전할 뿐 모양이 변하지 않기 때문입니다. 반대로 팔꿈치를 굽힌 정도는 cos q<sub>2</sub>를 통해 r을 바꿉니다. 다만 +90°와 −90°처럼 부호만 반대인 각도는 코사인이 같아 r도 같습니다. ③에서 q<sub>2</sub>=90°이면 cos90°=0이라 r²=0.4²+0.3²=0.25, r=0.5m가 됩니다. 같은 식에 q<sub>2</sub>=0°를 넣으면 cos0°=1이라 r²=(0.4+0.3)²=0.49, r=0.7m입니다. ①과 ②의 거리가 같은 이유가 이 한 줄에 들어 있습니다.</p>
+<div class="point"><strong>정리</strong><br>링크 길이는 고정, 손끝 좌표는 자세마다 변화, 어깨–손끝 거리는 <strong>팔꿈치각만의 함수</strong>입니다. 어깨각은 그 거리를 어느 방향으로 향하게 할지 정합니다.</div>
+<h3>이 팔에게 던지는 질문은 두 가지</h3>
+<p>첫 질문은 “관절을 이렇게 구부리면 손끝이 어디에 있나?”입니다. 힘·무게·시간은 넣지 않고 모양만 계산합니다. 이것이 <strong>기구학</strong>이고, 오늘 하는 일입니다. 두 번째 질문은 “모터에 명령을 주면 팔이 정말 그 자세로 가나?”입니다. 무게 때문에 처지거나 흔들릴 수 있으므로 힘과 시간이 필요합니다. MuJoCo는 이 두 번째 질문을 컴퓨터 안에서 실험하는 도구이고, 9차시부터 다룹니다.</p>
+<div class="point">6~8차시는 각도를 정한 <strong>한 장면</strong>을 계산하고, 9~10차시는 힘을 주고 <strong>시간에 따라 움직이는 과정</strong>을 봅니다. 지금은 첫 번째만 다룹니다.</div>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p02" data-pdf-page="2"><h2>이 수업이 지나갈 순서</h2>
+<p>전체 흐름을 먼저 알아 두면 지금 하는 계산이 어디에 쓰이는지 잃지 않습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<ol><li><strong>6차시</strong> — 관절각으로 손끝 위치 찾기. 지금 이 페이지들입니다.</li><li><strong>7차시</strong> — 원하는 손끝 위치에 맞는 관절각 찾기(역기구학), 그리고 조금 돌렸을 때 얼마나 움직이는지(야코비안).</li><li><strong>8차시</strong> — 계산이 어려운 자세와 관절 한계를 다루고, 손끝으로 선과 그림을 그립니다.</li><li><strong>9차시</strong> — 가상 장면을 만들고 시간을 진행합니다.</li><li><strong>10차시</strong> — 모터·센서·접촉을 붙여 상자를 밀어 봅니다.</li></ol>
+<p>교안은 차시당 50분을 도입 5분, 설명·시연 30분, 직접 실행 10분, 정리 5분으로 나눕니다. 이 페이지들은 그중 설명에 해당하고, 직접 실행은 13쪽의 세 가지 변경 실습에서 합니다. 시간을 정확히 맞추는 것보다 <strong>시범을 보고, 같은 계산을 따라 하고, 왜 그렇게 나왔는지 말해 보는</strong> 순서가 중요합니다.</p>
+<details><summary>실습 파일 경로와 명령이 궁금할 때</summary><div class="inside"><p><code>build-src/vol3/v3c03</code>은 3장, <code>v3c04</code>는 4장 예제 폴더입니다. <code>examples/vol3</code>는 실행 환경 설정이고, <code>uv sync</code>는 그 환경의 패키지를 맞추는 명령입니다. 교안은 3·4장 예제 49개가 짧게 끝나고 추가 다운로드나 Docker가 필요 없다고 안내합니다. 실제 준비 상태와 실행 시간은 컴퓨터 환경에 따라 다릅니다.</p><p>이 해설을 만들면서 설치 명령을 실행한 것은 아닙니다. 지금 단계에서는 아래 수치 예제를 손으로 따라가도 충분합니다.</p></div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p03" data-pdf-page="3"><h2>관절의 상태와 손끝의 상태</h2>
+<p>팔꿈치를 얼마나 굽혔는지는 <strong>관절의 상태</strong>이고, 손끝이 책상 어디에 있는지는 <strong>손끝의 상태</strong>입니다. 같은 로봇을 두 가지 방식으로 적는 것이고, 1쪽에서 본 것처럼 둘은 같은 사건의 앞면과 뒷면입니다. 관절값을 알면 손끝을 계산할 수 있고, 손끝을 원하면 관절값을 거꾸로 찾을 수 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<p>이번 차시는 두 막대에서 익힌 방법을 관절 여섯 개짜리 팔로 늘립니다. “숫자가 많아지면 새 공식이 필요한가?”가 걱정된다면 답은 아닙니다. <strong>작은 이동과 회전을 차례로 이어 붙인다</strong>는 방법 하나가 그대로 반복됩니다. 9쪽에서 보게 될 코드도 관절 수만큼 같은 줄을 반복할 뿐입니다.</p>
+<p>다만 각도만으로는 손끝을 정할 수 없습니다. 같은 30°라도 위팔이 40cm인 팔과 60cm인 팔은 손끝이 다른 곳에 있습니다. 그래서 순기구학의 입력은 늘 <strong>로봇 구조(링크 길이와 관절 순서) + 관절값</strong> 한 쌍입니다.</p>
+<div class="check">계산을 시작하기 전에 스스로에게 물어볼 것: 이 팔의 링크 길이는 몇 m이고, 각도는 어디를 기준으로 재는가?</div>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p04" data-pdf-page="4"><h2>순기구학과 역기구학은 질문 방향이 반대입니다</h2>
+<p>1쪽의 세 자세를 계산한 것이 순기구학입니다. 반대 방향도 있습니다. 컵이 (0.5, 0.3)m에 있고 손끝을 그곳에 두고 싶다면, 각도를 얼마로 해야 하는지 찾아야 합니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<div class="tablewrap"><table><thead><tr><th>질문</th><th>이미 아는 것</th><th>찾는 것</th><th>이름</th></tr></thead><tbody><tr><td>이 각도로 손끝은 어디에 있나?</td><td>관절각</td><td>손끝 위치·방향</td><td>순기구학 FK</td></tr><tr><td>이 위치에 손끝을 두려면 각도는?</td><td>원하는 손끝 위치·방향</td><td>그곳에 놓을 관절값</td><td>역기구학 IK</td></tr></tbody></table></div>
+<p>같은 0.4m·0.3m 팔에서 어깨 30°, 팔꿈치 45°를 정하면 손끝은 <strong>(0.424, 0.490)</strong>m로 하나 정해집니다. 반대로 손끝을 (0.5, 0.3)m에 놓는 방법은 하나가 아닙니다. 팔꿈치를 위로 들 수도, 아래로 내릴 수도 있습니다. 7차시에서 이 두 갈래를 계산합니다.</p>
+<p>교안은 두 번째 질문을 컴퓨터로 밀어붙여 봅니다. 어깨 360개 × 팔꿈치 360개, 1° 간격으로 총 <strong>129,600개 조합</strong>을 모두 대입하고 목표에서 5mm 이내인 것을 모읍니다. 결과는 6개였고, 두 무리로 나뉘었습니다. 어깨 2.3°에 팔꿈치 +68°, 그리고 어깨 59.3°에 팔꿈치 −68°. 같은 손끝에 두 자세가 있다는 것이 숫자로 드러납니다.</p>
+<div class="warning">6개는 “정확한 해가 6개”라는 뜻이 아닙니다. 1° 간격으로 찍은 표본 중 5mm 허용 오차 안에 들어온 개수입니다. 간격을 촘촘히 하면 개수는 달라지고, 두 갈래라는 구조만 남습니다.</div>
+<details><summary>그 계산을 하는 코드 세 줄</summary><div class="inside"><pre><code>angles = np.deg2rad(np.arange(-180, 180))
+error = np.linalg.norm(tip - target)
+accepted = error &lt; 0.005</code></pre><p><code>deg2rad</code>는 사람이 읽는 도를 라디안으로 바꿉니다. <code>norm</code>은 x오차와 y오차를 합친 실제 거리, 즉 목표점과 손끝 사이의 직선거리를 구합니다. <code>0.005</code>는 0.005m, 5mm입니다. 세 줄 모두 1쪽에서 구분한 세 양 중 무엇을 다루는지 확인하고 읽으세요.</p></div></details>
+<p>이 방법은 관절이 여섯이 되면 버티지 못합니다. 1° 간격이면 360<sup>6</sup>≈2.18×10<sup>15</sup>개라 전부 대입할 수 없습니다. 그래서 뒤에서 공식과 반복 계산을 배웁니다.</p>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p05" data-pdf-page="5"><h2>링크는 막대, 관절은 움직이는 연결부</h2>
+<figure class="figure"><img src="assets/3-2-two-link-clean.png" alt="어깨와 팔꿈치가 두 링크를 연결하고 끝에 손끝 좌표가 표시된 도식"><figcaption>어깨에서 팔꿈치까지가 위팔 링크, 팔꿈치에서 손끝까지가 아래팔 링크입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>팔꿈치의 점선에서 각도를 읽습니다</h3><ol class="visual-steps"><li>파랑 L₁은 위팔, 주황 L₂는 아래팔입니다. 흰 원이 관절, 검은 P가 손끝이며 회색 점선은 P의 x·y 성분을 축으로 옮겨 줍니다.</li><li>어깨 θ₁은 바닥 x축부터, 팔꿈치 θ₂는 <strong>파란 연장선부터</strong> 잽니다. 어깨를 돌리면 연장선도 함께 돌아서 아래팔의 바닥 기준 방향은 θ₁+θ₂입니다.</li><li>그림은 각도 정의용입니다. 같은 규칙에 (30°,45°)를 넣으면 위팔 방향30°·아래팔 방향75°이고 두 화살표를 더해 손끝 (0.4241,0.4898)m가 됩니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>지금까지 쓴 낱말을 정리합니다. 뼈처럼 길이를 갖는 부분이 <strong>링크</strong>, 마디처럼 움직이는 부분이 <strong>관절</strong>입니다. 링크는 모양이 변하지 않으므로 계산에서 길이 하나로 취급됩니다.</p>
+
+
+<p><strong>회전 관절</strong>은 문 경첩처럼 축 주위를 돕니다. 값의 단위는 라디안(rad)입니다. 30cm 막대를 0°, 45°, 90°로 돌리면 끝점은 (0.3, 0), (0.212, 0.212), (0, 0.3)m로 바뀌지만 관절에서 끝점까지의 거리는 계속 0.30m입니다. 1쪽에서 본 “어깨만 돌리면 거리는 그대로”가 막대 하나에서 이미 성립합니다.</p>
+<p><strong>직선 관절</strong>은 서랍처럼 축을 따라 미끄러집니다. 단위는 m입니다. z방향으로 0.1m 밀면 (0.3, 0, 0)이 (0.3, 0, 0.1)이 됩니다. 그러므로 “로봇의 거리는 라디안”이 아니라 <strong>회전각은 라디안, 길이는 미터</strong>입니다. 관절 종류가 달라도 “값을 넣으면 끝점이 정해진다”는 틀은 같습니다.</p>
+<p>값을 모아 놓은 쪽을 <strong>관절 공간</strong>, 결과를 모아 놓은 쪽을 <strong>작업 공간</strong>이라고 합니다. 관절 공간은 (어깨각, 팔꿈치각)처럼 관절값을 늘어놓은 것이고, 작업 공간은 손끝이 도달하는 위치와 포즈의 영역입니다. 3차원 포즈는 위치 3방향과 방향을 바꾸는 회전 3방향으로 여섯 성분입니다.</p>
+<div class="warning">6자유도는 3차원 위치와 자세를 맞추는 데 필요한 수의 기준일 뿐입니다. 관절이 여섯이라고 모든 곳에 닿거나 모든 자세가 가능한 것은 아닙니다. 링크 길이, 관절 한계, 특이점을 함께 봐야 합니다. 팔이 닿는 범위는 8쪽에서 계산합니다.</div>
+</div></details></section>
+
+<!-- ACTIVE-LEARNING START -->
+<section class="active-learning" id="active-day2-01-questions">
+<p class="eyebrow">배운 뒤에 스스로 확인하기</p><h2>같은 팔로 다시 계산해 보기</h2>
+<p>여기까지 읽고 나면 아래 두 질문은 새로운 내용이 아니라 방금 쓴 구분을 한 번 더 적용하는 일입니다. 지금 풀지 않아도 되고, 답이 궁금할 때 펼쳐서 확인하면 됩니다.</p>
+<details><summary>확인 문제 두 개 펼치기</summary><div class="inside">
+<p>첫 문제는 “주어진 값이 각도인가 좌표인가”를 묻고, 두 번째는 그 로봇의 관절이 회전식이 아니라 서랍식일 때도 같은 구분이 통하는지 묻습니다.</p>
+<div data-quiz-id="d01-check"></div>
+<div data-quiz-id="d01-transfer"></div>
+</div></details>
+<p class="check">답을 맞힌 뒤에는 이렇게 말해 보세요. “관절값을 알려 주고 손끝을 물으면 FK, 손끝을 알려 주고 관절값을 물으면 IK. 회전 관절이면 답의 단위는 rad, 직선 관절이면 m.”</p>
+</section>
+<!-- ACTIVE-LEARNING END -->
+
+<details><summary>수업 근거와 원문 보기</summary><div class="inside">
+<p>이 페이지는 교안 1~5쪽을 하나의 설명으로 다시 쓴 것입니다. 아래 표는 각 쪽이 맡은 내용과 원문 위치입니다.</p>
+<div class="tablewrap"><table><thead><tr><th>쪽</th><th>이 수업에서 맡은 내용</th><th>원문</th></tr></thead><tbody><tr><td>1</td><td>한 장면 계산과 시간에 따른 움직임의 구분, MuJoCo의 위치</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0001.txt">교안 1쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0099.txt">교과서 3장 도입</a></td></tr><tr><td>2</td><td>6~10차시 순서와 차시 구성</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0002.txt">교안 2쪽</a></td></tr><tr><td>3</td><td>관절 상태와 손끝 상태, 두 막대에서 여섯 관절로</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0003.txt">교안 3쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0101.txt">교과서 3.1</a></td></tr><tr><td>4</td><td>FK·IK 구분, 129,600조합·6개, 코드 세 줄</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0004.txt">교안 4쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0099.txt">교과서 3.1</a></td></tr><tr><td>5</td><td>링크·관절, 회전/직선 관절의 단위, 관절 공간과 작업 공간</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0005.txt">교안 5쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0101.txt">교과서 3.1</a></td></tr></tbody></table></div>
+<p class="source">1쪽의 세 자세 수치는 교안 6쪽 예제와 같은 0.4m·0.3m 팔에서 나온 값이고, r=0.7/0.7/0.5는 0.4·0.3·90°로 독립 계산해 확인했습니다. 129,600개·6개·(0.424,0.490)은 교안이 제시한 결과이며 이 해설에서 예제를 새로 실행한 값이 아닙니다. 세 패널 도식은 이 설명을 위해 새로 그린 자료입니다. <a href="../../source-library/snapshot/manuscript-vol3/chapters/03-kinematics.md">3장 원고 전체</a></p>
+</div></details>

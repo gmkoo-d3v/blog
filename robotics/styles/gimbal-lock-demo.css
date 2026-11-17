@@ -1,0 +1,13 @@
+.gimbal-demo { margin: 1.5rem 0; padding: 1rem; border: 1px solid #b8d3cc; border-radius: 14px; background: #f9fcfb; }
+.gimbal-demo h3 { margin-top: 0; }
+.gimbal-steps,.gimbal-presets,.gimbal-sliders { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin:.7rem 0; }
+.gimbal-demo button { padding:.5rem .7rem; border:1px solid #789b93; border-radius:6px; background:white; color:#173e37; cursor:pointer; }
+.gimbal-demo button:focus-visible,.gimbal-demo input:focus-visible,.gimbal-demo canvas:focus-visible { outline:3px solid #c66b16; outline-offset:2px; }
+.gimbal-sliders label { flex:1 1 220px; font-weight:700; }
+.gimbal-sliders input { display:block; width:100%; }
+.gimbal-canvas { width:100%; height:370px; border-radius:8px; overflow:hidden; }
+.gimbal-canvas canvas { display:block; width:100%; height:100%; touch-action:none; }
+.gimbal-guide,.gimbal-result { padding:.7rem; background:#e9f3ef; border-radius:7px; }
+.gimbal-result { overflow-wrap:anywhere; font-variant-numeric:tabular-nums; line-height:1.65; }
+.gimbal-legend { line-height:1.7; }.gimbal-yaw { color:#7734a8; font-weight:700; }.gimbal-roll { color:#007878; font-weight:700; }
+@media(max-width:600px){.gimbal-canvas{height:300px}.gimbal-demo{padding:.7rem}.gimbal-demo button{font-size:.9rem}}

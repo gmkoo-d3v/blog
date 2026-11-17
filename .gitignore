@@ -24,3 +24,22 @@ docs/
 
 # IDE metadata
 .idea/
+
+# Robotics private source and local work records
+/robotics/.qa/
+/robotics/.build/
+/robotics/plans/
+/robotics/source-library/
+/robotics/class-notes.md
+/robotics/reference-notes.md
+/robotics/page-index.md
+/robotics/*user-notes*
+/robotics/**/*user-notes*
+/robotics/AGENTS.md
+/robotics/README.html
+/robotics/**/*.pdf
+/robotics/__pycache__/
+
+# Private robotics source documents and working records
+/.private/
+

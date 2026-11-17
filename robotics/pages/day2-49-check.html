@@ -1,0 +1,91 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>낙하와 마찰로 채점하고 장면 찍기 · 로봇 공부 노트</title><link rel="stylesheet" href="../styles/study.css"></head><body><a class="skip-link" href="#lesson-content">본문으로 건너뛰기</a><div class="layout"><aside><div class="brand">ROBOTICS · STUDY NOTES</div><details class="site-menu" open><summary>학습 목차 열기·닫기</summary><nav aria-label="학습 목차"><a href="../index.html">학습 시작</a><a href="day1-coverage.html">1일차 교안 쪽에서 찾기</a><a href="coverage.html">2일차 교안 쪽에서 찾기</a><a href="simulator.html">2D 작업 공간 실험 ↗</a><a href="dh-lab.html">DH 3D 실험실 ↗</a><a href="jacobian-lab.html">야코비안 실험실 ↗</a><details class="nav-group"><summary>1일차 · 1차시 · 감지와 제어</summary><a href="day1-01-loop.html"><span>재고, 고르고, 한 걸음 움직이기</span><small>PDF p.1–9</small></a></details><details class="nav-group"><summary>1일차 · 1차시 · 피드백</summary><a href="day1-02-feedback.html"><span>미끄러져도 다시 가는 이유와 센서의 한계</span><small>PDF p.10–15</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 몸과 부품</summary><a href="day1-03-body.html"><span>몸의 자유도와 모터·센서 숫자 읽기</span><small>PDF p.16–22</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 제어 주기</summary><a href="day1-04-timing.html"><span>같은 판단도 박자가 다르면 흔들립니다</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 물리와 모델</summary><a href="day1-05-simulation.html"><span>떨어지는 상자로 시뮬레이션의 뜻 읽기</span><small>PDF p.29–35</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 안전과 회피</summary><a href="day1-06-avoidance.html"><span>모르면 멈추고, 장애물 옆으로 돌아갑니다</span><small>PDF p.36–41</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 좌표와 평면 회전</summary><a href="day1-07-frames-rotation.html"><span>같은 컵의 좌표와 회전행렬의 두 열</span><small>PDF p.42–46</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 3차원 회전</summary><a href="day1-08-camera.html"><span>카메라에서 몸으로: 열 세 개와 전치의 방향</span><small>PDF p.47–48</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 자세 표현</summary><a href="day1-09-euler.html"><span>롤·피치·요의 순서와 회전 벡터</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 쿼터니언</summary><a href="day1-10-quaternion.html"><span>숫자 넷으로 회전을 잇고 부드럽게 바꾸기</span><small>PDF p.55–59</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 동차 변환</summary><a href="day1-11-transform.html"><span>카메라가 본 컵을 방 좌표로 옮기기</span><small>PDF p.60–62</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 자이로와 정리</summary><a href="day1-12-gyro.html"><span>각속도를 쌓아 자세를 추적하고 하루를 연결하기</span><small>PDF p.63–68</small></a></details><details class="nav-group"><summary>6차시 · 순기구학</summary><a href="day2-01-questions.html"><span>로봇팔에게 묻는 두 가지 질문</span><small>PDF p.1–5</small></a><a href="day2-02-two-links.html"><span>막대 두 개로 손끝과 작업 공간 찾기</span><small>PDF p.6–8</small></a><a href="day2-03-spatial-arm.html"><span>관절 여섯 개도 작은 변환을 이어 붙입니다</span><small>PDF p.9–12</small></a></details><details class="nav-group"><summary>6차시 · 실습과 확인</summary><a href="day2-04-fk-practice.html"><span>순기구학 실습을 손계산으로 풀어 보기</span><small>PDF p.13–15</small></a></details><details class="nav-group"><summary>7차시 · 역기구학</summary><a href="day2-05-inverse.html"><span>손끝에서 거꾸로 관절각 찾기</span><small>PDF p.16–18</small></a></details><details class="nav-group"><summary>7차시 · 야코비안</summary><a href="day2-06-jacobian.html"><span>조금 돌렸을 때 얼마나 움직일까</span><small>PDF p.19–22</small></a></details><details class="nav-group"><summary>7차시 · 수치 계산과 실습</summary><a href="day2-07-numerical-ik.html"><span>목표에 조금씩 다가가는 역기구학</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>8차시 · 특이점</summary><a href="day2-08-singularity.html"><span>팔을 쭉 펴면 왜 계산이 어려워질까</span><small>PDF p.29–33</small></a></details><details class="nav-group"><summary>8차시 · 한계와 검산</summary><a href="day2-09-limits.html"><span>관절의 한계와 남는 자유도</span><small>PDF p.34–36</small></a></details><details class="nav-group"><summary>8차시 · 경로</summary><a href="day2-10-path.html"><span>한 점에서 선과 하트로 이어 가기</span><small>PDF p.37–38</small></a></details><details class="nav-group"><summary>8차시 · 실습과 확인</summary><a href="day2-11-kinematics-check.html"><span>특이점 실습과 기구학 전체 정리</span><small>PDF p.39–41</small></a></details><details class="nav-group" open><summary>9차시 · MuJoCo</summary><a href="day2-42-mujoco.html"><span>컴퓨터 속 실험실과 장면 조립</span><small>PDF p.42–45</small></a><a href="day2-46-state.html"><span>상태의 칸, 크기, 한 걸음의 의미</span><small>PDF p.46–48</small></a><a href="day2-49-check.html" aria-current="page"><span>낙하와 마찰로 채점하고 장면 찍기</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>10차시 · 모터·센서</summary><a href="day2-55-actuator.html"><span>로봇의 위치를 읽고 모터에 목표 주기</span><small>PDF p.55–58</small></a><a href="day2-59-sensor.html"><span>센서, 충돌, 시뮬레이션 안정성</span><small>PDF p.59–61</small></a><a href="day2-62-push.html"><span>두 관절 팔로 상자를 밀어 보기</span><small>PDF p.62–65</small></a><a href="day2-66-review.html"><span>확인 문제와 2일차 전체 연결</span><small>PDF p.66–68</small></a></details><details class="nav-group"><summary>수업 중 헷갈렸던 것</summary><a href="links.html">막대 두 개를 움직이면 맨 끝은 어디에 있을까요?</a><a href="workspace.html">팔이 닿는 곳과 못 닿는 곳</a><a href="transform.html">돌리기와 옮기기를 한 번에</a><a href="rotation.html">“코사인 사인, 사인 코사인” 부호 하나를 기억하세요.</a><a href="frames.html">좌표계를 연결하는 것은 설명을 번역하는 것</a><a href="radians.html">거리 단위가 아니라 각도 단위</a><a href="parent.html">부모를 움직이면 연결된 자식도 따라옵니다.</a><a href="dh.html">DH 규약으로 로봇의 좌표계 연결하기</a><a href="dh-lab.html">DH 네 값을 직접 바꾸는 3D 실험실</a><a href="jacobian-code.html">야코비안 코드, 한 줄씩 이해하기</a><a href="jacobian-lab.html">각도·코드·손끝 속도를 잇는 야코비안 실험실</a></details></nav></details></aside><main id="lesson-content"><header><div class="eyebrow">PDF p.49–54 · 9차시 · MuJoCo</div><h1>낙하와 마찰로 채점하고 장면 찍기</h1><div class="path">시범 보기 → 따라 하기 → 이유 이해 → 선택적 확인</div></header><article class="section"><p class="lead">계산기가 맞는지 확인할 때 우리는 어려운 식부터 넣지 않습니다. 1+1을 넣어 봅니다. 시뮬레이터도 같습니다. 답을 이미 아는 문제를 넣어 보고, 어긋나는 크기와 방향을 읽습니다. 이번 차시의 채점 문제는 두 개입니다. <strong>10m에서 놓은 공</strong>과 <strong>20° 비탈 위의 상자</strong>입니다.</p>
+<details><summary>이 장면에서 고정한 조건</summary><div class="inside"><p>앞 차시에서 만든 공 장면을 그대로 씁니다. 고정하는 것은 중력 9.81m/s², 처음 높이, 처음 속도 0입니다. 바꾸는 것은 한 걸음의 길이 Δt이고, 그때 오차가 어떻게 변하는지가 관찰 대상입니다.</p></div></details>
+<section class="pdf-page" id="pdf-p49" data-pdf-page="49"><h3>답을 아는 문제로 채점하기: 낙하와 마찰</h3>
+<figure class="figure"><img src="../assets/eli5-day2-fall-error.svg" alt="10미터 자유 낙하1초뒤 정확높이와시간간격0.002및0.001초의계산높이비교"><figcaption>세 점은 같은 시각의 서로 다른 계산입니다. 높이 차이는 보이도록 확대했고, 색은 계산 방법입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>파란 점이 왜 검은 점보다 아래인지 봅니다</h3><ol class="visual-steps"><li>출발10m·초기속도0·중력9.81m/s²·관찰시각1초를 고정했습니다. 검정은 정확식5.095m, 파랑은Δt=.002s, 주황은Δt=.001s 계산입니다.</li><li>한 걸음마다 먼저 속도를 바꾸고 그 새 속도로 위치를 바꿔 조금 더 내려갑니다. 파랑은5.08519m로9.810mm 낮고, 걸음을 절반으로 줄인 주황은4.905mm 낮습니다.</li><li>같은 차이를 오차=−½gΔt·t로 씁니다. .002를 넣으면−.00981m입니다. 그림의 높이는 공 중심이며, 바닥 접촉이 없는 낙하이므로 튀는 현상은 비교하지 않습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+
+<p>공을 10m 높이에서 놓고 1초 기다립니다. 공기 저항과 충돌이 없다면 정답은 식으로 바로 나옵니다.</p>
+<div class="formula">z(t) = z<sub>0</sub> − ½gt²,　v(t) = −gt</div>
+<p>z는 높이(m), z<sub>0</sub>는 처음 높이 10m, g는 아래로 당기는 중력의 크기 9.81m/s², t는 시간(s)입니다. 1초 뒤 정확한 높이는 10−4.905=<strong>5.095m</strong>, 속도는 −9.81m/s입니다. 이제 같은 문제를 0.002초씩 걸어서 풀어 봅니다.</p>
+<p>MuJoCo의 기본 적분은 반암시적 오일러입니다. 먼저 속도를 바꾸고, 바뀐 속도로 위치를 바꿉니다. 매번 작은 계단을 내려가듯 계산하므로 정확한 곡선과 조금 차이가 납니다. 이 조건에서 높이 오차(계산−정확)는 <strong>−½gΔt·t</strong>입니다. 계산이 정확한 값보다 <em>낮게</em> 나온다는 뜻입니다.</p>
+<div class="tablewrap"><table><tr><th>한 걸음 Δt</th><th>1초 뒤 높이 오차(교안)</th><th>속도 오차(교안)</th></tr><tr><td>0.002s</td><td>−9.810mm</td><td>6.4×10<sup>−14</sup>m/s</td></tr><tr><td>0.001s</td><td>−4.905mm</td><td>9.8×10<sup>−14</sup>m/s</td></tr><tr><td>0.0005s</td><td>−2.453mm</td><td>7.6×10<sup>−13</sup>m/s</td></tr></table></div>
+<p>걸음을 절반으로 줄이면 이 문제의 높이 오차도 절반입니다. Δt=0.004초라면 −½×9.81×0.004×1=−0.01962m, 즉 <strong>−19.62mm</strong>가 됩니다. 속도 차이는 부동소수점 반올림 수준이라 사실상 0입니다. 다만 이 비례 법칙을 모든 물리 문제와 모든 적분기에 그대로 적용하지는 않습니다.</p>
+<h4>20° 미끄럼틀 위의 상자</h4>
+<p>중력은 아래로 끌고 마찰은 미끄러짐을 막습니다. 마찰계수 μ가 <strong>tan20°≈0.364</strong>보다 작을 때, 이상적인 이 모델에서는 아래로 미끄러집니다.</p>
+<div class="formula">a = g(sinθ − μcosθ),　이동거리 s = ½at²</div>
+<p>θ는 비탈 각도, μ는 단위 없는 마찰계수, a는 비탈 아래 방향 가속도(m/s²)입니다. 상자는 멈춘 상태에서 출발합니다. μ가 임계값보다 크면 위 식의 값이 음수가 되는데, 이것을 “상자가 저절로 위로 올라간다”로 읽지 않고 정지 상태로 둡니다.</p>
+<div class="tablewrap"><table><tr><th>μ</th><th>1초 이동 이론</th><th>교안 시뮬레이션</th></tr><tr><td>0.1</td><td>1.217m</td><td>1.219m</td></tr><tr><td>0.3</td><td>0.295m</td><td>0.297m</td></tr><tr><td>0.4</td><td>0m</td><td>0.004m</td></tr><tr><td>0.6</td><td>0m</td><td>0.002m</td></tr></table></div>
+<p>이론과 시뮬레이션이 0.002m 안쪽으로 맞는 줄은 좋은 검산입니다. 그런데 멈춰야 하는 μ=0.4와 0.6에서 상자가 몇 mm 기어 내려갔습니다. 접촉이 아주 딱딱하지 않고 조금 말랑하게 계산되기 때문에 생기는 차이입니다. 이 표는 교안의 특정 마찰 설정과 단순 식을 비교한 것이며, 현실의 모든 정지·운동 마찰을 하나의 μ로 설명한다는 뜻이 아닙니다.</p>
+<details><summary>결과 하나만 보고 “정답”이라고 하지 않는 이유</summary><div class="inside">시간 간격, 접촉 모델, 설정이 결과에 영향을 주기 때문입니다. 이론식과 비교하고, 시간 간격을 줄여 변화를 확인하면 오차의 원인을 구분하기 쉬워집니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p50" data-pdf-page="50"><h3>바닥 접촉은 아주 딱딱한 쿠션처럼</h3>
+<p>현실의 물체도 닿는 순간 미세하게 변형되지만 눈에 잘 보이지 않습니다. 시뮬레이터의 부드러운 접촉은 물체가 조금 파고든 상태를 허용하면서 그 깊이로 힘을 계산합니다. 그래서 <strong>조금 겹쳐 보인다고 접촉 계산이 아예 없는 것은 아닙니다.</strong> 반대로, 튀어 오르는 높이를 보고 접촉 설정을 판단할 수도 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<div class="tablewrap"><table><tr><th>solref 설정</th><th>최대 파고듦</th><th>다시 뜬 높이</th></tr><tr><td>"0.02 1" 기본값</td><td>0.027m</td><td>0.000m</td></tr><tr><td>"0.02 0.1" 덜 감쇠</td><td>0.021m</td><td>0.043m</td></tr><tr><td>"-10000 -10" 직접 강성·감쇠 형식</td><td>0.039m</td><td>0.650m</td></tr></table></div>
+<p>양수 형식의 첫 수는 접촉이 회복되는 시간 척도, 둘째 수는 감쇠비입니다. 감쇠는 흔들림을 줄이는 효과입니다. 음수 형식은 강성을 직접 지정하는 다른 표현이므로 <strong>−10000초라는 뜻이 아닙니다.</strong> 두 형식은 같은 자리에 다른 문법을 쓰는 것이지, 같은 값의 부호만 바꾼 것이 아닙니다.</p>
+<p>이 표는 같은 실험에서 설정만 바꾼 교안 결과입니다. “값을 세게 하면 언제나 덜 파고든다” 같은 순서로 외우지 마십시오. 시간 간격, 접촉 정규화, 감쇠가 함께 작용하므로 파고듦과 튀는 높이를 <em>둘 다</em> 확인해야 합니다.</p>
+<details><summary>다시 뜬 높이가 0.000m로 출력됐다면 공이 움직이지 않았다는 뜻일까?</summary><div class="inside">아닙니다. 떨어져 부딪힌 뒤 다시 뜬 높이가 표시 정밀도에서 0이라는 뜻입니다. 처음부터 가만히 있었다는 뜻이 아닙니다. 파고듦 값 0.027m가 함께 있으니 접촉 자체는 분명히 일어났습니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p51" data-pdf-page="51"><h3>계산된 장면을 카메라로 찍기</h3>
+<p>물리 상태가 계산되어 있어도 이미지는 따로 만들어야 합니다. 장면에 미리 이름 붙여 둔 카메라를 쓸 수도 있고, 코드에서 자유 카메라의 위치를 정할 수도 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<pre><code>자유 = mujoco.MjvCamera()
+자유.lookat[:] = [0, 0, 0.1]
+자유.distance = 2.0
+자유.azimuth = 45
+자유.elevation = -35
+mujoco.mj_forward(모델, 데이터)
+렌더러.update_scene(데이터, camera=자유)
+이미지 = 렌더러.render()</code></pre>
+<ul><li><code>MjvCamera()</code>: 카메라 설정을 담을 객체.</li><li><code>lookat</code>: 바라볼 지점의 좌표. 카메라가 놓인 위치 그 자체는 아닙니다.</li><li><code>distance</code>: 그 지점까지 거리 2m.</li><li><code>azimuth</code>: 수평 방향에서 45° 돌려 봅니다.</li><li><code>elevation</code>: 여기서는 −35°로 내려다봅니다. <strong>카메라 각도는 도 단위</strong>이며 관절 qpos의 라디안과 다릅니다.</li><li><code>forward</code>: 찍기 전에 현재 상태로 계산값을 맞춥니다.</li><li><code>update_scene</code>: 어떤 상태를 어떤 카메라로 그릴지 전달합니다.</li><li><code>render</code>: RGB 숫자 배열을 만듭니다.</li></ul>
+<p>교안의 배열 모양 <code>(240,320,3)</code>은 세로 240픽셀, 가로 320픽셀, 색 채널 3개입니다. <code>uint8</code>은 각 채널을 0~255 정수로 담는 형식입니다. 영상 인식 모델이 입력으로 받는 이미지도 결국 이런 배열입니다.</p>
+<p>여기서 시간 감각이 하나 갈라집니다. 물리 계산은 0.002초마다 하지만 영상은 약 1/30초마다 찍습니다. 두 간격은 서로 나누어떨어지지 않으므로, “다음 촬영 시각에 실제 시각이 도달했는지”를 검사하며 찍습니다. 교안은 이렇게 46장을 찍어 6장을 골라 시간순 격자로 배치했습니다. 계산 횟수와 사진 장수가 별개라는 점이, 나중에 센서 주기와 제어 주기를 다룰 때 다시 나옵니다.</p>
+<details><summary>렌더링하지 않아도 낙하 계산을 할 수 있을까?</summary><div class="inside">그렇습니다. 물리 계산과 이미지 생성은 별개입니다. 화면 없이 계산하고 숫자만 확인할 수 있으며, 렌더러는 결과를 보고 싶을 때 씁니다. 이미지 생성에는 실행 환경의 그래픽 지원이 필요할 수 있습니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p52" data-pdf-page="52"><h3>직접 실행 문제: 손으로 먼저 예상하기</h3>
+<p>세 문제 모두 “실행 전에 예상하고, 실행 뒤 차이를 설명하기”가 목적입니다. 아래 숫자는 주어진 식으로 계산한 예상값이며 MuJoCo 실행 결과가 아닙니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<details><summary>① 낙하 간격을 0.004초로 바꾸면 높이 오차는?</summary><div class="inside"><p>t=1s, g=9.81m/s²에서 −½×9.81×0.004×1=−0.01962m, 즉 <strong>−19.62mm</strong>입니다. 0.002초의 −9.81mm보다 두 배이므로, 시뮬레이션 높이는 정확한 5.095m보다 더 낮게 나올 것이라고 예상합니다.</p><pre><code>간격들 = [0.004, 0.002]
+# 각 간격을 model.opt.timestep에 적용하고 1초까지 진행
+# 계산높이 - (10 - 0.5 * 9.81 * 1**2)를 비교</code></pre></div></details>
+<details><summary>② 마찰 0.2, 0.35, 0.37이면?</summary><div class="inside"><p>임계값은 약 0.364입니다. 따라서 0.2와 0.35는 아래로 미끄러지고 0.37은 이상적인 식에서는 멈춥니다. 1초 이동거리 예상은 각각 약 <strong>0.756m, 0.0644m, 0m</strong>입니다. 임계값 근처는 작은 차이를 비교하는 문제라, 접촉의 부드러움과 수치 오차가 상대적으로 크게 보입니다.</p><pre><code>theta = np.deg2rad(20)
+a = max(0.0, 9.81 * (np.sin(theta) - mu * np.cos(theta)))
+예상거리 = 0.5 * a * 1.0**2</code></pre><p>첫 줄은 도를 라디안으로, 둘째 줄은 가속도를, 셋째 줄은 정지 상태에서 1초 동안 움직인 거리를 계산합니다. <code>max</code>는 이 문제의 정지 조건을 반영합니다.</p></div></details>
+<details><summary>③ 상자 size를 0.05씩으로 줄이면 질량은?</summary><div class="inside"><p>전체 한 변은 0.1m입니다. 부피 0.001m³×밀도 1000kg/m³=<strong>1kg</strong>이고, 앞의 8kg의 1/8입니다. 명시적인 mass가 따로 있으면 이 밀도 계산 대신 mass 설정이 적용되므로 해당 코드도 확인해야 합니다.</p></div></details>
+<pre><code>cd build-src/vol3/v3c04
+uv run --project ../../../examples/vol3 python b08_free_fall.py</code></pre>
+<p>cd는 예제 폴더로 이동, uv run은 지정한 프로젝트 환경으로 실행, 마지막 이름은 실행할 파일입니다. 원본 저장소 구조와 의존성 준비가 필요합니다. 이 학습 페이지를 여는 것만으로 MuJoCo가 설치되지는 않습니다.</p>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p53" data-pdf-page="53"><h3>확인 문제: step 직후 xpos는?</h3>
+<p>교안의 기본 예제에서 <code>mj_step</code>을 부른 직후 <code>데이터.body(1).xpos</code>를 읽으면 무엇이 나올까요? 앞 차시의 순서를 떠올리며 답해 보십시오.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<ol><li>걸음을 마친 지금 상태의 위치</li><li>한 걸음 전 상태의 위치</li><li>처음 놓은 위치</li><li>0</li></ol>
+<details><summary>정답과 이유</summary><div class="inside"><p><strong>둘, 한 걸음 전 상태의 위치.</strong> 이 예제에서는 위치 계산을 먼저 하고 맨 끝에 qpos를 적분하기 때문입니다. 현재 qpos와 맞는 위치를 읽으려면 <code>mj_forward</code>를 부른 뒤에 읽습니다. 다만 이것을 “적분기와 필드에 관계없이 모든 값이 항상 한 단계 전”이라는 법칙으로 일반화하지는 않습니다.</p></div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p54" data-pdf-page="54"><h3>9차시를 하나의 실험 절차로 묶기</h3>
+<p>이제 이 차시에서 확인한 것들을 한 줄씩 정리해 둡니다. box size는 반 길이이고, 질량은 설정한 밀도와 부피에서 계산됩니다. Model은 공유 설정이고 Data는 실험별 상태입니다. 관절 타입마다 qpos·qvel 칸 수가 다릅니다. 작은 시간 간격도 오차를 만들고, 접촉은 조금 말랑합니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<div class="steps"><span>MJCF로 공 작성</span><b>→</b><span>Model·Data 만들기</span><b>→</b><span>step 반복</span><b>→</b><span>forward 후 읽기·촬영</span><b>→</b><span>이론식과 채점</span></div><p class="diagram-read">화살표를 따라 같은 낙하 공의 값을 놓아 보세요. 높이10m로 시작해0.002초씩500걸음이면1초입니다. forward뒤 높이5.08519m를 읽고 정확식5.095m와 빼면−9.810mm입니다. 촬영은 이 상태를 보여 주며 카메라 각도는 이 높이 검산을 바꾸지 않습니다.</p>
+
+<details><summary>스스로 진단하기: “공이 너무 무겁고 바닥을 조금 파고들어요.”</summary><div class="inside"><p>먼저 크기의 반 길이/반지름을 잘못 넣지 않았는지, density 또는 mass가 무엇인지 확인합니다. 그다음 timestep과 접촉 설정을 봅니다. 원인을 확인하기 전에 중력과 모든 설정을 동시에 바꾸면 무엇이 문제였는지 알 수 없게 됩니다.</p></div></details>
+<p>교안이 따로 지정한 읽기 과제는 4.2절 기본값과 재질, 4.4절 대화형 뷰어입니다. 여기서 실습한 범위와 읽기 과제를 구분해 두십시오. 다음 차시는 이 공에 모터와 센서를 달아, 팔로 상자를 미는 장면으로 넘어갑니다.</p>
+</div></details></section>
+
+<details id="active-day2-49-check"><summary>따라 해 보기 (선택): 오차를 mm로 계산하기</summary><div class="inside">
+<p>본문의 표를 직접 재현해 보는 계산입니다. 부호가 아니라 크기를 묻는 문제이니, m를 mm로 바꾸는 것까지 확인하십시오. 먼저 종이에 예상값을 적고 나서 답을 확인하면 좋습니다.</p>
+<div data-quiz-id="d49-check"></div>
+<p>두 번째는 시뮬레이션 결과가 이론과 어긋났을 때 무엇을 먼저 볼지 묻습니다. 값을 의심하기 전에 조건을 의심하는 순서를 연습합니다.</p>
+<div data-quiz-id="d49-transfer"></div>
+<p class="check">실제로 실행한다면 예상값, 측정값, 차이를 세 열로 기록하십시오. 값이 달라도 곧바로 버그나 새로운 물리라고 단정하지 않습니다.</p>
+</div></details>
+
+<details><summary>수업 근거/원문 보기</summary><div class="inside">
+<p class="small">표의 수치는 교안 출력이고, 식으로 계산한 값은 검산입니다. 이 노트에서 MuJoCo를 실행한 결과는 없습니다.</p>
+<ul><li>교안 9차시: 49쪽 · 50쪽 · 51쪽 · 52쪽 · 53쪽 · 54쪽</li><li>교과서: PDF 159쪽 · PDF 165쪽 · <a href="https://github.com/playideas/python-book/blob/ef89393f254f7315fe31dcdd8f7fc12eabe488b8/manuscript-vol3/chapters/04-mujoco-basics.md">4.3~4.4절 원고</a></li><li>예제: b08_free_fall.py, b09_slope.py, b10_bounce.py, b11_render.py, b12_frames.py (교안 출력 인용)</li></ul>
+</div></details>
+</article><footer><div class="page-turn"><a href="day2-46-state.html">← 이전: 상태의 칸, 크기, 한 걸음의 의미</a><a href="day2-55-actuator.html">다음: 로봇의 위치를 읽고 모터에 목표 주기 →</a></div><p><a href="../../index.html">블로그로 돌아가기</a></p></footer></main></div><script src="../scripts/common.js"></script><script src="../scripts/quiz-core.js"></script><script src="../scripts/quiz-data.js"></script><script src="../scripts/quiz.js"></script><script src="../vendor/three-offline.js"></script><script src="../scripts/inline-3d.js"></script></body></html>

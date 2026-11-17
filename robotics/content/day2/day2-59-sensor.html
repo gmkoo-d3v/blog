@@ -1,0 +1,62 @@
+<p class="lead">책상 위에 가만히 놓인 휴대폰의 가속도계는 위쪽으로 약 9.8m/s²를 읽습니다. 움직이지 않는데도 그렇습니다. 반대로 손에서 놓여 자유 낙하하는 동안에는 0을 읽습니다. 이번 차시는 이 “거꾸로 된 것 같은” 숫자의 정체를 다룹니다. 이어서 닿는 순간의 큰 힘, 그리고 시간 간격이 만드는 가짜 움직임까지 봅니다.</p>
+<details><summary>이 장면에서 고정한 조건</summary><div class="inside"><p>앞 차시에서 만든 상자와 팔 장면을 그대로 씁니다. 고정하는 것은 센서가 붙은 위치와 축 방향이고, 바뀌는 것은 상자가 떨어지는 중이냐 바닥에 놓였느냐입니다.</p></div></details>
+<section class="pdf-page" id="pdf-p59" data-pdf-page="59"><h3>떨어지는 가속도계가 0을 읽는 이유</h3>
+<figure><img src="assets/day2-accelerometer.png" alt="보충 도식: 위쪽이 센서의 +축인 단순 직선운동. 자유 낙하와 책상 위 정지를 비교한다."><figcaption>보충 도식: 위쪽이 센서의 +축인 단순 직선운동. 자유 낙하와 책상 위 정지를 비교한다.</figcaption></figure>
+<aside class="figure-guide"><h3>주황 중력 화살표는 두 장 모두 같습니다</h3><ol class="visual-steps"><li>파란 네모는 센서, 주황 아래 화살표는 중력입니다. 오른쪽의 초록 위 화살표만 책상이 밀어 주는 효과입니다. 센서의 +축은 위로 고정했습니다.</li><li>왼쪽 자유 낙하에서는 센서와 내부 물체가 함께 떨어져 센서값0입니다. 오른쪽 책상 위에서는 세계 가속도0이어도 떠받치는 효과+9.81m/s²를 읽습니다.</li><li>같은 식 f=a−g에 왼쪽은−9.81−(−9.81)=0, 오른쪽은0−(−9.81)=9.81을 넣습니다. 센서를 뒤집으면 센서 축 성분의 부호가 바뀝니다. 카메라만 돌리는 것은 센서를 뒤집은 것이 아닙니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+
+<p>엘리베이터가 통째로 자유 낙하하면 바닥이 발을 떠받치지 못해 몸이 붕 뜹니다. 가속도계도 이 <strong>“몸을 밀어 주는 효과”</strong>를 읽습니다. 세계에서 보면 낙하 가속도는 아래로 −9.81m/s²이지만, 이상적인 자유 낙하 가속도계는 0을 읽습니다. 가속도계가 읽는 고유가속도는 중력만으로 떨어지는 운동을 뺀 값입니다.</p>
+<div class="formula">가속도계의 단순 직선 예: f = a − g<br>자유 낙하: (−9.81) − (−9.81) = 0<br>바닥에 정지: 0 − (−9.81) = +9.81 m/s²</div>
+<p>여기서 g는 중력가속도 벡터 −9.81m/s²(아래 방향), a는 세계에서 본 그 물체의 가속도입니다. 책상에 놓인 공은 가속도가 0이지만 바닥이 위로 떠받치고 있으므로 센서는 +9.81을 읽습니다. 식의 부호가 헷갈리면 “센서는 중력을 뺀 나머지 힘을 잰다”는 문장으로 돌아오십시오.</p>
+<p>실제 센서는 <strong>자기 좌표계의 축</strong>으로 읽으므로, 센서를 뒤집으면 부호가 바뀝니다. “언제나 z에 +9.81”이 아니라 이 예제에서 센서의 위쪽 축이 +z라는 조건이 붙어 있는 것입니다. 이 구분이 없으면 로봇이 기울었을 때 값을 잘못 해석합니다.</p>
+<div class="tablewrap"><table><tr><th>교안 시각</th><th>가속도계</th><th>자이로</th><th>접촉 센서</th><th>상자 위치</th></tr><tr><td>0.1s, 낙하 중</td><td>[0,0,0] m/s²</td><td>[0,0,0] rad/s</td><td>0N</td><td>[0,0,0.35]m</td></tr><tr><td>1.0s, 바닥</td><td>[0,0,9.81]</td><td>[0,0,0]</td><td>9.81N</td><td>[0,0,0.05]m</td></tr></table></div>
+<p>같은 순간에 기록한 어깨 관절 센서는 0.1초에 0.17rad와 3.47rad/s, 1초에 1.03rad와 −7.83rad/s입니다. 자이로가 0인 상자와, 흔들리는 팔의 관절 센서는 서로 다른 대상을 읽고 있습니다. 센서 이름을 볼 때 <em>어느 물체의 어느 축인지</em>를 함께 봐야 하는 이유입니다.</p>
+<pre><code>mujoco.mj_forward(모델, 데이터)
+센서 = 모델.sensor("accel")
+시작 = 센서.adr[0]
+칸수 = 센서.dim[0]
+값 = 데이터.sensordata[시작:시작 + 칸수]</code></pre>
+<p>설명용 이름 accel은 실제 XML의 센서 이름으로 바꿔야 합니다. 센서 결과는 sensordata라는 긴 배열 하나에 이어 붙으므로, 이름으로 시작 주소와 칸 수를 찾아 읽습니다. 센서마다 출력 크기가 다르기 때문에 qpos처럼 “관절마다 한 칸”으로 가정하면 안 됩니다.</p>
+<details><summary>가만히 놓인 휴대폰의 센서가 9.8이라면 고장일까?</summary><div class="inside">아닙니다. 중력을 포함해 보이는 원시 가속도계 측정과, 앱이 중력을 제거해 계산한 “선형 가속도”는 다를 수 있습니다. 교안이 설명하는 값은 원시 가속도계의 고유가속도입니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p60" data-pdf-page="60"><h3>닿는 순간의 힘은 무게보다 클 수 있다</h3>
+<p>상자를 천천히 들고 있을 때와, 떨어지는 상자를 손으로 받는 순간은 다릅니다. 받는 순간에는 아래로 움직이던 속도를 짧은 시간 안에 멈춰야 해서 큰 힘이 필요합니다. 시뮬레이터에서도 접촉 목록을 직접 읽으면 이 순간을 잡을 수 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<p>교안은 질량 2kg 상자의 중심을 높이 0.3m에 둡니다. 상자 반 높이가 0.05m이므로 밑면이 바닥에 닿기까지 중심이 떨어질 거리는 0.25m입니다. 낙하 시간은 √(2×0.25/9.81)≈<strong>0.226초</strong>입니다. 중심이 0까지 떨어질 때를 접촉 시각으로 계산하면 틀립니다. <strong>몸체의 위치는 중심 좌표이고, 접촉은 밑면에서 일어납니다.</strong></p>
+<pre><code>for i in range(데이터.ncon):
+    접촉 = 데이터.contact[i]
+    mujoco.mj_contactForce(모델, 데이터, i, 힘)
+    법선힘_합 += 힘[0]</code></pre>
+<p><code>ncon</code>은 현재 계산된 접촉 개수이고, contact[i]에는 접촉한 geom 두 개, 접촉 위치, 거리, 접촉 좌표계가 담깁니다. 미리 6칸 배열로 만든 힘에 contactForce가 힘 3개와 토크 3개를 넣습니다. <code>힘[0]</code>은 <strong>접촉 좌표계의 법선 방향 힘</strong>입니다. 평평한 바닥인 이 예제에서는 법선이 위쪽이라 수직력으로 합산할 수 있지만, 경사면에서도 무조건 세계 z방향 힘이라고 읽지는 않습니다.</p>
+<div class="tablewrap"><table><tr><th>교안 관찰</th><th>읽는 법</th></tr><tr><td>처음 기록 0.228s, 접촉 4개</td><td>상자 바닥 네 모서리에서 접촉</td></tr><tr><td>dist=−0.0027m</td><td>겹침/침투 깊이가 약 2.7mm인 상태에서 접촉이 기록됨</td></tr><tr><td>최대 수직력 약 494N</td><td>무게 19.62N의 약 25배인 충격 순간</td></tr><tr><td>1초 뒤 힘 합 19.620N</td><td>정지 후에는 무게 mg=2×9.81과 균형</td></tr></table></div>
+<p>원본 루프는 step 직후 contact를 읽고 현재 time을 붙입니다. 그래서 0.228초라는 표시에는 <strong>시간 차이</strong>가 섞여 있습니다. 앞 차시에서 본 것처럼 step 직후의 계산 필드는 걸음을 시작할 때 값이고 time은 이미 진행된 값이기 때문입니다. 이산 시간 간격 때문에 이론의 0.226초와도 차이가 납니다. 최신 qpos와 접촉을 맞춰 읽으려면 forward를 부르되, 그러면 원본 교안과 기록 절차가 달라졌다는 점을 함께 적어야 합니다.</p>
+<details><summary>충격력이 25배면 정지한 뒤에도 무게가 25배가 될까?</summary><div class="inside">아닙니다. 잠깐 큰 힘으로 속도를 줄이는 것입니다. 이후 가만히 있으면 중력과 지지력이 균형을 이루어 1초 뒤 힘 합이 mg에 가까워집니다. 25배는 이 낙하 장면의 교안 결과이지 모든 충돌의 상수가 아닙니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p61" data-pdf-page="61"><h3>너무 큰 걸음으로 계산하면 숫자가 폭주한다</h3>
+<figure><img src="assets/p61-timestep.png" alt="시간 간격에 따른 진동과 불안정 비교 교안 그림"><figcaption>교안 p61: timestep이 커질 때 단순히 거칠어지는 것을 넘어 해가 폭주할 수 있다.</figcaption></figure>
+<aside class="figure-guide"><h3>세 그림의 세로 눈금부터 확인합니다</h3><ol class="visual-steps"><li>가로는 같은0~0.5초, 세로는 위치(m)입니다. 파란 선은 같은 진동 문제의 계산값입니다. 패널마다 세로 범위가 달라 그림 높이만 비교하면 안 됩니다.</li><li>물체·힘은 두고 Δt만 .002→.019→.021초로 키웠습니다. 왼쪽은약±0.1m, 가운데는약±0.3m, 오른쪽은 수십만m까지 폭주합니다.</li><li>중간 힘을 너무 드물게 갱신하면 수치 계산이 에너지를 보탤 수 있기 때문입니다. .002초는0.5초에250걸음, .021초는약24걸음입니다. 오른쪽 큰 수를 실제 로봇의 힘이 커진 증거로 읽지 않습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+
+<p>좁은 징검다리를 큰 보폭으로 건너면 다음 돌을 지나칩니다. 빠르게 흔들리는 용수철도 큰 시간 간격으로 계산하면 움직임을 놓치고, 없는 에너지가 늘어나는 듯한 수치 불안정이 나타납니다. 이것은 물리 현상이 아니라 계산이 무너진 것입니다.</p>
+<div class="formula">ω = √(k/m),　주기 T = 2π/ω<br>교안 단순 진동 예: ω=100 rad/s → T≈0.0628s,　2/ω=0.020s</div>
+<p>ω는 진동의 각속도 척도, k는 용수철 강성, m은 질량입니다. 이 단순 선형 진동의 반암시적 오일러에서는 Δtω&lt;2가 안정성의 기준입니다. ω=100이면 2/ω=0.020초가 경계가 되고, 실제 표에서도 0.019초와 0.021초 사이에서 결과가 갈립니다. 다만 이것을 접촉이 많은 복잡한 로봇 전체에 그대로 적용하는 보편 공식으로 쓰지는 않습니다.</p>
+<div class="tablewrap"><table><tr><th>Δt</th><th>0.5초 동안 최대 거리, 교안</th><th>해석</th></tr><tr><td>0.002s</td><td>0.101m</td><td>이 예제에서 안정적</td></tr><tr><td>0.019s</td><td>0.32m</td><td>경계 가까이에서 오차가 큼</td></tr><tr><td>0.021s</td><td>7.86×10<sup>5</sup>m</td><td>계산 폭주, 현실 운동으로 읽으면 안 됨</td></tr></table></div>
+<p>적분법을 바꾼 실험도 있습니다. 감쇠가 큰 별도 예제(kv=300)에서 Euler와 RK4는 불안정 경고가 1번씩, implicitfast는 0번이었습니다. 2초 뒤 위치는 각각 0.0000m, 0.0000m, 0.0487m입니다. 여기서 <strong>경고 뒤에 0으로 출력된 값을 “정확히 원점에 수렴했다”라고 읽지 마십시오.</strong> 시뮬레이터가 불안정 상태를 재설정했을 가능성을 경고와 함께 읽어야 합니다.</p>
+<p class="point">“정확도가 높은 적분법”과 “지금처럼 강한 감쇠가 있는 문제에 안정적인 적분법”은 같은 말이 아닙니다. 기본 0.002초에서 시작해 간격을 키워 가며 비교하고, 강한 감쇠나 센 액추에이터가 있는 장면에서는 implicitfast 같은 방법을 검토합니다. 어떤 방법도 큰 간격을 안전하게 만드는 마법은 아닙니다.</p>
+<details><summary>0.021초 결과에서 팔이 수백 km 움직였다고 보고해야 할까?</summary><div class="inside">아닙니다. 물리적 발견보다 수치 불안정을 먼저 의심합니다. 경고, timestep, 힘·질량·관성 설정을 확인하고 더 작은 간격으로 다시 비교하십시오.</div></details>
+</div></details></section>
+
+<details id="active-day2-59-sensor"><summary>따라 해 보기 (선택): 센서 부호와 폭주 구분</summary><div class="inside">
+<p>첫 문제는 부호 계산입니다. 센서 축은 그대로 두고 세로 가속도만 바뀌는 상황이니, f=a−g에 각각 어떤 값이 들어가는지 적어 보십시오.</p>
+<div data-quiz-id="d59-check"></div>
+<p>두 번째는 숫자가 이상할 때의 조사 순서를 묻습니다. 이 차시에서 가장 자주 되돌아올 판단입니다.</p>
+<div data-quiz-id="d59-transfer"></div>
+<p class="check">손계산을 하나 더 해 보려면: 질량 2kg 상자가 정지해 있을 때 지지력 합은 19.62N입니다. 충돌 순간의 494N과 왜 다른지 “속도를 멈추는 데 걸린 시간”으로 설명해 보십시오.</p>
+</div></details>
+
+<details><summary>수업 근거/원문 보기</summary><div class="inside">
+<p class="small">센서 표와 충격 수치는 교안 출력입니다. f=a−g는 회전하지 않는 단순 축 예로 쓴 설명이며, 실제 장면은 센서 좌표계를 따릅니다.</p>
+<ul><li>교안 10차시: <a href="../../source-library/pdf/lecture-day2/pages/p0059.txt">59쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0060.txt">60쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0061.txt">61쪽</a></li><li>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0179.txt">PDF 179쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0192.txt">PDF 192쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/04-mujoco-basics.md">4.7~4.9절 원고</a></li><li>예제: b16_sensors.py, b18_contacts.py, b19_timestep.py, b20_integrators.py (교안 출력 인용)</li></ul>
+</div></details>

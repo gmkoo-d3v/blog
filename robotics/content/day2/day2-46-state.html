@@ -1,0 +1,59 @@
+<p class="lead">관절이 네 개인 팔에서 팔꿈치 각도를 읽으려고 <code>데이터.qpos[1]</code>을 썼더니 엉뚱한 값이 나옵니다. 코드가 틀린 것이 아닙니다. 관절 하나에 숫자 하나라고 가정한 것이 틀렸습니다. 구관절은 자세를 네 칸으로 적고, 자유 관절은 일곱 칸을 씁니다. 이번 차시는 <strong>상태를 적는 서랍의 칸 배치</strong>와, 그 서랍을 읽는 시점을 다룹니다.</p>
+<details><summary>이 장면에서 고정한 조건</summary><div class="inside"><p>앞 차시의 공 장면을 그대로 이어서 씁니다. 고정하는 것은 관절의 종류와 순서이고, 바뀌는 것은 각 관절이 몇 번째 칸을 차지하느냐입니다. 관절을 하나 더 붙이면 뒤에 오는 모든 관절의 번호가 밀립니다.</p></div></details>
+<section class="pdf-page" id="pdf-p46" data-pdf-page="46"><h3>qpos와 qvel은 길이가 다른 서랍이다</h3>
+<figure class="figure"><img src="assets/eli5-day2-state-addresses.svg" alt="같은 관절색을 따라 qpos와 qvel 시작 주소6과5를 비교"><figcaption>직사각형 폭은 해당 관절이 차지하는 숫자 칸 수입니다. 좌표축이나 실제 링크 길이가 아닙니다.</figcaption></figure>
+<aside class="figure-guide"><h3>보라색 자유 관절의 첫 칸을 찾아봅니다</h3><ol class="visual-steps"><li>같은 색은 같은 관절입니다. 위qpos는 자세, 아래qvel은 속도입니다. 관절 순서를 고정하고 위·아래 시작 번호만 비교합니다.</li><li>보라색은 위에서6, 아래에서5로 시작합니다. 앞의 구관절이 자세에는쿼터니언4칸, 속도에는3칸을 써서 한 칸 어긋났기 때문입니다.</li><li>free 자세는 data.qpos[6:13], 속도는 data.qvel[5:11]입니다. 주소를 외우는 대신 qposadr·dofadr를 물어보면 앞에 관절이 추가돼도 올바르게 읽습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+
+<p>“자세를 적는 숫자”와 “움직이는 속도를 적는 숫자”가 같은 개수일 필요는 없습니다. 문 경첩은 각도 하나, 각속도 하나면 끝이지만, 눈알처럼 방향을 바꾸는 구관절은 방향을 네 개의 수(쿼터니언)로 적고 회전 속도는 세 성분으로 적습니다.</p>
+<div class="tablewrap"><table><tr><th>관절</th><th>비유</th><th>qpos 칸</th><th>qvel 칸</th><th>의미</th></tr><tr><td>hinge</td><td>문 경첩</td><td>1</td><td>1</td><td>각도 rad / 각속도 rad/s</td></tr><tr><td>slide</td><td>서랍 레일</td><td>1</td><td>1</td><td>이동 m / 속도 m/s</td></tr><tr><td>ball</td><td>눈알처럼 방향 회전</td><td>4</td><td>3</td><td>쿼터니언 4수 / 각속도 3성분</td></tr><tr><td>free</td><td>던진 주사위</td><td>7</td><td>6</td><td>위치 3+쿼터니언 4 / 선속도 3+각속도 3</td></tr></table></div>
+<p>교안 순서 hinge→slide→ball→free에서 qpos는 <code>[0:1], [1:2], [2:6], [6:13]</code>을 차지하고, qvel의 시작 번호는 <code>0, 1, 2, 5</code>입니다. 합계는 <code>nq=13</code>, <code>nv=11</code>입니다. 관절이 네 개인데 배열이 13칸인 이유가 여기 있고, qvel은 11칸이라 두 배열의 길이도 다릅니다. 고정 선반은 관절이 없으므로 이 서랍에 칸을 차지하지 않습니다.</p>
+<p>번호를 외우는 대신 주소를 물어보는 편이 안전합니다.</p>
+<pre><code>관절 = 모델.joint("elbow")
+위치시작 = 관절.qposadr[0]
+속도시작 = 관절.dofadr[0]
+# hinge라면 각각 1칸을 읽는다
+각도 = 데이터.qpos[위치시작]
+각속도 = 데이터.qvel[속도시작]</code></pre>
+<p>첫 줄은 이름으로 관절을 찾고, 다음 두 줄은 자세 서랍과 속도 서랍에서 각각의 시작 주소를 찾습니다. <code>qposadr</code>와 <code>dofadr</code>를 같은 번호라고 가정하지 않는 것이 핵심입니다. 위 코드는 hinge 하나를 읽는 설명용이며, ball이나 free의 상태 전체를 읽으려면 각 타입의 칸 수만큼 슬라이스해야 합니다.</p>
+<details><summary>free 관절의 qvel은 왜 7칸이 아닐까?</summary><div class="inside">위치 3개와 방향을 표현하는 쿼터니언 4개가 자세 표현입니다. 실제 순간 회전 속도는 3축 성분으로 적으므로 선속도 3 + 각속도 3 = 6입니다. 쿼터니언 성분 네 개를 그대로 각속도라고 읽지 않습니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p47" data-pdf-page="47"><h3>size는 반 길이: 두 배로 착각하면 질량은 여덟 배</h3>
+<p>상자를 주문하며 “가운데에서 끝까지 10cm”라고 적으면 전체 길이는 20cm입니다. MJCF의 box size가 이 <strong>반 길이</strong>를 적는 방식입니다. 여기서 단위를 한 번 착각하면 질량이 여덟 배로 뛰고, 낙하·충돌·모터 힘까지 전부 달라집니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<div class="tablewrap"><table><tr><th>geom type</th><th>size가 뜻하는 것</th></tr><tr><td>sphere</td><td>반지름</td></tr><tr><td>capsule</td><td>반지름, 원통 부분 반 길이. fromto를 쓰면 두 끝점과 반지름으로 지정</td></tr><tr><td>cylinder</td><td>반지름, 반 높이</td></tr><tr><td>box</td><td>x·y·z 각 방향의 반 길이</td></tr><tr><td>plane</td><td>보이는 평면 x·y 반 길이와 표시용 격자 간격. 충돌 평면은 무한 평면으로 취급</td></tr></table></div>
+<div class="formula">질량 m = 밀도 ρ × 부피 V<br>상자 부피 = (2s<sub>x</sub>)(2s<sub>y</sub>)(2s<sub>z</sub>)</div>
+<p><code>size="0.1 0.1 0.1"</code>이면 부피는 0.2³=0.008m³이고, 기본 밀도 1000kg/m³를 곱하면 8kg입니다. 10cm 정육면체를 원했다면 <code>size="0.05 0.05 0.05"</code>라고 써야 하고 질량은 1kg입니다. 같은 상자인데 적는 숫자 하나 때문에 여덟 배 차이가 납니다.</p>
+<p>질량을 정하는 방법은 두 가지입니다. 밀도를 주거나 질량을 직접 줍니다. 교안의 같은 20cm 상자에 <code>density="20"</code>을 주면 스티로폼처럼 0.16kg이 되고, 공에 <code>mass="30"</code>을 직접 주면 30kg이 됩니다. 구의 4.189kg과 막대의 0.662kg는 각 예제의 모양과 치수에서 계산된 결과이지, “막대는 언제나 0.662kg” 같은 상수가 아닙니다.</p>
+<p>관성은 “돌리기 어려운 정도”입니다. 질량 총량뿐 아니라 질량이 어디에 퍼져 있는지에도 영향을 받습니다. 명시적인 관성 설정 없이 geom으로 질량을 추정하는 예제에서는 관성도 함께 계산됩니다.</p>
+<details><summary>모든 방향의 길이를 두 배로 하면 왜 질량이 여덟 배일까?</summary><div class="inside">가로·세로·높이 세 방향이 각각 두 배이므로 부피는 2×2×2=8배입니다. 밀도를 그대로 두면 질량도 8배가 됩니다.</div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p48" data-pdf-page="48"><h3>step은 시간 진행, forward는 현재 상태로 다시 계산</h3>
+<p>게임 캐릭터의 좌표를 코드로 바꿨는데 화면은 아직 예전 위치에 있는 상황을 떠올려 봅시다. 저장된 상태와, 그 상태로부터 계산해 둔 결과는 다릅니다. MuJoCo도 마찬가지여서 한 걸음 안에서 일어나는 일의 순서를 알아야 값을 제대로 읽습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<div class="steps"><span>현재 qpos·qvel</span><b>→</b><span>위치·힘·센서 계산</span><b>→</b><span>다음 qpos·qvel로 적분</span></div><p class="diagram-read">가운데 상자는 지금 상태로 계산한 값이고, 오른쪽은 적분한 새 상태입니다. 예제의0.200초에서 qpos높이0.8018m와 xpos높이0.8058m가 다른 이유가 이 순서입니다. forward는 가운데 상자만 새 qpos로 다시 계산하며 시간을 더하지 않습니다.</p>
+<p>한 걸음은 <strong>지금 상태로 위치·센서·접촉을 계산하고, 가속도를 구하고, 맨 끝에서 qpos와 qvel을 적분</strong>하는 순서로 진행됩니다. 그래서 step을 마친 직후에 읽는 xpos나 센서 값은 적분 직전, 즉 이번 걸음을 시작할 때의 상태를 반영합니다.</p>
+<div class="tablewrap"><table><tr><th>함수</th><th>시간</th><th>언제?</th></tr><tr><td>mj_step</td><td>한 걸음 진행</td><td>다음 순간을 계산할 때</td></tr><tr><td>mj_forward</td><td>진행하지 않음</td><td>현재 상태로 계산 결과를 갱신할 때</td></tr><tr><td>mj_resetData</td><td>초기 상태로 되돌림</td><td>같은 실험을 처음부터 다시 할 때</td></tr></table></div>
+<pre><code>mujoco.mj_step(모델, 데이터)
+mujoco.mj_forward(모델, 데이터)
+현재높이 = 데이터.body("ball").xpos[2]</code></pre>
+<p>첫 줄은 시간을 진행합니다. 둘째 줄은 진행된 상태에 맞춰 위치 같은 계산값을 갱신합니다. 셋째 줄은 이제 갱신된 세계 좌표의 z성분을 읽습니다. 여기서 <strong>이름 ball은 그 모델에 실제로 있어야</strong> 하며, 없으면 이름 조회가 실패합니다.</p>
+<p>교안 기본 예제에서 100걸음 뒤 시간은 0.200초이고 qpos의 높이는 0.8018m인데, step 직후 읽은 xpos는 0.8058m입니다. 한 걸음 전 위치가 남아 있다는 뜻입니다. forward를 부르면 xpos도 0.8018m가 됩니다. 이어서 qpos 높이를 0.3으로 직접 바꾸면 xpos는 0.8018m 그대로 있고, forward를 부른 뒤에야 0.3m가 됩니다. 상태를 바꾼 것과 계산 결과를 갱신한 것이 별개임을 보여 주는 장면입니다.</p>
+<p class="warning point">“step 직후에는 모든 값이 무조건 한 걸음 전”이라고 모든 적분기와 모든 필드에 일반화하지는 마십니다. 여기서는 교안의 기본 적분 예제로 동기화 문제를 설명합니다. 다만 <strong>현재 qpos에 대응하는 위치·센서·그림을 읽으려면 forward로 재계산한다</strong>는 습관은 그대로 가져갈 만합니다.</p>
+<details><summary>forward를 100번 부르면 0.2초가 흐를까?</summary><div class="inside">아닙니다. 시간 적분을 하지 않으므로 시간이 흐르지 않습니다. 교안은 forward를 3번 호출해도 시간 0, 높이 1m, 계산된 z가속도 −9.81m/s²임을 보여 줍니다.</div></details>
+</div></details></section>
+
+<details id="active-day2-46-state"><summary>따라 해 보기 (선택): 칸 수를 세고, 읽는 시점을 맞추기</summary><div class="inside">
+<p>본문을 읽었으니 같은 계산을 손으로 한 번 해 보십시오. 아래 문제는 관절을 하나 더 붙였을 때 배열이 어떻게 늘어나는지 묻습니다. 각 관절의 칸을 종이에 적고 더하면 실수를 줄일 수 있습니다.</p>
+<div data-quiz-id="d46-check"></div>
+<p>두 번째는 읽는 시점에 대한 문제입니다. 상태를 바꾼 직후와 계산을 갱신한 뒤를 구분해 보십시오.</p>
+<div data-quiz-id="d46-transfer"></div>
+<p class="check">box size는 반 길이입니다. size=0.05m라면 한 변이 0.10m라는 것을 실제로 그림을 그려 확인해 두면, 질량 계산에서 같은 착각을 반복하지 않습니다.</p>
+</div></details>
+
+<details><summary>수업 근거/원문 보기</summary><div class="inside">
+<p class="small">출처는 확인용입니다. 본문의 수치는 교안 출력이며 이 노트에서 다시 실행한 결과가 아닙니다.</p>
+<ul><li>교안 9차시: <a href="../../source-library/pdf/lecture-day2/pages/p0046.txt">46쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0047.txt">47쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0048.txt">48쪽</a></li><li>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0155.txt">PDF 155쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0161.txt">PDF 161쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/04-mujoco-basics.md">4.2~4.3절 원고</a></li><li>예제: b04_joint_types.py, b05_geom_mass.py, b07_step_forward.py (교안 출력 인용)</li></ul>
+</div></details>

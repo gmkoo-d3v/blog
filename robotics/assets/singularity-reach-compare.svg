@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+<title id="title">못 닿는 목표와 도달한 특이 자세는 다른 문제</title>
+<desc id="desc">길이 0.4미터와 0.3미터의 평면 팔. 0.8미터 목표는 도달 불가다. 손끝 0.7미터인 편 자세는 도달 가능하지만 그 순간 x속도는 만들지 못한다. 팔꿈치 90도인 자세는 x와 y의 독립 속도를 만들 수 있다.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="#526878"/></marker></defs>
+<style>text{font-family:'Malgun Gothic','Noto Sans KR',sans-serif;fill:#203944;font-size:21px}.title{font-size:29px;font-weight:700}.head{font-size:24px;font-weight:700}.small{font-size:18px}.panel{fill:#f7fafb;stroke:#d7e2e7;stroke-width:2}.axis{stroke:#a6b5bd;stroke-width:2}.arm1{stroke:#2878ac;stroke-width:12;stroke-linecap:round}.arm2{stroke:#d88330;stroke-width:12;stroke-linecap:round}.joint{fill:white;stroke:#203944;stroke-width:3}</style>
+<rect width="1120" height="520" fill="white"/><text x="30" y="45" class="title">목표의 위치와, 현재 자세의 움직임을 나누어 봅니다</text>
+<text x="30" y="80">같은 팔: L₁=0.4m, L₂=0.3m · 관절 제한과 장애물은 제외</text>
+<rect x="20" y="105" width="350" height="330" rx="14" class="panel"/>
+<rect x="385" y="105" width="350" height="330" rx="14" class="panel"/>
+<rect x="750" y="105" width="350" height="330" rx="14" class="panel"/>
+<text x="40" y="143" class="head">① 너무 먼 목표</text><text x="405" y="143" class="head">② 도달한 특이 자세</text><text x="770" y="143" class="head">③ 굽힌 비특이 자세</text>
+<g class="axis"><path d="M55 295H340M55 295V190"/><path d="M420 295H705M420 295V190"/><path d="M785 295H1070M785 295V190"/></g>
+<text x="333" y="321" class="small">x</text><text x="697" y="321" class="small">x</text><text x="1063" y="321" class="small">x</text>
+<path d="M55 295H175" class="arm1"/><path d="M175 295H265" class="arm2"/>
+<circle cx="55" cy="295" r="8" class="joint"/><circle cx="175" cy="295" r="8" class="joint"/>
+<path d="M287 285l20 20m0-20-20 20" stroke="#be4f45" stroke-width="4"/>
+<text x="215" y="250">목표 (0.8, 0)</text><text x="40" y="352">최대0.7m → 닿지 못함</text><text x="40" y="391" class="small">목표 위치의 도달 가능성 문제</text>
+<path d="M420 295H540" class="arm1"/><path d="M540 295H630" class="arm2"/>
+<circle cx="420" cy="295" r="8" class="joint"/><circle cx="540" cy="295" r="8" class="joint"/><circle cx="630" cy="295" r="7" fill="#267e69"/>
+<path d="M630 278V205M630 312V333" stroke="#526878" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="568" y="183">vᵧ 가능</text><text x="574" y="350">(0.7, 0)</text>
+<text x="405" y="387">도달함 · 그 순간 vₓ=0</text><text x="405" y="418" class="small">q=(0°, 0°), rank J=1</text>
+<path d="M785 295H905" class="arm1"/><path d="M905 295V205" class="arm2"/>
+<circle cx="785" cy="295" r="8" class="joint"/><circle cx="905" cy="295" r="8" class="joint"/><circle cx="905" cy="205" r="7" fill="#267e69"/>
+<path d="M925 205H1010M905 185V157" stroke="#526878" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="957" y="187">vₓ</text><text x="918" y="166">vᵧ</text><text x="935" y="254">(0.4, 0.3)</text>
+<text x="770" y="352">두 독립 속도 방향 가능</text><text x="770" y="391" class="small">q=(0°, 90°), rank J=2</text>
+<text x="30" y="477">특이점은 “못 가는 목표점”의 이름이 아니라, 순간 움직임의 독립 방향이 줄어든 자세입니다.</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 350" width="760" height="350" role="img" aria-label="시작 자세 90도 -30도에서 반복할 때 남은 거리 변화. 0.502, 0.743, 0.265, 0.0644, 0.00542, 4.95e-5, 4.99e-9, 5.6e-17미터로 줄어든다. 첫 걸음에서는 오차가 커진다.">
+  <rect width="760" height="350" fill="#fbfaf6"/>
+  <text x="70" y="26" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="13" fill="#20343d" font-weight="700">남은 거리 (m) · 로그 축</text>
+  <text x="700" y="26" text-anchor="end" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="12" fill="#5c6c72">왼쪽 = 큰 오차, 오른쪽 = 작은 오차</text>
+
+  <g stroke="#dce3df" stroke-width="1">
+    <line x1="70" y1="36" x2="70" y2="292"/>
+    <line x1="182.9" y1="36" x2="182.9" y2="292"/>
+    <line x1="295.9" y1="36" x2="295.9" y2="292"/>
+    <line x1="408.8" y1="36" x2="408.8" y2="292"/>
+    <line x1="521.8" y1="36" x2="521.8" y2="292"/>
+    <line x1="634.7" y1="36" x2="634.7" y2="292"/>
+  </g>
+
+  <g font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="11" fill="#5c6c72">
+    <text x="60" y="52" text-anchor="end">0회</text>
+    <text x="60" y="84" text-anchor="end">1회</text>
+    <text x="60" y="116" text-anchor="end">2회</text>
+    <text x="60" y="148" text-anchor="end">3회</text>
+    <text x="60" y="180" text-anchor="end">4회</text>
+    <text x="60" y="212" text-anchor="end">5회</text>
+    <text x="60" y="244" text-anchor="end">6회</text>
+    <text x="60" y="276" text-anchor="end">7회</text>
+  </g>
+
+  <line x1="70" y1="300" x2="712" y2="300" stroke="#20343d" stroke-width="1.2"/>
+  <g font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="11" fill="#5c6c72" text-anchor="middle">
+    <text x="70" y="318">1</text>
+    <text x="182.9" y="318">10⁻³</text>
+    <text x="295.9" y="318">10⁻⁶</text>
+    <text x="408.8" y="318">10⁻⁹</text>
+    <text x="521.8" y="318">10⁻¹²</text>
+    <text x="634.7" y="318">10⁻¹⁵</text>
+  </g>
+
+  <polyline points="81.3,48 74.9,80 91.7,112 137.4,144 155.3,176 232.1,208 382.6,240 682,272"
+            fill="none" stroke="#286b5d" stroke-width="2.2" stroke-linejoin="round"/>
+
+  <g>
+    <circle cx="81.3" cy="48" r="4.5" fill="#ce7229"/>
+    <circle cx="74.9" cy="80" r="4.5" fill="#ce7229"/>
+    <circle cx="91.7" cy="112" r="4.5" fill="#286b5d"/>
+    <circle cx="137.4" cy="144" r="4.5" fill="#286b5d"/>
+    <circle cx="155.3" cy="176" r="4.5" fill="#286b5d"/>
+    <circle cx="232.1" cy="208" r="4.5" fill="#286b5d"/>
+    <circle cx="382.6" cy="240" r="4.5" fill="#286b5d"/>
+    <circle cx="682" cy="272" r="4.5" fill="#286b5d"/>
+  </g>
+
+  <g font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="12" fill="#20343d">
+    <text x="90.3" y="52">0.502</text>
+    <text x="84" y="96">0.743</text>
+    <text x="100.7" y="116">0.265</text>
+    <text x="146.4" y="148">0.0644</text>
+    <text x="164.3" y="180">0.00542</text>
+    <text x="241.1" y="212">4.95e-5</text>
+    <text x="391.6" y="244">4.99e-9</text>
+    <text x="691" y="276">5.6e-17</text>
+  </g>
+
+  <g font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="11.5" fill="#ce7229">
+    <text x="108" y="72">첫 걸음에서 오차가 커짐</text>
+  </g>
+</svg>

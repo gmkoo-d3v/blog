@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 780" role="img" aria-labelledby="title desc">
+<title id="title">관절 속도 원을 야코비안으로 보내면 손끝 속도 타원이 된다</title>
+<desc id="desc">관절 속도 벡터 크기를 1라디안 매초로 맞춘 입력 원에 J를 곱한다. 팔꿈치 90도에서는 긴 반축 0.5389, 짧은 반축 0.2227의 기울어진 속도 타원이다. 팔꿈치 0도에서는 짧은 특이값이 0이 되어 세로 선분이 된다.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8" fill="#526878"/></marker></defs>
+<style>text{font-family:'Malgun Gothic','Noto Sans KR',sans-serif;fill:#203944;font-size:21px}.title{font-size:28px;font-weight:700}.head{font-size:24px;font-weight:700}.small{font-size:18px}.axis{stroke:#b0bec6;stroke-width:2}.flow{fill:none;stroke:#526878;stroke-width:3;marker-end:url(#arrow)}.long{stroke:#2878ac;stroke-width:4}.short{stroke:#d88330;stroke-width:4}</style>
+<rect width="1120" height="780" fill="white"/>
+<text x="30" y="45" class="title">입력: 관절 속도 한 묶음 → J → 출력: 손끝의 순간 속도</text>
+<text x="30" y="83">길이 0.4m·0.3m 평면 팔 · 원과 타원은 서로 다른 속도 공간입니다.</text>
+<text x="48" y="235" class="head">같은 관절 속도 크기</text>
+<path d="M60 345H315M180 455V250" class="axis"/>
+<circle cx="180" cy="345" r="80" fill="#edf5f9" stroke="#526878" stroke-width="3"/>
+<path d="M180 345L244 297" stroke="#526878" stroke-width="4" marker-end="url(#arrow)"/>
+<text x="276" y="370">q̇₁</text><text x="191" y="271">q̇₂</text><text x="214" y="317" class="small">한 입력</text>
+<text x="55" y="488">‖q̇‖₂ = 1 rad/s</text><text x="55" y="522" class="small">어깨·팔꿈치 속도를 나누어 줌</text>
+<path d="M330 328L470 215H545" class="flow"/><path d="M330 362L470 570H545" class="flow"/>
+<text x="377" y="238">J(q)를 곱함</text><text x="377" y="540">J(q)를 곱함</text>
+<text x="555" y="128" class="head">굽힌 자세 q=(0°, 90°)</text>
+<path d="M590 220H895M750 323V145" class="axis"/>
+<text x="895" y="245">vₓ</text><text x="760" y="155">vᵧ</text>
+<ellipse cx="750" cy="220" rx="97.0025" ry="40.0815" transform="rotate(42.62 750 220)" fill="#e6f2ef" stroke="#267e69" stroke-width="3"/>
+<path d="M750 220L821.38 285.68" class="long"/><path d="M750 220L777.14 190.50" class="short"/>
+<text x="929" y="193" fill="#2878ac">긴 반축</text><text x="929" y="224">σ_max ≈ 0.5389</text><text x="929" y="269" fill="#d88330">짧은 반축</text><text x="929" y="300">σ_min ≈ 0.2227</text>
+<text x="557" y="353" class="small">둘 다 양수: 두 방향이 남음 · 반축은 x/y축과 기울어짐</text>
+<text x="555" y="405" class="head">편 자세 q=(0°, 0°)</text>
+<path d="M590 570H895M750 714V440" class="axis"/>
+<text x="895" y="595">vₓ</text><text x="760" y="450">vᵧ</text>
+<path d="M750 432.916V707.084" stroke="#2878ac" stroke-width="6"/>
+<circle cx="750" cy="570" r="5" fill="#d88330"/>
+<text x="810" y="500">σ_max ≈ 0.7616</text><text x="810" y="540">σ_min = 0</text><text x="810" y="580">타원 → 선분</text><text x="810" y="620" class="small">이 자세에서는 vₓ=0</text>
+<text x="30" y="750" class="small">σ의 단위는 m/rad. 입력 크기 1rad/s에서 반축 속력은 각각 σ×1rad/s입니다. 위치 도달 영역이 아닙니다.</text>
+</svg>

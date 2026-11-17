@@ -1,0 +1,79 @@
+<p class="lead">벽을 보고 움직이는 청소기에서 시작합니다. 명령한 자리·진짜 자리·센서가 보고한 자리를 나눠 봅니다.</p><section class="pdf-page" id="day1-p01" data-source="lecture-day1-revised" data-pdf-page="1"><h2>벽에 다가가던 청소기가 방향을 바꿉니다</h2>
+
+<figure class="figure"><svg style="display:block;width:100%;height:auto" viewBox="0 0 800 225" role="img" aria-label="고정된 벽 앞 청소기. 거리 0.45미터에서는 전진하고 0.15미터에서는 제자리 회전을 선택한다.">
+<defs><marker id="eli5-day1-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#135f9a"/></marker></defs>
+<rect width="800" height="225" fill="#f4f9fc" rx="12"/><path d="M400 15V210" stroke="#c7d9e4" stroke-width="2"/>
+<g font-family="sans-serif" font-size="24" fill="#173c51"><text x="20" y="35">멀 때</text><text x="420" y="35">가까울 때</text><text x="309" y="35">벽</text><text x="709" y="35">벽</text></g>
+<path d="M345 60V177M745 60V177" stroke="#506273" stroke-width="12"/>
+<g fill="#9bc9ee" stroke="#135f9a" stroke-width="3"><circle cx="130" cy="105" r="35"/><circle cx="650" cy="105" r="35"/></g>
+<g fill="#135f9a"><path d="M150 96L162 105L150 114Z"/><path d="M670 96L682 105L670 114Z"/></g>
+<path d="M165 105H339M685 105H739" stroke="#b7740c" stroke-width="4" stroke-dasharray="7 5"/>
+<g font-family="sans-serif" font-size="24" fill="#8d5705"><text x="194" y="87">0.45m</text><text x="664" y="63">0.15m</text></g>
+<path d="M105 165H183" stroke="#135f9a" stroke-width="4" marker-end="url(#eli5-day1-arrow)"/><path d="M647 131A27 27 0 1 1 623 102" fill="none" stroke="#135f9a" stroke-width="4" marker-end="url(#eli5-day1-arrow)"/>
+<g font-family="sans-serif" font-size="24" fill="#173c51"><text x="111" y="200">전진</text><text x="551" y="200">제자리 회전</text></g>
+</svg><figcaption>벽은 고정입니다. 청소기가 다가가며 센서 거리가 줄면, 같은 규칙이 다른 행동을 고릅니다.</figcaption></figure><p>노란 점선은 센서가 잰 앞 거리, 파란 화살표는 고른 행동입니다. <strong>잰다 → 고른다 → 움직인다 → 다시 잰다.</strong> 아래 고리 그림은 이 청소기의 일을 상자로 나눈 것입니다.</p>
+<details><summary>이 수업에서 단순화한 몸과 목표</summary><div class="inside">
+
+<p>책상 위 로봇이 (0,0)에 있고 목표가 (2,1)m에 있다고 합시다. 이번 수업에서는 로봇의 몸을 점 하나로 줄이고, 어느 방향으로든 속도를 낼 수 있다고 가정합니다. 바퀴의 방향 제약은 잠시 생략합니다. 먼저 한 걸음이 무엇인지 보고, 그 걸음을 반복해 목표에 가는 코드를 읽겠습니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p02" data-source="lecture-day1-revised" data-pdf-page="2"><h2>오늘의 길: 점 로봇에서 카메라가 본 컵까지</h2>
+
+<p>먼저 움직이는 고리를 보고, 그다음 몸·센서·시간을 봅니다. 뒤에서는 같은 컵을 방·로봇·카메라의 눈금자로 읽습니다.</p>
+<details><summary>오늘의 흐름과 설치 안내</summary><div class="inside"><p>먼저 감지·판단·행동을 연결하고, 모터·센서·제어 주기가 만드는 차이를 봅니다. 그다음 좌표의 기준과 회전을 익혀 카메라가 본 컵을 방 좌표로 옮깁니다. 이 기초가 다음 날 관절각으로 손끝 위치를 계산하는 데 이어집니다.</p>
+<p>실습은 기존 <code>수업1일차.md</code>의 배포 코드 이름을 따릅니다. 가상환경을 이미 준비했다면 반복 설치하지 않습니다. 배포본의 <code>코드묶음</code>에서 <code>uv sync --python 3.12</code>, 그 안의 <code>vol3</code>에서 예제를 실행하는 구조입니다. 웹 설명과 수식은 설치 없이 읽을 수 있습니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p03" data-source="lecture-day1-revised" data-pdf-page="3"><h2>세 동사를 한 박자로 묶습니다</h2>
+<figure class="figure"><a href="../../source-library/local-day1/01-what-is-a-robot/s05_loop_diagram.png"><img loading="lazy" src="../../source-library/local-day1/01-what-is-a-robot/s05_loop_diagram.png" alt="감지 → 판단 → 행동 뒤에 세상이 바뀌고, 새 측정이 다음 판단으로 돌아옵니다."></a><figcaption>감지 → 판단 → 행동 뒤에 세상이 바뀌고, 새 측정이 다음 판단으로 돌아옵니다. 그림을 누르면 크게 볼 수 있습니다.</figcaption></figure>
+<aside class="figure-guide"><ol class="visual-steps"><li>위의 <strong>감지 → 판단 → 행동</strong>을 따라갑니다. 청소기는 앞을 재고, 갈지 돌지 고른 뒤, 바퀴를 굴립니다.</li><li>벽은 그대로인데 몸이 다가가면 거리가 줄어듭니다. 아래 <strong>세상</strong>에서 왼쪽으로 돌아오는 파란 선은 그 새 거리를 다시 재는 길입니다.</li><li>아래 오른쪽에는 몸에서 판단으로 돌아오는 파란 선이 있습니다. 이 연결 덕분에 <strong>방금 움직인 결과로 다음 명령을 고칩니다.</strong></li></ol></aside>
+<details><summary>고리를 말과 코드로 연결하기</summary><div class="inside">
+
+
+<p>청소기가 앞 거리를 <strong>잽니다</strong>. 0.2m보다 가까운지 보고 행동을 <strong>고릅니다</strong>. 바퀴를 <strong>움직입니다</strong>. 움직였으니 앞 거리가 달라졌을 수 있어 다시 잽니다. 이 되돌아오는 연결이 고리입니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p04" data-source="lecture-day1-revised" data-pdf-page="4"><h2>측정값 한 개가 행동을 바꿉니다</h2>
+
+<p>벽과 안전선은 그대로 둡니다. 앞이 넉넉하면 전진, 가까워지면 회전합니다. <strong>0.45m → 전진 / 0.15m → 회전.</strong> 바뀐 센서값이 다음 행동을 바꿉니다.</p>
+<details><summary>거리 두 개를 코드에 넣어 보기</summary><div class="inside"><p>안전 거리를 0.2m로 두겠습니다. 앞 거리 0.45m에서는 전진하고 0.15m에서는 회전합니다. 같은 프로그램인데 바깥에서 들어온 숫자가 달라 행동이 바뀌었습니다. 여기서 비교하는 세탁기 코드는 시간표만 실행하도록 단순화한 예입니다. 실제 세탁기의 센서 유무를 분류하는 정의로 받아들이지는 마세요.</p><pre><code>거리 = 0.15  # 센서가 준 m
+행동 = &quot;앞으로 간다&quot; if 거리 &gt; 0.2 else &quot;제자리에서 돈다&quot;</code></pre><p>따라 하기: <code>거리</code>를 0.45로 한 번 바꿉니다. 비교의 대상은 로봇의 이동량이 아니라 <strong>판단에 들어가는 센서값</strong>입니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p05" data-source="lecture-day1-revised" data-pdf-page="5"><h2>미리 정한 명령과 매번 고친 명령</h2>
+
+<p>“다섯 번 가”만 예약하면 열린 고리입니다. 한 번 갈 때마다 보고 “이제 조금만 가”로 고치면 닫힌 고리입니다.</p>
+<details><summary>열린 고리와 닫힌 고리의 뜻</summary><div class="inside"><p>열린 고리는 출발 전에 정한 명령을 끝까지 보냅니다. 닫힌 고리는 움직인 결과를 재서 다음 명령에 반영합니다. 피드백은 이 “재서 되돌려 넣기”입니다. 닫힌 고리를 쓴다고 모터가 더 강해지거나 센서가 저절로 정확해지지는 않습니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p06" data-source="lecture-day1-revised" data-pdf-page="6"><h2>한 걸음: 진짜 위치와 잰 위치를 분리합니다</h2>
+<figure class="figure"><a href="../../source-library/local-day1/01-what-is-a-robot/s06_point_robot_step.png"><img loading="lazy" src="../../source-library/local-day1/01-what-is-a-robot/s06_point_robot_step.png" alt="검은 출발점에서 명령 이동과 실제 이동이 갈라지고, 실제 위치 주변으로 센서 측정이 흔들립니다."></a><figcaption>검은 출발점에서 명령 이동과 실제 이동이 갈라지고, 실제 위치 주변으로 센서 측정이 흔들립니다. 그림을 누르면 크게 볼 수 있습니다.</figcaption></figure>
+<aside class="figure-guide"><ol class="visual-steps"><li><strong>검은 점</strong>에서 출발합니다. 회색 점선 끝은 명령한 도착점, 파란 끝은 실제 도착점입니다. 미끄러져 둘이 갈라졌습니다.</li><li>몸을 파란 끝에 세워 둔 채 여러 번 재면 하늘색 점처럼 흔들립니다. <strong>잰 자리도 진짜 자리와 다를 수 있습니다.</strong></li><li>아래 계산의 속도×0.1초는 회색 명령 이동입니다. 실제 이동과 센서값은 그다음에 따로 만듭니다.</li></ol></aside>
+<details><summary>숫자로 한 걸음 계산하기</summary><div class="inside">
+
+
+<p>목표 방향은 (2,1)/√5 ≈ (0.8944,0.4472)입니다. 최대 속도 0.5를 곱하면 속도 명령 (0.4472,0.2236)m/s, 0.1초를 곱하면 이동 (0.04472,0.02236)m입니다. 미끄러짐이 없을 때만 진짜 이동이 이 값과 같습니다.</p><div class="formula">방향 = (목표−위치)/‖목표−위치‖<br>이동(m) = 제한된 속도(m/s) × 주기(s)</div><p><code>움직이기</code>는 시뮬레이터 안의 진짜 위치를 갱신하고, <code>위치_재기</code>는 판단에 줄 측정값을 만듭니다. 실물 로봇에서는 이 진짜 위치를 이렇게 쉽게 꺼내지 못합니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p07" data-source="lecture-day1-revised" data-pdf-page="7"><h2>열린 고리는 45걸음을 미리 예약합니다</h2>
+
+<p>출발할 때 같은 걸음 45개를 미리 정해 둡니다. 중간에 덜 가도 다시 재지 않으므로 예약한 명령은 그대로 나갑니다.</p>
+<details><summary>같은 명령 45번을 코드로 적기</summary><div class="inside"><p>거리는 √5 ≈ 2.23607m입니다. 한 걸음 0.05m이므로 44.721걸음이 필요하지만 정수 걸음으로 45번 보냅니다. 총 이동 2.25m, 끝 위치 약 (2.01246,1.00623), 남은 거리 약 0.01393m입니다. 완벽한 조건에서도 반올림 때문에 조금 지나갑니다.</p><pre><code>거리 = np.linalg.norm(목표 - 시작)
+방향 = (목표 - 시작) / 거리
+명령_횟수 = round(거리 / (0.5 * 0.1))
+# 반복 중 위치를 재지 않고 같은 속도 명령을 45번 보낸다</code></pre><p>출발점과 목표가 같으면 거리로 나눌 수 없으므로 먼저 정지 처리해야 합니다. 지금 예는 거리가 0이 아닌 경우입니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p08" data-source="lecture-day1-revised" data-pdf-page="8"><h2>닫힌 고리는 남은 거리로 다음 속도를 만듭니다</h2>
+
+<p>컵은 가만히 둡니다. 멀 때는 크게, 가까워지면 작게 움직입니다. 남은 간격을 매번 다시 재기 때문에 마지막 걸음도 작게 고를 수 있습니다.</p>
+<details><summary>남은 거리로 속도 명령 만들기</summary><div class="inside"><p>같은 목표에 <code>속도_명령 = 1.5*(목표−잰_위치)</code>를 씁니다. 처음에는 남은 거리가 커서 명령의 크기가 3.354m/s이지만, 모터 모형이 0.5m/s로 줄입니다. 목표까지 0.1m가 남으면 명령은 0.15m/s, 다음 0.1초 이동은 0.015m가 됩니다.</p><pre><code>잰_위치 = 위치_재기(위치)
+속도_명령 = 1.5 * (목표 - 잰_위치)
+위치 = 움직이기(위치, 속도_명령, 0.1)</code></pre><p>이득 1.5의 단위는 1/s입니다. m에 곱해 m/s를 만듭니다. <code>속도_제한</code>은 각 성분을 따로 자르지 않고 벡터 길이를 줄여 목표 방향을 유지합니다.</p></div></details></section>
+
+<section class="pdf-page" id="day1-p09" data-source="lecture-day1-revised" data-pdf-page="9"><h2>처음엔 같은 크기, 가까워지면 작은 걸음</h2>
+<figure class="figure"><a href="../../source-library/local-day1/01-what-is-a-robot/s07_open_closed_steps.png"><img loading="lazy" src="../../source-library/local-day1/01-what-is-a-robot/s07_open_closed_steps.png" alt="위는 같은 크기의 열린 고리 걸음, 아래는 가까워질수록 줄어드는 닫힌 고리 걸음입니다. 가로축은 목표로 향하는 선 위의 거리입니다."></a><figcaption>위는 같은 크기의 열린 고리 걸음, 아래는 가까워질수록 줄어드는 닫힌 고리 걸음입니다. 가로축은 목표로 향하는 선 위의 거리입니다. 그림을 누르면 크게 볼 수 있습니다.</figcaption></figure>
+<aside class="figure-guide"><ol class="visual-steps"><li>빨간 목표선은 그대로 둡니다. 위·아래 모두 <strong>점 하나에서 다음 점까지 0.1초</strong>입니다.</li><li>위는 끝까지 같은 간격, 아래는 목표 가까이서 촘촘해집니다. <strong>시간이 줄어서가 아니라 속도가 줄어서</strong> 짧게 갔습니다.</li><li>오른쪽 주황 선은 남은 거리로 속도를 고릅니다. 0.2m 남으면 0.3m/s, 한 걸음은 0.03m입니다. 파란 점선은 최대 속도입니다.</li></ol></aside>
+<details><summary>속도 그래프와 한 걸음 검산</summary><div class="inside">
+
+
+<p>경계는 1.5×남은 거리=0.5, 즉 약 0.3333m입니다. 이보다 멀면 포화되어 최대 속도, 가까우면 거리에 비례한 속도입니다. 그림의 줄어드는 간격은 제어 주기가 달라진 것이 아니라 같은 0.1초 동안 느리게 움직인 결과입니다.</p>
+<p>따라 하기: 남은 거리 0.2m를 대입하면 명령 0.3m/s, 한 걸음 0.03m입니다. <code>b03_closed_loop.py</code>의 기록에서 가까워질수록 이동 간격이 줄어드는 부분을 찾아 이 계산에 연결해 보세요.</p><details class="self-check"><summary>선택 확인 · 0.1초를 0.2초로 바꾸면 이 한 걸음은?</summary><div class="inside"><p>속도 명령이 그대로 0.3m/s라면 이동은 0.06m입니다. 주기를 바꾸면 한 번 판단한 명령을 유지하는 시간도 바뀝니다.</p></div></details></div></details></section><details class="sources"><summary>수업 근거와 원문 보기</summary><div class="inside"><p>교안·교과서·기존 1일차 필기와 그림을 하나의 설명 흐름으로 재구성했습니다. 아래 쪽수는 PDF 파일의 페이지 순서입니다. 예전 그림 안의 슬라이드 쪽수는 수정 전 교안의 번호일 수 있습니다.</p>
+<p>교안: <a href="../../source-library/pdf/lecture-day1-revised/pages/p0001.txt">1쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0002.txt">2쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0003.txt">3쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0004.txt">4쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0005.txt">5쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0006.txt">6쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0007.txt">7쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0008.txt">8쪽</a>, <a href="../../source-library/pdf/lecture-day1-revised/pages/p0009.txt">9쪽</a></p>
+<p>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0011.txt">11쪽</a>, <a href="../../source-library/pdf/robot-textbook/pages/p0013.txt">13쪽</a>, <a href="../../source-library/pdf/robot-textbook/pages/p0014.txt">14쪽</a>, <a href="../../source-library/pdf/robot-textbook/pages/p0015.txt">15쪽</a>, <a href="../../source-library/pdf/robot-textbook/pages/p0016.txt">16쪽</a>, <a href="../../source-library/pdf/robot-textbook/pages/p0017.txt">17쪽</a>, <a href="../../source-library/pdf/robot-textbook/pages/p0018.txt">18쪽</a></p>
+<p><a href="../../source-library/local-day1/수업1일차.md">기존 실습 필기와 파일명·축 약속 교정</a>. 그림과 코드는 기존 학습 폴더의 보관 사본에서 필요한 부분만 재사용했습니다.</p>
+<p>재사용 자료: <a href="../../source-library/local-day1/01-what-is-a-robot/s05_loop_diagram.png">s05_loop_diagram.png</a>, <a href="../../source-library/local-day1/01-what-is-a-robot/s06_point_robot_step.png">s06_point_robot_step.png</a>, <a href="../../source-library/local-day1/01-what-is-a-robot/s07_open_closed_steps.png">s07_open_closed_steps.png</a>, <a href="../../source-library/local-day1/01-what-is-a-robot/point_robot.py">point_robot.py</a></p>
+<p>그림의 난수 통계와 MuJoCo 출력은 교안의 해당 실험 조건에서 나온 값입니다. 본문의 손계산 예는 조건을 함께 적었습니다.</p></div></details>

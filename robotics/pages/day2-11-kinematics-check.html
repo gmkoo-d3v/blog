@@ -1,0 +1,67 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>특이점 실습과 기구학 전체 정리 · 로봇 공부 노트</title><link rel="stylesheet" href="../styles/study.css"></head><body><a class="skip-link" href="#lesson-content">본문으로 건너뛰기</a><div class="layout"><aside><div class="brand">ROBOTICS · STUDY NOTES</div><details class="site-menu" open><summary>학습 목차 열기·닫기</summary><nav aria-label="학습 목차"><a href="../index.html">학습 시작</a><a href="day1-coverage.html">1일차 교안 쪽에서 찾기</a><a href="coverage.html">2일차 교안 쪽에서 찾기</a><a href="simulator.html">2D 작업 공간 실험 ↗</a><a href="dh-lab.html">DH 3D 실험실 ↗</a><a href="jacobian-lab.html">야코비안 실험실 ↗</a><details class="nav-group"><summary>1일차 · 1차시 · 감지와 제어</summary><a href="day1-01-loop.html"><span>재고, 고르고, 한 걸음 움직이기</span><small>PDF p.1–9</small></a></details><details class="nav-group"><summary>1일차 · 1차시 · 피드백</summary><a href="day1-02-feedback.html"><span>미끄러져도 다시 가는 이유와 센서의 한계</span><small>PDF p.10–15</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 몸과 부품</summary><a href="day1-03-body.html"><span>몸의 자유도와 모터·센서 숫자 읽기</span><small>PDF p.16–22</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 제어 주기</summary><a href="day1-04-timing.html"><span>같은 판단도 박자가 다르면 흔들립니다</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 물리와 모델</summary><a href="day1-05-simulation.html"><span>떨어지는 상자로 시뮬레이션의 뜻 읽기</span><small>PDF p.29–35</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 안전과 회피</summary><a href="day1-06-avoidance.html"><span>모르면 멈추고, 장애물 옆으로 돌아갑니다</span><small>PDF p.36–41</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 좌표와 평면 회전</summary><a href="day1-07-frames-rotation.html"><span>같은 컵의 좌표와 회전행렬의 두 열</span><small>PDF p.42–46</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 3차원 회전</summary><a href="day1-08-camera.html"><span>카메라에서 몸으로: 열 세 개와 전치의 방향</span><small>PDF p.47–48</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 자세 표현</summary><a href="day1-09-euler.html"><span>롤·피치·요의 순서와 회전 벡터</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 쿼터니언</summary><a href="day1-10-quaternion.html"><span>숫자 넷으로 회전을 잇고 부드럽게 바꾸기</span><small>PDF p.55–59</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 동차 변환</summary><a href="day1-11-transform.html"><span>카메라가 본 컵을 방 좌표로 옮기기</span><small>PDF p.60–62</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 자이로와 정리</summary><a href="day1-12-gyro.html"><span>각속도를 쌓아 자세를 추적하고 하루를 연결하기</span><small>PDF p.63–68</small></a></details><details class="nav-group"><summary>6차시 · 순기구학</summary><a href="day2-01-questions.html"><span>로봇팔에게 묻는 두 가지 질문</span><small>PDF p.1–5</small></a><a href="day2-02-two-links.html"><span>막대 두 개로 손끝과 작업 공간 찾기</span><small>PDF p.6–8</small></a><a href="day2-03-spatial-arm.html"><span>관절 여섯 개도 작은 변환을 이어 붙입니다</span><small>PDF p.9–12</small></a></details><details class="nav-group"><summary>6차시 · 실습과 확인</summary><a href="day2-04-fk-practice.html"><span>순기구학 실습을 손계산으로 풀어 보기</span><small>PDF p.13–15</small></a></details><details class="nav-group"><summary>7차시 · 역기구학</summary><a href="day2-05-inverse.html"><span>손끝에서 거꾸로 관절각 찾기</span><small>PDF p.16–18</small></a></details><details class="nav-group"><summary>7차시 · 야코비안</summary><a href="day2-06-jacobian.html"><span>조금 돌렸을 때 얼마나 움직일까</span><small>PDF p.19–22</small></a></details><details class="nav-group"><summary>7차시 · 수치 계산과 실습</summary><a href="day2-07-numerical-ik.html"><span>목표에 조금씩 다가가는 역기구학</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>8차시 · 특이점</summary><a href="day2-08-singularity.html"><span>팔을 쭉 펴면 왜 계산이 어려워질까</span><small>PDF p.29–33</small></a></details><details class="nav-group"><summary>8차시 · 한계와 검산</summary><a href="day2-09-limits.html"><span>관절의 한계와 남는 자유도</span><small>PDF p.34–36</small></a></details><details class="nav-group"><summary>8차시 · 경로</summary><a href="day2-10-path.html"><span>한 점에서 선과 하트로 이어 가기</span><small>PDF p.37–38</small></a></details><details class="nav-group" open><summary>8차시 · 실습과 확인</summary><a href="day2-11-kinematics-check.html" aria-current="page"><span>특이점 실습과 기구학 전체 정리</span><small>PDF p.39–41</small></a></details><details class="nav-group"><summary>9차시 · MuJoCo</summary><a href="day2-42-mujoco.html"><span>컴퓨터 속 실험실과 장면 조립</span><small>PDF p.42–45</small></a><a href="day2-46-state.html"><span>상태의 칸, 크기, 한 걸음의 의미</span><small>PDF p.46–48</small></a><a href="day2-49-check.html"><span>낙하와 마찰로 채점하고 장면 찍기</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>10차시 · 모터·센서</summary><a href="day2-55-actuator.html"><span>로봇의 위치를 읽고 모터에 목표 주기</span><small>PDF p.55–58</small></a><a href="day2-59-sensor.html"><span>센서, 충돌, 시뮬레이션 안정성</span><small>PDF p.59–61</small></a><a href="day2-62-push.html"><span>두 관절 팔로 상자를 밀어 보기</span><small>PDF p.62–65</small></a><a href="day2-66-review.html"><span>확인 문제와 2일차 전체 연결</span><small>PDF p.66–68</small></a></details><details class="nav-group"><summary>수업 중 헷갈렸던 것</summary><a href="links.html">막대 두 개를 움직이면 맨 끝은 어디에 있을까요?</a><a href="workspace.html">팔이 닿는 곳과 못 닿는 곳</a><a href="transform.html">돌리기와 옮기기를 한 번에</a><a href="rotation.html">“코사인 사인, 사인 코사인” 부호 하나를 기억하세요.</a><a href="frames.html">좌표계를 연결하는 것은 설명을 번역하는 것</a><a href="radians.html">거리 단위가 아니라 각도 단위</a><a href="parent.html">부모를 움직이면 연결된 자식도 따라옵니다.</a><a href="dh.html">DH 규약으로 로봇의 좌표계 연결하기</a><a href="dh-lab.html">DH 네 값을 직접 바꾸는 3D 실험실</a><a href="jacobian-code.html">야코비안 코드, 한 줄씩 이해하기</a><a href="jacobian-lab.html">각도·코드·손끝 속도를 잇는 야코비안 실험실</a></details></nav></details></aside><main id="lesson-content"><header><div class="eyebrow">PDF p.39–41 · 8차시 · 실습과 확인</div><h1>특이점 실습과 기구학 전체 정리</h1><div class="path">시범 보기 → 따라 하기 → 이유 이해 → 선택적 확인</div></header><article class="section"><p class="lead">이제 배운 것을 조건만 바꿔 다시 써 봅니다. 감쇠 계수를 키우면 무엇이 좋아지고 무엇이 남는지, 완전히 접힌 팔은 왜 특이점인지, 그린 그림을 옆으로 옮기면 왜 문제가 되는지입니다. 세 실습 모두 <strong>같은 식에 다른 숫자를 넣는</strong> 일입니다.</p>
+
+<section class="pdf-page" id="pdf-p39" data-pdf-page="39">
+<h2>감쇠, 접힌 팔, 옮긴 하트</h2>
+<figure class="figure"><img src="../assets/day2-draw_line.png" alt="같은 직선 목표에서 속도를 줄인 DLS와 큰 속도가 나온 의사역행렬 비교"><figcaption>복습에서는 주황 경로의 마지막 점과 검은 목표선 끝을 비교합니다.</figcaption></figure>
+<aside class="figure-guide"><h3>주황 선이 곧아 보여도 목표와의 거리를 잽니다</h3><ol class="visual-steps"><li>왼쪽 주황은DLS, 파랑은의사역행렬입니다. 검은 목표선과 회색반경0.7m 한계는 고정입니다. 오른쪽은 관절 속도 크기이며 로그 눈금입니다.</li><li>DLS의 마지막 위치약(0.695,0.087)m와 목표(0.8,0.1)m를 비교합니다. y차이는13mm뿐이지만 x로105mm 뒤처져 전체 오차는√(105²+13²)≈106mm입니다.</li><li>감쇠를 키우면 작은σ방향을 덜 따라가므로 속도는 줄어도 위치가 더 정확해진다고 보장하지 않습니다. 아래 λ비교에서도 y이탈·전체오차·최대속도를 서로 다른 값으로 읽습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+
+<details open><summary>실습 1 · λ를 0.01, 0.05, 0.2로 바꾸면?</summary><div class="inside">
+<p>38쪽의 직선 추종을 그대로 두고 감쇠 계수만 바꿉니다. 경로·시간 간격·이득은 고정입니다. 교안과 같은 식을 별도로 구현해 계산한 결과입니다.</p>
+<div class="tablewrap"><table><tr><th>λ</th><th>가장 빠른 관절 속도(rad/s)</th><th>선(y=0.1)에서 최대 이탈(mm)</th></tr><tr><td>0.01</td><td>28.55</td><td>13.72</td></tr><tr><td>0.05</td><td>1.322</td><td>13.41</td></tr><tr><td>0.2</td><td>0.572</td><td>11.78</td></tr></table></div>
+<p>λ를 키우면 관절 속도가 줄어듭니다. 0.01에서 0.2로 가면 28.55에서 0.572로, 약 50분의 1입니다. 그런데 y이탈은 13.72mm에서 11.78mm로 거의 그대로입니다. <strong>이 표만 보고 “감쇠를 키우면 정확해진다”고 결론 내리면 틀립니다.</strong> y이탈은 선에 얼마나 가까이 있는지만 재고, x방향으로 얼마나 뒤처졌는지는 재지 않습니다. 감쇠를 키우면 그 방향의 지연이 커집니다. 전체 목표 오차를 따로 계산해야 비교가 됩니다.</p>
+</div></details>
+<details><summary>실습 2 · 팔꿈치를 170°, 179°, 180°로 접으면?</summary><div class="inside">
+<p>펴는 쪽만 특이점이라고 생각하기 쉽습니다. 30쪽의 식에 접는 쪽 각도를 넣어 봅니다.</p>
+<div class="tablewrap"><table><tr><th>팔꿈치</th><th>det J = 0.12 sinθ₂</th><th>작은 특이값 σ<sub>min</sub></th></tr><tr><td>170°</td><td>0.02084</td><td>0.06614</td></tr><tr><td>179°</td><td>0.002094</td><td>0.006623</td></tr><tr><td>180°</td><td>0</td><td>0</td></tr></table></div>
+<p>완전히 접힌 팔도 특이점입니다. sinθ₂가 0이 되는 각도가 0°와 180° 두 곳이기 때문입니다. 접힌 자세에서는 손끝을 바깥으로 밀 수 없고, 어깨를 돌리면 손끝이 팔 길이 차이 0.1m 반경의 작은 원 위에서만 움직입니다. 두 열이 다시 나란해진 결과입니다.</p>
+<p>컴퓨터에서는 sin π가 정확히 0이 아니라 10<sup>−16</sup> 정도로 나옵니다. 이 값을 “아주 조금은 움직일 수 있다”는 물리적 능력으로 읽지 않습니다. 반올림입니다.</p>
+</div></details>
+<details><summary>실습 3 · 하트 중심을 (0.55, 0.15)m로 옮기면?</summary><div class="inside">
+<p>37쪽의 하트를 오른쪽으로 0.15m 옮깁니다. 모양과 점 개수는 그대로입니다.</p>
+<p>가장 먼 목표점의 어깨로부터의 거리가 <strong>0.70421m</strong>가 됩니다. 링크 합 0.7m를 넘으므로 그 부분은 어떤 IK도 정확히 맞출 수 없습니다. 원래 하트의 최대 반경이 0.562m였으니, 0.15m 이동만으로 여유가 사라진 것입니다.</p>
+<p>400점·점당 3회·λ=0.01 조건을 그대로 두고 독립 계산하면, 최대 손끝 오차는 약 <strong>5.36mm</strong>, 어깨는 약 <strong>13.72~64.81°</strong>, 팔꿈치는 <strong>−100.32~5.74°</strong>입니다. 팔꿈치가 0°를 넘나드는 구간도 나옵니다. 즉 경로가 특이점 근처를 지나갑니다.</p>
+<p>여기서 얻을 교훈은 “하트를 조금 옮겨도 된다”가 아닙니다. 옮긴 뒤에는 <strong>모든 점</strong>이 작업 공간과 관절 한계 안에 있는지, 특이점 근처를 지나지 않는지를 먼저 확인해야 합니다. 0.15m는 작아 보이지만 0.7m라는 한계에 비하면 20%가 넘는 이동입니다.</p>
+</div></details>
+<p class="small">이 페이지의 세 실습 수치는 교안과 같은 식을 별도로 구현해 계산한 값입니다. 교안 예제 파일을 그대로 실행한 출력이 아니며, 마지막 자릿수는 수치 라이브러리와 반복 조건에 따라 달라질 수 있습니다.</p>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p40" data-pdf-page="40">
+<h2>확인 문제: DLS가 실제로 하는 선택은?</h2>
+<p>특이점 근처에서 DLS λ=0.05를 썼습니다. 이 방법이 하는 일은 무엇일까요?</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<ol><li>속도를 키워서라도 목표를 정확히 따라간다</li><li>비싼 방향은 덜 따라가고 관절 속도를 줄인다</li><li>팔꿈치의 위·아래 가지를 뒤집는다</li><li>관절 한계에 붙여서 멈춘다</li></ol>
+<details><summary>정답과 오답의 이유</summary><div class="inside"><p><strong>②번입니다.</strong> 여기서 “비싸다”는 손끝을 조금 움직이려고 관절을 매우 크게 움직여야 한다는 뜻입니다. 31쪽의 바깥 방향 예에서 (14.32, −33.42)rad/s 대신 (0.04, −0.1)rad/s를 내놓은 것이 이 선택입니다.</p><ul><li>①번은 작은 특이값의 역수를 그대로 쓰는 의사역행렬 쪽 설명입니다.</li><li>③번은 DLS의 정의가 아닙니다. 가지 선택은 시작점과 경로가 정합니다.</li><li>④번은 <code>clip</code>이 하는 일입니다. 감쇠와 한계 처리는 다른 기능입니다.</li></ul><p>정리하면 DLS는 정확도와 관절 움직임 크기를 <strong>맞바꾸는</strong> 장치입니다. 목표가 불가능하면 남은 오차를 인정해야 하고, 가능한 목표라도 어려운 방향에서는 조금 뒤처질 수 있습니다.</p></div></details>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p41" data-pdf-page="41">
+<h2>이제 기구학 전체를 한 줄로 연결할 수 있습니다</h2>
+<p>이 다섯 단계는 서로 대체 관계가 아닙니다. IK로 답을 찾아도 FK로 검산해야 하고, J로 걸음을 정해도 특이값을 봐야 하며, clip으로 범위를 지켜도 목표 오차를 다시 재야 합니다. 어느 하나를 통과했다고 나머지가 자동으로 만족되지 않습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<ol class="steps"><li><strong>구조와 각도 → FK:</strong> 링크 길이와 관절값으로 손끝 위치·방향을 구한다.</li><li><strong>목표 → IK:</strong> 가능한 관절값을 구하고, FK에 넣어 목표 오차를 확인한다.</li><li><strong>작은 움직임 → J:</strong> 관절 속도 하나가 손끝 속도에 얼마를 보태는지 한 열씩 읽는다.</li><li><strong>어려운 자세 → 특이값·DLS:</strong> σ<sub>min</sub>과 조건수로 위험을 재고, 큰 관절 속도를 완화한다.</li><li><strong>현실 조건 → 한계·검산:</strong> 관절 범위, 경로 도달성, 다른 계산기와의 일치를 확인한다.</li></ol>
+
+<p>여유 관절은 손끝의 순간 움직임에 영향을 주지 않는 영공간 방향으로 활용합니다. 다만 유한한 걸음의 오차는 다시 보정해야 하고, 특이점 근처의 감쇠도 목표 도달이나 안전을 보장하지 않습니다.</p>
+<p>지금까지 한 일은 로봇을 원하는 각도로 <strong>놓아 보는 계산</strong>이었습니다. 관절값을 넣으면 그 자세가 즉시 나온다고 가정했습니다. 다음 MuJoCo 단원은 “모터가 힘을 내고 시간이 흐르면 정말 그 각도로 가는가”를 묻습니다. 중력, 질량, 접촉, 센서가 등장하는 이유입니다. 이 장에서 <code>mj_forward</code>로 위치만 계산했다면, 다음 장에서는 <code>mj_step</code>으로 시간을 움직입니다.</p>
+<div class="check">자기 말로 설명해 보기: “DLS를 썼는데도 손끝이 목표와 다를 수 있는 이유를 두 가지로 말하라.” → 하나는 감쇠가 큰 관절 움직임을 줄이느라 오차를 남긴 경우, 다른 하나는 목표가 작업 공간 밖이거나 관절 한계 때문에 애초에 불가능한 경우입니다. 앞은 알고리즘의 선택, 뒤는 로봇의 한계입니다.</div>
+</div></details></section>
+
+<section class="active-learning" id="active-day2-11-kinematics-check">
+<p class="eyebrow">선택 · 배운 뒤 스스로 확인</p>
+<h2>접힌 팔의 행렬식, 그리고 “잘 따라갔다”의 기준</h2>
+<p>여기까지 읽은 뒤에 확인해 보세요. 첫 문제는 접힌 자세의 행렬식을 직접 계산하고, 둘째 문제는 측정 기준 자체를 고르는 판단 문제입니다. 둘째는 y오차만 보고 성공이라고 말할 수 있는지를 묻습니다.</p>
+<details><summary>연습 두 문제 펼치기</summary><div class="inside">
+<div data-quiz-id="d11-check"></div>
+<div data-quiz-id="d11-transfer"></div>
+<p class="check">행렬식 문제에서 sin 180°의 정확한 수학값을 쓰세요. 컴퓨터 출력의 10<sup>−16</sup>은 답이 아닙니다.</p>
+</div></details>
+</section>
+
+<details class="source"><summary>수업 근거 / 원문 보기</summary><div class="inside">
+<p class="source">교안 p.39</p>
+<p class="source">교안 p.41 · 교과서 3.7~3.11 요약</p>
+<p>강의 교안 PDF p.39~41(λ 비교, 접힌 팔, 옮긴 하트, 확인 문제, 단원 정리)을 교과서 3.7~3.11절과 하나의 설명으로 합쳤습니다. 교과서의 “MuJoCo가 다 해 주는데 왜 직접 짰나”에 대한 답(이해와 검산)과 3.11절 요약은 본문에 흡수했고, 자료를 나란히 비교하는 문단은 두지 않았습니다.</p>
+<ul>
+<li>교과서 참고: PDF 파일 127쪽 · PDF 파일 146쪽 · <a href="https://github.com/playideas/python-book/blob/ef89393f254f7315fe31dcdd8f7fc12eabe488b8/manuscript-vol3/chapters/03-kinematics.md">3장 원고 전체</a></li>
+<li>수치 구분: p.39의 세 실습 값과 0.70421m·5.36mm·13.72~64.81°·−100.32~5.74°는 교안과 같은 식을 독립 계산한 값이고, p.40~41은 교안의 확인 문제와 요약입니다. MuJoCo는 이 수업에서 실행하지 않았습니다.</li>
+</ul>
+</div></details>
+</article><footer><div class="page-turn"><a href="day2-10-path.html">← 이전: 한 점에서 선과 하트로 이어 가기</a><a href="day2-42-mujoco.html">다음: 컴퓨터 속 실험실과 장면 조립 →</a></div><p><a href="../../index.html">블로그로 돌아가기</a></p></footer></main></div><script src="../scripts/common.js"></script><script src="../scripts/quiz-core.js"></script><script src="../scripts/quiz-data.js"></script><script src="../scripts/quiz.js"></script><script src="../vendor/three-offline.js"></script><script src="../scripts/inline-3d.js"></script></body></html>

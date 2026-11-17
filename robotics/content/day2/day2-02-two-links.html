@@ -1,0 +1,63 @@
+<p class="lead">어깨에서 팔꿈치까지 한 번, 팔꿈치에서 손끝까지 한 번. 오늘은 이 두 화살표를 이어 붙이는 규칙 하나를 세우고, 그 규칙으로 팔이 닿는 곳과 닿지 못하는 곳을 가릅니다. 링크 길이는 0.4m와 0.3m로 고정하고, 바꾸는 것은 두 각도뿐입니다.</p>
+
+<section class="pdf-page" id="pdf-p06" data-pdf-page="6"><h2>아래팔 방향은 왜 두 각도를 더한 값인가</h2>
+<figure class="figure"><img src="assets/3-2-two-link-clean.png" alt="파란 위팔의 연장선에서 주황 아래팔 상대각을 재는 두 링크 팔"><figcaption>먼저 각도의 출발선을 보고, 아래에서 두 화살표를 더합니다.</figcaption></figure>
+<aside class="figure-guide"><h3>팔꿈치의 점선에서 각도를 읽습니다</h3><ol class="visual-steps"><li>파랑 L₁은 위팔, 주황 L₂는 아래팔입니다. 흰 원이 관절, 검은 P가 손끝이며 회색 점선은 P의 x·y 성분을 축으로 옮겨 줍니다.</li><li>어깨 θ₁은 바닥 x축부터, 팔꿈치 θ₂는 <strong>파란 연장선부터</strong> 잽니다. 어깨를 돌리면 연장선도 함께 돌아서 아래팔의 바닥 기준 방향은 θ₁+θ₂입니다.</li><li>그림은 각도 정의용입니다. 같은 규칙에 (30°,45°)를 넣으면 위팔 방향30°·아래팔 방향75°이고 두 화살표를 더해 손끝 (0.4241,0.4898)m가 됩니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+
+<p>어깨를 0°에 두고 팔꿈치만 90° 굽혀 봅니다. 위팔은 오른쪽으로 0.4m 뻗어 팔꿈치가 <strong>(0.4, 0)</strong>에 있습니다. 여기까지는 어깨각 하나로 결정됩니다. 이제 아래팔은 팔꿈치를 중심으로 90° 꺾여 위를 봅니다. 아래팔 화살표는 <strong>(0, 0.3)</strong>, 손끝은 어깨에서 팔꿈치까지의 화살표에, 팔꿈치에서 손끝까지의 화살표를 이어 더한 <strong>(0.4, 0.3)</strong>입니다. 1쪽 ③에서 본 자세 그대로입니다.</p>
+<p>여기서 놓치기 쉬운 것이 있습니다. 팔꿈치각 90°는 <strong>바닥이 아니라 위팔의 연장선에서 잰 각도</strong>입니다. 어깨를 30° 돌린 채 팔꿈치를 곧게 펴면 아래팔도 30°를 봅니다. 거기서 팔꿈치를 45° 더 굽히면 아래팔은 바닥 기준으로 <strong>30+45=75°</strong>를 봅니다. 그래서 식에 q<sub>1</sub>+q<sub>2</sub>가 통째로 들어갑니다.</p>
+<p>팔꿈치각 45°를 바닥 기준 각도로 착각하면 어떻게 되는지 보겠습니다. 아래팔 화살표를 0.3(cos45°, sin45°)=(0.212, 0.212)로 잡으면 손끝은 (0.559, 0.412)가 됩니다. 맞는 값은 (0.424, 0.490)입니다. 10cm 넘게 틀어지고, 두 막대의 길이 합 0.7m를 넘지도 않으니 겉보기에는 그럴듯합니다. <strong>상대각을 바닥 기준 각도로 읽는 실수</strong>가 이 단원에서 가장 흔합니다.</p>
+<div class="formula">팔꿈치 = (L<sub>1</sub>cos q<sub>1</sub>, L<sub>1</sub>sin q<sub>1</sub>)<br>손끝 x = L<sub>1</sub>cos q<sub>1</sub> + L<sub>2</sub>cos(q<sub>1</sub>+q<sub>2</sub>)<br>손끝 y = L<sub>1</sub>sin q<sub>1</sub> + L<sub>2</sub>sin(q<sub>1</sub>+q<sub>2</sub>)</div>
+<p>cos는 막대가 오른쪽으로 뻗은 양, sin은 위로 뻗은 양을 구한다고 읽으면 됩니다. (30°, 45°)를 넣어 끝까지 따라가 보겠습니다. 팔꿈치 = 0.4(cos30°, sin30°) = (0.3464, 0.2000). 아래팔 화살표 = 0.3(cos75°, sin75°) = (0.0776, 0.2898). 더하면 손끝 <strong>(0.4241, 0.4898)</strong>m입니다. 이 손끝의 어깨–손끝 거리는 √(0.4241²+0.4898²)=<strong>0.648</strong>m로, 0.7m보다 짧습니다. 팔꿈치를 45° 굽혔으니 1쪽의 규칙대로 거리가 줄어든 것입니다.</p>
+<details><summary>같은 계산을 하는 코드 세 줄</summary><div class="inside"><pre><code>q1, q2 = np.deg2rad([30, 45])
+elbow = 0.4 * np.array([np.cos(q1), np.sin(q1)])
+tip = elbow + 0.3 * np.array([np.cos(q1+q2), np.sin(q1+q2)])</code></pre><p>첫 줄은 사람이 읽는 도를 라디안으로 바꿉니다. <code>np.cos</code>·<code>np.sin</code>은 라디안을 받기 때문입니다. 둘째 줄의 <code>np.array([...])</code>는 x성분과 y성분을 묶은 화살표 하나이고, 0.4를 곱하는 것이 위팔 길이만큼 늘리는 일입니다. 셋째 줄은 <strong>팔꿈치에서 시작해</strong> 아래팔 화살표를 더합니다. 여기서 <code>q1+q2</code>를 <code>q2</code>로 잘못 쓰면 위에서 본 0.559가 나옵니다.</p><p>이 코드는 교안 예제의 구조를 설명용으로 줄인 것입니다. 이 해설에서 실행한 출력이 아니라, 교안이 제시한 값과 같은 계산입니다.</p></div></details>
+<p>같은 팔로 다섯 자세를 나란히 놓으면 규칙이 눈에 보입니다.</p>
+<div class="tablewrap"><table><thead><tr><th>[q<sub>1</sub>, q<sub>2</sub>]</th><th>팔꿈치 (m)</th><th>손끝 (m)</th><th>어깨–손끝 r (m)</th></tr></thead><tbody><tr><td>[0, 0]</td><td>(0.4, 0)</td><td>(0.7, 0)</td><td>0.7</td></tr><tr><td>[90, 0]</td><td>(0, 0.4)</td><td>(0, 0.7)</td><td>0.7</td></tr><tr><td>[30, 45]</td><td>(0.346, 0.2)</td><td>(0.424, 0.49)</td><td>0.648</td></tr><tr><td>[0, 90]</td><td>(0.4, 0)</td><td>(0.4, 0.3)</td><td>0.5</td></tr><tr><td>[0, 180]</td><td>(0.4, 0)</td><td>(0.1, 0)</td><td>0.1</td></tr></tbody></table></div>
+<p>어깨각만 바뀐 첫 두 줄은 r이 같고, 팔꿈치각이 바뀐 아래 세 줄은 r이 달라집니다. [0,180]은 아래팔을 위팔 위로 완전히 접은 경우로, 긴 막대가 0.1m 남습니다. 1쪽에서 쓴 r²=L<sub>1</sub>²+L<sub>2</sub>²+2L<sub>1</sub>L<sub>2</sub>cos q<sub>2</sub>에 이 다섯 값을 넣으면 네 번째 열이 그대로 나옵니다.</p>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p07" data-pdf-page="7"><h2>동차 변환은 위치와 방향을 한 장에 적는 메모</h2>
+<p>화살표 두 개를 더하는 계산은 관절이 둘일 때만 편합니다. 여섯이 되면 “어깨에서 팔꿈치로 찾아가고, 아래팔 방향으로 손끝까지 찾아간다”를 여섯 번 이어 붙여야 합니다. 이때 관절마다 <strong>이동과 회전을 한 장의 행렬에 적어 두는</strong> 방법이 동차 변환입니다. 행렬은 길 안내를 숫자로 저장한 메모이고, 실제 모터를 움직이는 명령이 아닙니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+
+<div class="formula">T<sup>바닥</sup><sub>손끝</sub> = T<sup>바닥</sup><sub>위팔</sub> T<sup>위팔</sup><sub>아래팔</sub> T<sup>아래팔</sup><sub>손끝</sub></div>
+<p>가운데 좌표계 이름이 맞물립니다. “바닥 기준에서 위팔을, 위팔 기준에서 아래팔을, 아래팔 기준에서 손끝을 설명”하면 바닥 기준 손끝이 나옵니다. 3차원 동차 변환에서는 <strong>오른쪽 위 세 숫자가 위치</strong>, <strong>왼쪽 위 3×3이 방향</strong>입니다. 점의 좌표에 곱할 때는 <strong>오른쪽부터</strong> 손끝 → 아래팔 → 위팔 → 바닥 순서로 바뀝니다. 행렬을 종이에 왼쪽부터 나열하는 순서와, 점에 작용하는 순서는 반대입니다.</p>
+<details><summary>교안 코드의 이동과 회전 순서 풀기</summary><div class="inside"><pre><code>T_base_upper = rotation(q1)
+T_upper_fore = translation([L1, 0, 0]) @ rotation(q2)
+T_fore_tip = translation([L2, 0, 0])
+T_base_tip = T_base_upper @ T_upper_fore @ T_fore_tip</code></pre><p>이것은 뜻을 보여 주기 위해 줄인 축약 코드입니다. 가운데 줄의 이동은 “위팔 길이만큼 팔꿈치 위치를 잡기”, 회전은 “그 위치에서 아래팔 좌표계가 q<sub>2</sub>만큼 돌아 있음”을 뜻합니다. <strong>위팔 자체를 현실에서 밀어 옮기라는 명령이 아닙니다.</strong> 위팔은 어깨 관절에 붙어 있고, 여기서 옮기는 것은 계산의 기준점입니다.</p><p>(30°, 45°)를 넣으면 위치는 6쪽의 삼각함수 계산과 같은 (0.424, 0.490, 0)m가 되고, 손끝 x축의 방향은 75°입니다. 4×4 행렬의 마지막 줄 (0,0,0,1)은 위치 이동까지 행렬곱 하나로 묶기 위한 장치입니다.</p><p>단위를 조심해야 합니다. 이 교안의 <code>Rz(각도)</code> 도우미는 도를 받지만 <code>np.sin</code>·<code>np.cos</code>는 라디안을 받습니다. 같은 30이라도 어느 함수에 넣느냐에 따라 30°가 되기도 하고 30rad가 되기도 합니다.</p></div></details>
+<div class="check">“두 T가 같아야 연결되나요?” → 아닙니다. 행렬 값이 같은 것이 아니라 <strong>가운데 좌표계 이름</strong>이 맞아야 이어집니다. 이것이 9쪽의 여섯 관절 계산에서도 그대로 쓰이는 규칙입니다.</div>
+</div></details></section>
+
+<section class="pdf-page" id="pdf-p08" data-pdf-page="8"><h2>팔이 닿는 곳과 닿지 않는 곳</h2>
+<figure class="figure"><img src="assets/workspace-limits-comparison.png" alt="회전 제한이 없는 고리형 작업 공간과 어깨·팔꿈치 제한이 있는 도달 영역을 나란히 비교한 그림"><figcaption>왼쪽은 회전 제한 없음, 오른쪽은 어깨0~180°·팔꿈치±150° 제한입니다. 청록은 닿는 영역, 분홍·회색은 거리 때문에 불가, 노랑은 관절 제한 때문에 불가입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>같은 점이 왼쪽과 오른쪽에서 무슨 색인지 봅니다</h3><ol class="visual-steps"><li>검은 네모는 고정 어깨, 가로 x·세로 y는 미터입니다. 청록은 닿음, 분홍은 너무 가까움, 옅은 회색은 너무 멂, 노랑은 각도 제한 때문에 빠진 곳입니다.</li><li>길이 0.4·0.3m는 그대로 두고, 왼쪽의 자유 회전을 오른쪽에서 어깨0~180°·팔꿈치±150°로 제한했습니다. (0.15,0)을 짚으면 왼쪽은 청록, 오른쪽은 노랑입니다.</li><li>완전히 접지 못해서 최소 거리가 |0.4−0.3|=0.1m에서 √(0.25+0.24cos150°)≈0.2053m로 늘었습니다. 오른쪽 아래의 노랑은 어깨 방향 제한의 영향도 있으므로 반경만 맞는다고 모두 닿지 않습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>이제 이 팔이 손끝을 어디까지 보낼 수 있는지 봅니다. 두 막대를 펼치면 0.4+0.3=0.7m까지 닿습니다. 완전히 접어도 긴 막대가 0.3m를 덮고 0.1m가 남습니다. 관절을 마음대로 돌릴 수 있다면 반경은 <strong>0.1m 이상 0.7m 이하</strong>이고, 이 반경 범위의 모든 방향에 닿는 <strong>고리</strong> 모양입니다. 반경 0.1m 안쪽의 원판은 비어 있습니다.</p>
+<p>경계의 등호를 조심하세요. 0.1m <em>안쪽</em>은 닿지 못하지만 정확히 0.1m인 경계는 닿습니다. 6쪽 표의 [0,180]이 손끝 (0.1, 0)을 주는 것이 그 증거입니다. 이 경계는 팔이 완전히 접힌 자세라 특이점이 되기도 합니다.</p>
+<p>교안의 실제 설정은 다릅니다. 어깨는 0~180°, 팔꿈치 −150~150°입니다. 팔꿈치가 180°까지 접히지 못하므로 0.1m까지 갈 수 없습니다. 얼마나 남는지는 1쪽의 거리 식에 가장 많이 접은 각도를 넣어 구합니다.</p>
+<div class="formula">r² = L<sub>1</sub>² + L<sub>2</sub>² + 2L<sub>1</sub>L<sub>2</sub>cos q<sub>2</sub><br>r<sub>최소</sub> = √(0.4² + 0.3² + 2×0.4×0.3×cos150°) = √0.042154 ≈ <strong>0.205314m = 20.53cm</strong></div>
+<p>계산 과정을 확인하면 cos150°=−0.8660이므로 2×0.4×0.3×(−0.8660)=−0.2078, 0.16+0.09−0.2078=0.0422, 제곱근이 0.2053입니다. 교안이 제시한 약 0.205m와 같은 값입니다. 즉 이 설정에서 손끝은 <strong>20.53cm에서 70cm 사이 중 관절 제한이 허용하는 영역</strong>에만 갑니다. 완전한 고리 전체에 닿는다는 뜻은 아닙니다. “0.1m부터”는 관절을 끝까지 접을 수 있다는 가정에서만 맞는 말입니다.</p>
+
+
+<p>어깨각은 이 반경 자체를 바꾸지 않습니다. 1쪽에서 확인한 대로 r에는 q<sub>1</sub>이 없습니다. 어깨 제한은 <strong>어느 방향으로 팔을 향할 수 있는지</strong>를 제한합니다. 그래서 20.53~70cm라는 거리 조건을 만족해도 모든 방향의 점에 닿는 것은 아니고, 고리의 일부만 남습니다.</p>
+<div class="warning">시뮬레이터라고 항상 360° 회전하는 것은 아닙니다. 모델에 관절 제한을 넣을 수 있고, 현실에서는 부품 충돌이나 장애물이 작업 공간을 더 줄입니다. “닿는다”를 말할 때는 어떤 제한을 켠 상태인지 함께 밝혀야 합니다.</div>
+</div></details></section>
+
+<!-- ACTIVE-LEARNING START -->
+<section class="active-learning" id="active-day2-02-two-links">
+<p class="eyebrow">배운 뒤에 스스로 확인하기</p><h2>같은 팔, 다른 각도로 확인하기</h2>
+<p>두 문제 모두 방금 계산한 규칙을 한 번 더 적용하는 것입니다. 각 문제의 시범과 풀이를 먼저 보거나, 원하면 답을 입력한 뒤 비교해 보세요.</p>
+<details><summary>확인 문제 두 개 펼치기</summary><div class="inside">
+<div data-quiz-id="d02-check"></div>
+<div data-quiz-id="d02-transfer"></div>
+</div></details>
+<p class="check">손으로 확인하고 싶다면 <a href="simulator.html">2링크 실험실</a>에서 링크 길이를 0.4/0.3m로 맞추고 [0,90]과 [90,0]을 번갈아 놓아 보세요. 손끝 위치뿐 아니라 아래팔이 어느 방향을 보는지, 어깨–손끝 거리가 변하는지도 함께 보면 6쪽 표가 다시 읽힙니다. 실험실의 관절 제한 설정은 8쪽의 20.53cm와 다른 값을 줄 수 있으니 조건을 확인하세요.</p>
+</section>
+<!-- ACTIVE-LEARNING END -->
+
+<details><summary>수업 근거와 원문 보기</summary><div class="inside">
+<p>교안 6~8쪽을 하나의 설명으로 다시 썼습니다. 2링크 순기구학의 순서 설명은 교과서 3.2를 함께 읽었습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>쪽</th><th>이 수업에서 맡은 내용</th><th>원문</th></tr></thead><tbody><tr><td>6</td><td>아래팔 방향 = q<sub>1</sub>+q<sub>2</sub>, (30°,45°) 계산, 다섯 자세 표</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0006.txt">교안 6쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0101.txt">교과서 3.2</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0102.txt">계산 예</a></td></tr><tr><td>7</td><td>동차 변환 사슬과 코드의 이동·회전 순서</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0007.txt">교안 7쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0103.txt">교과서 변환 사슬</a></td></tr><tr><td>8</td><td>0.1~0.7m 고리, ±150°에서 0.205314m</td><td><a href="../../source-library/pdf/lecture-day2/pages/p0008.txt">교안 8쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0104.txt">교과서 작업 공간</a></td></tr></tbody></table></div>
+<p class="source">0.4m·0.3m 링크와 (0.424,0.490), 0.1~0.7m 고리는 교안 제시값입니다. 0.648m와 20.5314cm는 같은 식에 값을 넣어 독립 계산으로 확인했고, 0.559m는 상대각을 바닥각으로 잘못 읽었을 때의 결과를 보여 주려고 계산한 값입니다. MuJoCo나 실물 로봇을 이 해설에서 실행한 것은 아닙니다. 사용자 손그림의 기준각이 불명확해 도식은 6쪽의 정의를 기준으로 다시 그렸습니다. <a href="../../source-library/snapshot/manuscript-vol3/chapters/03-kinematics.md">3장 원고 전체</a></p>
+</div></details>
