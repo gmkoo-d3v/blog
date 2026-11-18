@@ -1,9 +1,10 @@
 <p class="lead">계산이 내놓은 관절각을 그대로 로봇에 넣었다고 합시다. 손끝은 목표에 정확히 닿았습니다. 그런데 팔꿈치가 반대로 꺾여 있고, 어깨는 한 바퀴 반을 감고 있습니다. 숫자는 맞는데 로봇이 그 자세로 갈 수 없습니다. 이번 시간에는 <strong>“맞는 답”과 “가능한 답”이 다르다</strong>는 문제, 그리고 관절이 남을 때 그 남는 몫을 어떻게 쓰는지를 다룹니다.</p>
+<p class="small run-hint">코드 블록을 내 컴퓨터에서 돌리는 방법은 <a href="run-code.html">예제 실행하기</a>에 있습니다.</p>
 
 <section class="pdf-page" id="pdf-p34" data-pdf-page="34">
 <h2>각도를 예쁘게 표시하는 것과 한계를 지키는 것은 다릅니다</h2>
 <figure class="figure"><img src="assets/eli5-day2-limit-clip.svg" alt="어깨100도 요청을 clip으로 상한90도에 붙인 비교"><figcaption>주황 점선은 요청, 파랑 실선은 범위를 지킨 각도입니다. 아래팔은 생략한 어깨 한 관절 비교입니다.</figcaption></figure>
-<aside class="figure-guide"><h3>100°를 예쁘게 적는 대신 실제 허용 범위를 봅니다</h3><ol class="visual-steps"><li>회색 바닥 축과 어깨 원점은 고정이고 허용 범위는 −90~90°입니다. 왼쪽 주황 요청100°는 세로90°선을 넘어갔습니다.</li><li>clip을 적용하면 오른쪽 파랑90°에 붙습니다. np.clip(100,−90,90)=90입니다. 이 예제 코드는 모든 각도를 rad로 바꾼 뒤 같은 비교를 합니다.</li><li>관절각을 잘랐으니 손끝 위치도 달라집니다. 범위 검사는 통과해도 원래 목표에 닿았는지는 FK(q)로 다시 재야 합니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<aside class="figure-guide"><h3>100°를 예쁘게 적는 대신 실제 허용 범위를 봅니다</h3><ol class="visual-steps"><li>회색 바닥 축과 어깨 원점은 고정이고 허용 범위는 −90~90°입니다. 왼쪽 주황 요청100°는 세로90°선을 넘어갔습니다.</li><li>clip을 적용하면 오른쪽 파랑90°에 붙습니다. np.clip(100,−90,90)=90입니다. 이 예제 코드는 모든 각도를 rad로 바꾼 뒤 같은 비교를 합니다.</li><li>관절각을 잘랐으니 손끝 위치도 달라집니다. 범위 검사는 통과해도 원래 목표에 닿았는지는 FK(q)로 다시 재야 합니다.</li></ol></aside>
 
 
 <p>지금까지의 수치 역기구학은 관절이 어디까지 돌 수 있는지 전혀 몰랐습니다. 계산 입장에서는 −357.5°도 428°도 그냥 숫자입니다. 실제 관절은 케이블과 몸체 때문에 정해진 범위에서만 돕니다. 사람 팔꿈치가 한쪽으로만 굽는 것과 같습니다.</p>
@@ -17,12 +18,12 @@ q = np.clip(q, lower_limits, upper_limits)</code></pre>
 <p>여기서 흔한 오해를 정리합니다. −357.5°에 360°를 더하면 2.5°, 428°에서 360°를 빼면 68.0°입니다. 두 답은 <strong>손끝이 같은 자세</strong>입니다. 다른 것은 관절이 그 자세까지 <em>어떻게 도착했는가</em>입니다. 한계를 무시한 쪽은 첫 걸음이 크게 튀면서 관절이 한 바퀴 넘게 감겼고, clip을 쓴 쪽은 범위를 벗어나려는 걸음이 경계에서 멈추면서 허용된 쪽으로 수렴했습니다.</p>
 <p>그래서 “각도를 ±180°로 표시만 바꾸면 된다”는 해결이 되지 않습니다. 그것은 <strong>표시 범위</strong>를 정리하는 일이고, 필요한 것은 <strong>허용 범위</strong>를 지키는 일입니다. 표시를 고쳐도 모터가 금지 구간을 통과해 간 사실은 사라지지 않습니다.</p>
 <div class="warning">clip은 범위를 지켜 주지만 목표 도달을 보장하지는 않습니다. 한계에 붙은 관절은 더 이상 움직이지 못하므로 다른 답을 놓칠 수 있고, 목표가 애초에 불가능하면 경계에 붙은 채 멈춥니다. 최종 손끝 오차와 한계 준수를 <strong>둘 다</strong> 검사해야 합니다.</div>
-</div></details></section>
+</section>
 
 <section class="pdf-page" id="pdf-p35" data-pdf-page="35">
 <h2>손끝을 그대로 두고 팔꿈치만 움직일 수 있습니다</h2>
 <figure class="figure"><img src="assets/eli5-day2-redundancy.svg" alt="세관절 팔에서 도구 방향100도120도140도로 바꿔도 손끝0.5,0.3이 유지되는 세 자세"><figcaption>파랑0.4m·주황0.3m·초록0.2m. 세 검은 손끝은 각 패널에서 모두(0.500,0.300)m입니다.</figcaption></figure>
-<aside class="figure-guide"><h3>손끝은 붙여 두고 중간 마디를 옮깁니다</h3><ol class="visual-steps"><li>각 패널의 어깨·목표점·세 링크 길이는 고정입니다. 바뀐 것은 실제 세 관절각이고, 도구 방향100°→120°→140°는 중간을 연속적으로 지나는 예의 세 표본입니다.</li><li>검은 끝점은 같은데 파랑·주황 사이 관절이 옮겨갑니다. 관절3개로 x·y 두 조건을 맞춰 한 몫이 남았기 때문입니다. 이를 <strong>여유 자유도</strong>라 부릅니다.</li><li>순간식 Jq̇=0이 손끝을 멈추는 조합입니다. 세 링크 끝을 더하면 각 패널 모두(0.5,0.3)m입니다. 유한한 걸음을 쓸 때는 아래 코드처럼 다시 FK오차를 보정합니다.</li><li>앞의2R 팔꿈치 위·아래 두 해는 떨어진 두 후보여서 이 연속 여유와 다릅니다. 도구 방향까지 고정하면 평면3R의 세 조건을 모두 써 일반적으로 여유가 사라집니다. 특이점에서 순간 영공간이 커지는 현상도 좋은 여유 능력이 늘었다는 뜻은 아닙니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<aside class="figure-guide"><h3>손끝은 붙여 두고 중간 마디를 옮깁니다</h3><ol class="visual-steps"><li>각 패널의 어깨·목표점·세 링크 길이는 고정입니다. 바뀐 것은 실제 세 관절각이고, 도구 방향100°→120°→140°는 중간을 연속적으로 지나는 예의 세 표본입니다.</li><li>검은 끝점은 같은데 파랑·주황 사이 관절이 옮겨갑니다. 관절3개로 x·y 두 조건을 맞춰 한 몫이 남았기 때문입니다. 이를 <strong>여유 자유도</strong>라 부릅니다.</li><li>순간식 Jq̇=0이 손끝을 멈추는 조합입니다. 세 링크 끝을 더하면 각 패널 모두(0.5,0.3)m입니다. 유한한 걸음을 쓸 때는 아래 코드처럼 다시 FK오차를 보정합니다.</li><li>앞의2R 팔꿈치 위·아래 두 해는 떨어진 두 후보여서 이 연속 여유와 다릅니다. 도구 방향까지 고정하면 평면3R의 세 조건을 모두 써 일반적으로 여유가 사라집니다. 특이점에서 순간 영공간이 커지는 현상도 좋은 여유 능력이 늘었다는 뜻은 아닙니다.</li></ol></aside>
 
 
 <p>이번에는 반대 상황입니다. 컵을 든 채로 팔꿈치를 위아래로 들어 보세요. 손끝은 컵에 붙어 있는데 팔의 모양은 달라집니다. 관절이 맞춰야 할 조건보다 많기 때문에 생기는 여유이고, 이것을 <strong>여유 자유도(redundancy)</strong>라고 부릅니다.</p>
@@ -40,7 +41,7 @@ q += np.linalg.pinv(jacobian(q)) @ (target - fk(q))</code></pre>
 <div class="tablewrap"><table><tr><th>걸음</th><th>관절값</th><th>손끝</th></tr><tr><td>0</td><td>(−20.5, 75.5, 48.6)°</td><td>(0.5, 0.3)</td></tr><tr><td>100</td><td>(−18.4, 70.6, 56.4)°</td><td>(0.5, 0.3)</td></tr><tr><td>200</td><td>(−16.2, 65.6, 64.0)°</td><td>(0.5, 0.3)</td></tr><tr><td>300</td><td>(−13.8, 60.6, 71.2)°</td><td>(0.5, 0.3)</td></tr></table></div>
 <p>세 번째 관절이 48.6°에서 71.2°로 22.6° 돌았는데 손끝은 그대로입니다. 그동안 어깨와 두 번째 관절이 함께 움직여 손목이 돈 만큼을 메웠습니다. 이것이 여유 자유도의 쓰임새입니다. 손끝으로 일을 하면서 남는 몫으로 장애물을 피하거나, 관절을 한계에서 멀리 두거나, 특이점을 비켜 갈 수 있습니다. 7자유도 협동 로봇이 많이 쓰이는 이유가 여기 있습니다.</p>
 <div class="warning">“손끝이 안 움직인다”는 J에 대한 <strong>순간적인</strong> 성질입니다. 유한한 걸음을 반복하면 비선형 오차가 쌓이므로 작은 걸음과 위치 보정이 필요합니다. 관절 한계나 충돌 회피도 영공간이 자동으로 해결해 주지 않습니다. 그것은 별도의 목표로 넣어야 합니다.</div>
-</div></details></section>
+</section>
 
 <section class="pdf-page" id="pdf-p36" data-pdf-page="36">
 <h2>다른 계산기로 같은 로봇을 계산해 보기</h2>
@@ -51,11 +52,32 @@ q += np.linalg.pinv(jacobian(q)) @ (target - fk(q))</code></pre>
 
 <p>옮기는 작업은 생각보다 단순합니다. 3차시에서 손으로 곱한 “고정 위치 × 축 회전”이 MuJoCo의 구조와 그대로 대응되기 때문입니다.</p>
 <div class="tablewrap"><table><tr><th>직접 만든 코드</th><th>MuJoCo 표현</th></tr><tr><td>고정 위치 <code>pos</code></td><td><code>&lt;body pos="..."&gt;</code></td></tr><tr><td>회전축 <code>axis</code></td><td><code>&lt;joint type="hinge" axis="..."&gt;</code></td></tr><tr><td>손끝 점</td><td><code>&lt;site name="tip"&gt;</code></td></tr><tr><td>순기구학 위치·방향</td><td><code>mj_forward</code> 후 <code>site.xpos</code>, <code>site.xmat</code></td></tr><tr><td>야코비안</td><td><code>mj_jacSite</code>의 <code>jacp</code>, <code>jacr</code></td></tr></table></div>
-<p>무작위 관절각 100개를 넣고 세 가지를 비교합니다. 손끝 위치, 손끝 자세, 야코비안입니다. 교안의 검산 결과는 각각 최대 차이 <strong>3.3×10<sup>−16</sup>m, 5.6×10<sup>−16</sup>, 7.8×10<sup>−16</sup></strong>였습니다. 컴퓨터 실수의 반올림 수준이므로, 두 계산이 같은 구조를 같은 기준으로 계산하고 있다는 뜻입니다. 이 팔은 회전 관절만 있어서 <code>nq</code>와 <code>nv</code>가 둘 다 6이고, 굽힌 자세의 손끝은 (0.478, 0.276, 0.248)m로 3차시의 손 계산과 같습니다.</p>
+<p>무작위 관절각 100개를 넣고 세 가지를 비교합니다. 손끝 위치, 손끝 자세, 야코비안입니다. 교안의 검산 결과는 각각 최대 차이 <strong>3.3×10<sup>−16</sup>m, 5.6×10<sup>−16</sup>, 7.8×10<sup>−16</sup></strong>였고, 이 컴퓨터에서 같은 파일(<code>b23_mujoco_check.py</code>, 난수 씨앗 0)을 돌리니 2.2×10<sup>−16</sup>m, 5.6×10<sup>−16</sup>, 8.9×10<sup>−16</sup>이 나왔습니다.</p>
+<p>컴퓨터 실수의 반올림 수준이므로, 두 계산이 같은 구조를 같은 기준으로 계산하고 있다는 뜻입니다. 이 팔은 회전 관절만 있어서 <code>nq</code>와 <code>nv</code>가 둘 다 6이고, 굽힌 자세의 손끝은 (0.478, 0.276, 0.248)m로 3차시의 손 계산과 같습니다.</p>
 <p>이 검산이 말해 주는 것과 말해 주지 않는 것을 구분해야 합니다. 확인된 것은 <strong>코드끼리 일치한다</strong>는 사실입니다. 실제 로봇의 오차가 10<sup>−16</sup>m라는 뜻은 아닙니다. 링크 길이의 제작 오차, 관절 유격, 센서 오차는 이 기하학 모델에 들어 있지 않습니다.</p>
 <div class="check">검산을 할 때 가장 먼저 맞춰야 하는 것은 무엇일까요? → 숫자가 아니라 <strong>약속</strong>입니다. 각도 0°의 자세, 축 방향, 단위, 손끝을 어디로 볼지가 다르면 같은 로봇도 다른 숫자를 냅니다. 시뮬레이터·ROS·제조사 소프트웨어를 섞어 쓸 때 사고가 나는 지점이 여기입니다.</div>
-<p class="small">이 페이지의 MuJoCo 수치는 교안 p.36의 검산 결과입니다. 이 수업에서 MuJoCo를 새로 실행해 재현한 값이 아닙니다.</p>
+<p class="small">이 페이지의 MuJoCo 수치는 <code>b23_mujoco_check.py</code>를 이 컴퓨터에서 돌린 값입니다. 교안과 끝자리가 다르면 아래 ‘내 컴퓨터에서 돌려 보기’를 보세요.</p>
 </div></details></section>
+
+<section class="run-block" id="run-day2-09"><h2>내 컴퓨터에서 돌려 보기</h2><p>아래 출력은 이 컴퓨터(MuJoCo 3.17.0)에서 오너의 예제를 직접 돌려 얻은 값입니다. 명령은 줄 두 개(폴더로 이동 + 실행)이고 <a href="run-code.html">예제 실행하기</a>에 이유가 있습니다. 그림 파일을 저장하는 예제는 예제 폴더에 PNG가 생기지 않도록 임시 폴더(<code>cd $env:TEMP</code>)에서 전체 경로로 돌립니다.</p><h3><code>b21_limits.py</code> · 한계를 지킬 때와 무시할 때</h3><pre data-copy><code>cd C:\code\src\robo\vol3\03-kinematics
+..\..\.venv\Scripts\python.exe b21_limits.py</code></pre><pre><code>한계 지키기 False: 어깨 -357.5도, 팔꿈치  428.0도, 남은 거리 2.0e-16m, 한계 안? False
+한계 지키기 True : 어깨    2.5도, 팔꿈치   68.0도, 남은 거리 0.0e+00m, 한계 안? True</code></pre><p>읽을 곳: 10~15행의 함수에서 15행 <code>np.clip(q, 하한, 상한)</code> 한 줄이 한계를 지키는 부분이고, 19~23행이 두 경우를 비교합니다.</p><h3><code>b22_redundant.py</code> · 여유 자유도: 같은 목표, 다른 답</h3><pre data-copy><code>cd C:\code\src\robo\vol3\03-kinematics
+..\..\.venv\Scripts\python.exe b22_redundant.py</code></pre><pre><code>같은 목표, 다른 시작 → 다른 답
+  시작 (0, 30, 30) → 관절 [-16.7  66.8  62.2]도, 손끝 [0.5 0.3]
+  시작 (90, -60, -60) → 관절 [ 78.8 -67.1 -61.7]도, 손끝 [0.5 0.3]
+  시작 (-30, 90, 60) → 관절 [-20.5  75.5  48.6]도, 손끝 [0.5 0.3]
+손끝을 붙잡은 채 관절만 움직이기
+    0걸음: 관절 [-20.5  75.5  48.6]도, 손끝 [0.5 0.3]
+  100걸음: 관절 [-18.4  70.6  56.4]도, 손끝 [0.5 0.3]
+  200걸음: 관절 [-16.2  65.6  64. ]도, 손끝 [0.5 0.3]
+  300걸음: 관절 [-13.8  60.6  71.2]도, 손끝 [0.5 0.3]</code></pre><p>읽을 곳: 21~26행이 세 출발점의 세 답, 29~36행이 영공간(34행 <code>N = I − pinv(J)·J</code>)으로 손끝을 붙잡은 채 관절만 움직이는 300걸음입니다.</p><h3><code>b23_mujoco_check.py</code> · 내 순기구학을 MuJoCo가 검산</h3><pre data-copy><code>cd C:\code\src\robo\vol3\03-kinematics
+..\..\.venv\Scripts\python.exe b23_mujoco_check.py</code></pre><pre><code>관절 수(nq): 6 / 속도 수(nv): 6
+손끝 위치 최대 차이  : 2.2e-16 m
+손끝 자세 최대 차이  : 5.6e-16
+야코비안 최대 차이   : 8.9e-16</code></pre><p>읽을 곳: 12~14행이 난수 관절각 100개(씨앗 0), 26~28행이 위치·자세·야코비안의 최대 차이를 출력합니다.</p><h3><code>b24_mujoco_render.py</code> · MuJoCo로 6관절 팔 그리기</h3><pre data-copy><code>cd $env:TEMP
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\03-kinematics\b24_mujoco_render.py</code></pre><pre><code>[0, 0, 0, 0, 0, 0] → 손끝(site) 위치 [0.  0.  0.9]
+[30, 45, 60, 0, 45, 0] → 손끝(site) 위치 [0.478 0.276 0.248]
+저장: arm6_mujoco.png</code></pre><p>읽을 곳: 20행이 site(손끝) 위치를 출력합니다. 두 번째 줄이 b07의 (0.478, 0.276, 0.248)과 같습니다. 그림은 <code>arm6_mujoco.png</code>로 저장됩니다.</p></section>
 
 <section class="active-learning" id="active-day2-09-limits">
 <p class="eyebrow">선택 · 배운 뒤 스스로 확인</p>
@@ -75,7 +97,7 @@ q += np.linalg.pinv(jacobian(q)) @ (target - fk(q))</code></pre>
 <p>강의 교안 PDF p.34~36(관절 한계와 clip, 여유 자유도와 영공간, MuJoCo 검산)을 교과서 3.8~3.9절과 하나의 설명으로 합쳤습니다. 교과서의 “컵을 쥔 채 팔꿈치 들기” 장면과 장애물 회피·7자유도 로봇 연결은 본문에 흡수했고, 자료를 나란히 비교하는 문단은 두지 않았습니다.</p>
 <ul>
 <li>교과서 캐시: <a href="../../source-library/pdf/robot-textbook/pages/p0133.txt">PDF 파일 133쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0136.txt">PDF 파일 136쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/03-kinematics.md">3장 원고 전체</a></li>
-<li>수치 구분: −357.5°/428.0°와 2.5°/68.0°, 세 출발점의 도착값, 영공간 300걸음 표, MuJoCo 차이 3.3/5.6/7.8×10<sup>−16</sup>은 교안·원고 제시값입니다. 이 수업에서 MuJoCo를 실행하지 않았습니다.</li>
+<li>수치 구분: −357.5°/428.0°와 2.5°/68.0°, 세 출발점의 도착값, 영공간 300걸음 표, MuJoCo 차이는 오너의 <code>b21_limits.py</code>, <code>b22_redundant.py</code>, <code>b23_mujoco_check.py</code>, <code>b24_mujoco_render.py</code>를 이 컴퓨터에서 돌려 확인했습니다. MuJoCo 차이만 교안(3.3·5.6·7.8×10<sup>−16</sup>)과 끝자리가 다르고(이 컴퓨터 2.2·5.6·8.9×10<sup>−16</sup>), 둘 다 반올림 수준입니다.</li>
 <li>도해: <code>assets/day2-arm6_mujoco.png</code> — 원고 3.9절의 MuJoCo 렌더링입니다.</li>
 <li><a href="https://modernrobotics.northwestern.edu/nu-gm-book-resource/5-3-singularities/">Modern Robotics 5.3: Singularities</a> — 작업별 J의 랭크와 여유 자유도.</li><li><a href="https://modernrobotics.northwestern.edu/nu-gm-book-resource/5-4-manipulability/">Modern Robotics 5.4: Manipulability</a> — 관절 속도 원, 속도 타원의 주축·반축.</li><li><a href="https://math.ucsd.edu/~sbuss/ResearchWeb/ikmethods/iksurvey.pdf">Buss, Introduction to Inverse Kinematics, p.9–11</a> — SVD 의사역행렬과 감쇠 최소제곱.</li></ul>
 </div></details>

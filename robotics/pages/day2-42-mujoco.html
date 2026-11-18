@@ -1,18 +1,188 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터 속 실험실과 장면 조립 · 로봇 공부 노트</title><link rel="stylesheet" href="../styles/study.css"></head><body><a class="skip-link" href="#lesson-content">본문으로 건너뛰기</a><div class="layout"><aside><div class="brand">ROBOTICS · STUDY NOTES</div><details class="site-menu" open><summary>학습 목차 열기·닫기</summary><nav aria-label="학습 목차"><a href="../index.html">학습 시작</a><a href="day1-coverage.html">1일차 교안 쪽에서 찾기</a><a href="coverage.html">2일차 교안 쪽에서 찾기</a><a href="simulator.html">2D 작업 공간 실험 ↗</a><a href="dh-lab.html">DH 3D 실험실 ↗</a><a href="jacobian-lab.html">야코비안 실험실 ↗</a><details class="nav-group"><summary>1일차 · 1차시 · 감지와 제어</summary><a href="day1-01-loop.html"><span>재고, 고르고, 한 걸음 움직이기</span><small>PDF p.1–9</small></a></details><details class="nav-group"><summary>1일차 · 1차시 · 피드백</summary><a href="day1-02-feedback.html"><span>미끄러져도 다시 가는 이유와 센서의 한계</span><small>PDF p.10–15</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 몸과 부품</summary><a href="day1-03-body.html"><span>몸의 자유도와 모터·센서 숫자 읽기</span><small>PDF p.16–22</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 제어 주기</summary><a href="day1-04-timing.html"><span>같은 판단도 박자가 다르면 흔들립니다</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 물리와 모델</summary><a href="day1-05-simulation.html"><span>떨어지는 상자로 시뮬레이션의 뜻 읽기</span><small>PDF p.29–35</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 안전과 회피</summary><a href="day1-06-avoidance.html"><span>모르면 멈추고, 장애물 옆으로 돌아갑니다</span><small>PDF p.36–41</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 좌표와 평면 회전</summary><a href="day1-07-frames-rotation.html"><span>같은 컵의 좌표와 회전행렬의 두 열</span><small>PDF p.42–46</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 3차원 회전</summary><a href="day1-08-camera.html"><span>카메라에서 몸으로: 열 세 개와 전치의 방향</span><small>PDF p.47–48</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 자세 표현</summary><a href="day1-09-euler.html"><span>롤·피치·요의 순서와 회전 벡터</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 쿼터니언</summary><a href="day1-10-quaternion.html"><span>숫자 넷으로 회전을 잇고 부드럽게 바꾸기</span><small>PDF p.55–59</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 동차 변환</summary><a href="day1-11-transform.html"><span>카메라가 본 컵을 방 좌표로 옮기기</span><small>PDF p.60–62</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 자이로와 정리</summary><a href="day1-12-gyro.html"><span>각속도를 쌓아 자세를 추적하고 하루를 연결하기</span><small>PDF p.63–68</small></a></details><details class="nav-group"><summary>6차시 · 순기구학</summary><a href="day2-01-questions.html"><span>로봇팔에게 묻는 두 가지 질문</span><small>PDF p.1–5</small></a><a href="day2-02-two-links.html"><span>막대 두 개로 손끝과 작업 공간 찾기</span><small>PDF p.6–8</small></a><a href="day2-03-spatial-arm.html"><span>관절 여섯 개도 작은 변환을 이어 붙입니다</span><small>PDF p.9–12</small></a></details><details class="nav-group"><summary>6차시 · 실습과 확인</summary><a href="day2-04-fk-practice.html"><span>순기구학 실습을 손계산으로 풀어 보기</span><small>PDF p.13–15</small></a></details><details class="nav-group"><summary>7차시 · 역기구학</summary><a href="day2-05-inverse.html"><span>손끝에서 거꾸로 관절각 찾기</span><small>PDF p.16–18</small></a></details><details class="nav-group"><summary>7차시 · 야코비안</summary><a href="day2-06-jacobian.html"><span>조금 돌렸을 때 얼마나 움직일까</span><small>PDF p.19–22</small></a></details><details class="nav-group"><summary>7차시 · 수치 계산과 실습</summary><a href="day2-07-numerical-ik.html"><span>목표에 조금씩 다가가는 역기구학</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>8차시 · 특이점</summary><a href="day2-08-singularity.html"><span>팔을 쭉 펴면 왜 계산이 어려워질까</span><small>PDF p.29–33</small></a></details><details class="nav-group"><summary>8차시 · 한계와 검산</summary><a href="day2-09-limits.html"><span>관절의 한계와 남는 자유도</span><small>PDF p.34–36</small></a></details><details class="nav-group"><summary>8차시 · 경로</summary><a href="day2-10-path.html"><span>한 점에서 선과 하트로 이어 가기</span><small>PDF p.37–38</small></a></details><details class="nav-group"><summary>8차시 · 실습과 확인</summary><a href="day2-11-kinematics-check.html"><span>특이점 실습과 기구학 전체 정리</span><small>PDF p.39–41</small></a></details><details class="nav-group" open><summary>9차시 · MuJoCo</summary><a href="day2-42-mujoco.html" aria-current="page"><span>컴퓨터 속 실험실과 장면 조립</span><small>PDF p.42–45</small></a><a href="day2-46-state.html"><span>상태의 칸, 크기, 한 걸음의 의미</span><small>PDF p.46–48</small></a><a href="day2-49-check.html"><span>낙하와 마찰로 채점하고 장면 찍기</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>10차시 · 모터·센서</summary><a href="day2-55-actuator.html"><span>로봇의 위치를 읽고 모터에 목표 주기</span><small>PDF p.55–58</small></a><a href="day2-59-sensor.html"><span>센서, 충돌, 시뮬레이션 안정성</span><small>PDF p.59–61</small></a><a href="day2-62-push.html"><span>두 관절 팔로 상자를 밀어 보기</span><small>PDF p.62–65</small></a><a href="day2-66-review.html"><span>확인 문제와 2일차 전체 연결</span><small>PDF p.66–68</small></a></details><details class="nav-group"><summary>수업 중 헷갈렸던 것</summary><a href="links.html">막대 두 개를 움직이면 맨 끝은 어디에 있을까요?</a><a href="workspace.html">팔이 닿는 곳과 못 닿는 곳</a><a href="transform.html">돌리기와 옮기기를 한 번에</a><a href="rotation.html">“코사인 사인, 사인 코사인” 부호 하나를 기억하세요.</a><a href="frames.html">좌표계를 연결하는 것은 설명을 번역하는 것</a><a href="radians.html">거리 단위가 아니라 각도 단위</a><a href="parent.html">부모를 움직이면 연결된 자식도 따라옵니다.</a><a href="dh.html">DH 규약으로 로봇의 좌표계 연결하기</a><a href="dh-lab.html">DH 네 값을 직접 바꾸는 3D 실험실</a><a href="jacobian-code.html">야코비안 코드, 한 줄씩 이해하기</a><a href="jacobian-lab.html">각도·코드·손끝 속도를 잇는 야코비안 실험실</a></details></nav></details></aside><main id="lesson-content"><header><div class="eyebrow">PDF p.42–45 · 9차시 · MuJoCo</div><h1>컴퓨터 속 실험실과 장면 조립</h1><div class="path">시범 보기 → 따라 하기 → 이유 이해 → 선택적 확인</div></header><article class="section"><p class="lead">책상 위 1m 높이에서 공을 손에서 놓습니다. 0.5초 뒤 공은 어디에 있을까요? 관절각으로 손끝 위치를 구하던 계산으로는 이 질문에 답할 수 없습니다. 공의 질량, 아래로 당기는 중력, 그리고 0.5초라는 시간이 함께 있어야 다음 위치가 나옵니다.</p>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터 속 실험실과 장면 조립 · 로봇 공부 노트</title><link rel="stylesheet" href="../styles/study.css"></head><body><a class="skip-link" href="#lesson-content">본문으로 건너뛰기</a><div class="layout"><aside><div class="brand">ROBOTICS · STUDY NOTES</div><details class="site-menu" open><summary>학습 목차 열기·닫기</summary><nav aria-label="학습 목차"><a href="../index.html">학습 시작</a><a href="day1-coverage.html">1일차 교안 쪽에서 찾기</a><a href="coverage.html">2일차 교안 쪽에서 찾기</a><a href="d3-coverage.html">MuJoCo 교안 쪽에서 찾기</a><a href="simulator.html">2D 작업 공간 실험 ↗</a><a href="dh-lab.html">DH 3D 실험실 ↗</a><a href="jacobian-lab.html">야코비안 실험실 ↗</a><details class="nav-group"><summary>1일차 · 1차시 · 감지와 제어</summary><a href="day1-01-loop.html"><span>재고, 고르고, 한 걸음 움직이기</span><small>PDF p.1–9</small></a></details><details class="nav-group"><summary>1일차 · 1차시 · 피드백</summary><a href="day1-02-feedback.html"><span>미끄러져도 다시 가는 이유와 센서의 한계</span><small>PDF p.10–15</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 몸과 부품</summary><a href="day1-03-body.html"><span>몸의 자유도와 모터·센서 숫자 읽기</span><small>PDF p.16–22</small></a></details><details class="nav-group"><summary>1일차 · 2차시 · 제어 주기</summary><a href="day1-04-timing.html"><span>같은 판단도 박자가 다르면 흔들립니다</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 물리와 모델</summary><a href="day1-05-simulation.html"><span>떨어지는 상자로 시뮬레이션의 뜻 읽기</span><small>PDF p.29–35</small></a></details><details class="nav-group"><summary>1일차 · 3차시 · 안전과 회피</summary><a href="day1-06-avoidance.html"><span>모르면 멈추고, 장애물 옆으로 돌아갑니다</span><small>PDF p.36–41</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 좌표와 평면 회전</summary><a href="day1-07-frames-rotation.html"><span>같은 컵의 좌표와 회전행렬의 두 열</span><small>PDF p.42–46</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 3차원 회전</summary><a href="day1-08-camera.html"><span>카메라에서 몸으로: 열 세 개와 전치의 방향</span><small>PDF p.47–48</small></a></details><details class="nav-group"><summary>1일차 · 4차시 · 자세 표현</summary><a href="day1-09-euler.html"><span>롤·피치·요의 순서와 회전 벡터</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 쿼터니언</summary><a href="day1-10-quaternion.html"><span>숫자 넷으로 회전을 잇고 부드럽게 바꾸기</span><small>PDF p.55–59</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 동차 변환</summary><a href="day1-11-transform.html"><span>카메라가 본 컵을 방 좌표로 옮기기</span><small>PDF p.60–62</small></a></details><details class="nav-group"><summary>1일차 · 5차시 · 자이로와 정리</summary><a href="day1-12-gyro.html"><span>각속도를 쌓아 자세를 추적하고 하루를 연결하기</span><small>PDF p.63–68</small></a></details><details class="nav-group"><summary>6차시 · 순기구학</summary><a href="day2-01-questions.html"><span>로봇팔에게 묻는 두 가지 질문</span><small>PDF p.1–5</small></a><a href="day2-02-two-links.html"><span>막대 두 개로 손끝과 작업 공간 찾기</span><small>PDF p.6–8</small></a><a href="day2-03-spatial-arm.html"><span>관절 여섯 개도 작은 변환을 이어 붙입니다</span><small>PDF p.9–12</small></a></details><details class="nav-group"><summary>6차시 · 실습과 확인</summary><a href="day2-04-fk-practice.html"><span>순기구학 실습을 손계산으로 풀어 보기</span><small>PDF p.13–15</small></a></details><details class="nav-group"><summary>7차시 · 역기구학</summary><a href="day2-05-inverse.html"><span>손끝에서 거꾸로 관절각 찾기</span><small>PDF p.16–18</small></a></details><details class="nav-group"><summary>7차시 · 야코비안</summary><a href="day2-06-jacobian.html"><span>조금 돌렸을 때 얼마나 움직일까</span><small>PDF p.19–22</small></a></details><details class="nav-group"><summary>7차시 · 수치 계산과 실습</summary><a href="day2-07-numerical-ik.html"><span>목표에 조금씩 다가가는 역기구학</span><small>PDF p.23–28</small></a></details><details class="nav-group"><summary>8차시 · 특이점</summary><a href="day2-08-singularity.html"><span>팔을 쭉 펴면 왜 계산이 어려워질까</span><small>PDF p.29–33</small></a></details><details class="nav-group"><summary>8차시 · 한계와 검산</summary><a href="day2-09-limits.html"><span>관절의 한계와 남는 자유도</span><small>PDF p.34–36</small></a></details><details class="nav-group"><summary>8차시 · 경로</summary><a href="day2-10-path.html"><span>한 점에서 선과 하트로 이어 가기</span><small>PDF p.37–38</small></a></details><details class="nav-group"><summary>8차시 · 실습과 확인</summary><a href="day2-11-kinematics-check.html"><span>특이점 실습과 기구학 전체 정리</span><small>PDF p.39–41</small></a></details><details class="nav-group" open><summary>9차시 · MuJoCo</summary><a href="day2-40-mujoco-start.html"><span>MuJoCo 시작하기: 확인, 뷰어, 숫자로 보기</span><small>MuJoCo 교안 p.1–9</small></a><a href="day2-41-xml-primer.html"><span>XML 읽는 법과 로봇 부품 표</span><small>MuJoCo 교안 p.10–11</small></a><a href="day2-42-mujoco.html" aria-current="page"><span>컴퓨터 속 실험실과 장면 조립</span><small>PDF p.42–45</small></a><a href="day2-46-state.html"><span>상태의 칸, 크기, 한 걸음의 의미</span><small>PDF p.46–48</small></a><a href="day2-49-check.html"><span>낙하와 마찰로 채점하고 장면 찍기</span><small>PDF p.49–54</small></a></details><details class="nav-group"><summary>10차시 · 모터·센서</summary><a href="day2-55-actuator.html"><span>로봇의 위치를 읽고 모터에 목표 주기</span><small>PDF p.55–58</small></a><a href="day2-59-sensor.html"><span>센서, 충돌, 시뮬레이션 안정성</span><small>PDF p.59–61</small></a><a href="day2-62-push.html"><span>두 관절 팔로 상자를 밀어 보기</span><small>PDF p.62–65</small></a><a href="day2-66-review.html"><span>확인 문제와 2일차 전체 연결</span><small>PDF p.66–68</small></a></details><details class="nav-group"><summary>수업 중 헷갈렸던 것</summary><a href="run-code.html">내 PC에서 예제 실행하기</a><a href="links.html">막대 두 개를 움직이면 맨 끝은 어디에 있을까요?</a><a href="workspace.html">팔이 닿는 곳과 못 닿는 곳</a><a href="transform.html">돌리기와 옮기기를 한 번에</a><a href="rotation.html">“코사인 사인, 사인 코사인” 부호 하나를 기억하세요.</a><a href="frames.html">좌표계를 연결하는 것은 설명을 번역하는 것</a><a href="radians.html">거리 단위가 아니라 각도 단위</a><a href="parent.html">부모를 움직이면 연결된 자식도 따라옵니다.</a><a href="dh.html">DH 규약으로 로봇의 좌표계 연결하기</a><a href="dh-lab.html">DH 네 값을 직접 바꾸는 3D 실험실</a><a href="jacobian-code.html">야코비안 코드, 한 줄씩 이해하기</a><a href="jacobian-lab.html">각도·코드·손끝 속도를 잇는 야코비안 실험실</a><a href="widget-kit.html">보고 움직이는 그림 부품 모음</a></details></nav></details></aside><main id="lesson-content"><header><div class="eyebrow">PDF p.42–45 · 9차시 · MuJoCo · MuJoCo 교안 p.12–16·18–21</div><h1>컴퓨터 속 실험실과 장면 조립</h1><div class="path">시범 보기 → 따라 하기 → 이유 이해 → 선택적 확인</div></header><article class="section"><p class="lead">책상 위 1m 높이에서 공을 손에서 놓습니다. 0.5초 뒤 공은 어디에 있을까요? 관절각으로 손끝 위치를 구하던 계산으로는 이 질문에 답할 수 없습니다. 공의 질량, 아래로 당기는 중력, 그리고 0.5초라는 시간이 함께 있어야 다음 위치가 나옵니다.</p>
+<p class="check">처음 시작한다면 순서대로 읽으세요: <a href="day2-40-mujoco-start.html">MuJoCo 시작하기(설치 확인, 뷰어, 숫자로 보기)</a> → <a href="day2-41-xml-primer.html">XML 읽는 법과 로봇 부품 표</a> → 이 글. 내 PC에서 예제를 돌리는 방법은 <a href="run-code.html">예제 실행하기</a>입니다.</p>
 <details><summary>이 장면에서 고정한 조건</summary><div class="inside"><p>여기서부터는 자세 한 장을 계산하는 대신, 힘을 받은 물체가 시간이 지나며 어떻게 움직이는지를 계산합니다. MuJoCo는 그 계산을 대신 해 주는 컴퓨터 속 실험실입니다. 이번 차시는 <strong>공 하나, 진자 하나</strong>로 끝까지 갑니다. 고정하는 것은 장면입니다. 질량·모양·중력·시간 간격을 한 번 정하고, 바꾸는 것은 시간뿐입니다.</p></div></details>
 <section class="pdf-page" id="pdf-p42" data-pdf-page="42"><h3>사진 한 장에서 동영상으로</h3>
 <figure><img src="../assets/day2-model-data.png" alt="보충 도식: 설계 설정을 공유해도 실험별 상태와 시간은 따로 유지한다."><figcaption>보충 도식: 설계 설정을 공유해도 실험별 상태와 시간은 따로 유지한다.</figcaption></figure>
-<aside class="figure-guide"><h3>파란 실험판 A만 한 걸음 움직입니다</h3><ol class="visual-steps"><li>왼쪽 초록 MjModel은 질량·중력·시간 간격 설정입니다. 오른쪽 파란 A·살구색 B는 각각의 시간·위치·속도 MjData입니다. 두 화살표는 같은 설정을 참조한다는 뜻입니다.</li><li>중력과 Δt=0.002s를 고정하고 mj_step(model,A)만 한 번 부르면 A.time=0.002, B.time=0입니다. 공의 움직임은 A에만 반영됩니다.</li><li>모델의 중력을 −9.81→−1.62m/s²로 바꾸면 이후 A·B 계산 모두 달라집니다. 상태는 둘이어도 규칙은 하나를 공유하기 때문입니다. mj_resetData(model,A)는 A의 상태를 되돌리고 중력 설정은 유지합니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
-
-<p>순기구학은 “이 자세일 때 손이 어디 있나”라는 사진 한 장을 계산했습니다. 물리 시뮬레이션은 “이 힘을 받으면 다음 순간 어디 있나”를 계산해 사진을 이어 붙입니다. 그래서 할 일의 순서가 정해져 있습니다.</p>
+<aside class="figure-guide"><h3>파란 실험판 A만 한 걸음 움직입니다</h3><ol class="visual-steps"><li>왼쪽 초록 MjModel은 질량·중력·시간 간격 설정입니다. 오른쪽 파란 A·살구색 B는 각각의 시간·위치·속도 MjData입니다. 두 화살표는 같은 설정을 참조한다는 뜻입니다.</li><li>중력과 Δt=0.002s를 고정하고 mj_step(model,A)만 한 번 부르면 A.time=0.002, B.time=0입니다. 공의 움직임은 A에만 반영됩니다.</li><li>모델의 중력을 −9.81→−1.62m/s²로 바꾸면 이후 A·B 계산 모두 달라집니다. 상태는 둘이어도 규칙은 하나를 공유하기 때문입니다. mj_resetData(model,A)는 A의 상태를 되돌리고 중력 설정은 유지합니다.</li></ol></aside><p>순기구학은 “이 자세일 때 손이 어디 있나”라는 사진 한 장을 계산했습니다. 물리 시뮬레이션은 “이 힘을 받으면 다음 순간 어디 있나”를 계산해 사진을 이어 붙입니다. 그래서 할 일의 순서가 정해져 있습니다.</p>
 <div class="steps"><span>MJCF: 무엇을 놓을까?</span><b>→</b><span>Model: 실험 규칙</span><b>+</b><span>Data: 지금 상태</span><b>→</b><span>step: 다음 순간</span></div><p class="diagram-read">이 화살표는 공간 이동이 아니라 계산 순서입니다. 같은 공·중력·Δt를 정한 Model을 두고, Data의 시간·위치만 step마다 바꿉니다. Δt=0.002초이면 100걸음이0.2초입니다. 이 과정 뒤의 화면 회전은 계산한 공 위치를 바꾸지 않습니다.</p>
 <p>첫 단계는 장면을 글로 적는 일입니다. 무엇이 바닥이고, 무엇이 움직이며, 어디에 경첩이 있고, 중력은 어느 쪽으로 얼마나 강한지를 XML로 적습니다. 두 번째 단계에서 그 글을 계산용 모델로 바꾸고, 세 번째 단계에서 현재 상태를 따로 만듭니다. 마지막으로 0.002초짜리 걸음을 반복해 시간을 진행합니다.</p>
 <div class="point"><strong>위치를 안다고 다음 순간을 아는 것은 아닙니다</strong><p>손끝 좌표가 (0.3, 0.2)라는 사실은 지금 어디 있는지만 말해 줍니다. 다음 순간의 위치는 질량, 힘, 중력, 현재 속도, 시간 간격이 함께 정합니다. 이번 차시의 계산이 기구학과 갈라지는 지점입니다.</p></div>
-<p>이 차시에는 공과 진자로 이 흐름을 익히고, 낙하와 마찰처럼 <strong>답을 아는 문제</strong>로 계산이 맞는지 채점합니다. 화면에 예쁘게 보인다는 것과 물리 계산이 정확하다는 것은 다른 이야기입니다. 그래서 마지막에는 손으로 푼 값과 시뮬레이터의 값을 나란히 놓고 비교합니다.</p>
-</div></details></section>
+<p>이 차시에는 공과 진자로 이 흐름을 익히고, 낙하와 마찰처럼 <strong>답을 아는 문제</strong>로 계산이 맞는지 채점합니다. 화면에 예쁘게 보인다는 것과 물리 계산이 정확하다는 것은 다른 이야기입니다. 그래서 마지막에는 손으로 푼 값과 시뮬레이터의 값을 나란히 놓고 비교합니다.</p></section>
 
-<section class="pdf-page" id="pdf-p43" data-pdf-page="43"><h3>진자: 수평으로 든 추를 놓으면</h3>
-<p>문 경첩처럼 한 축만 돌 수 있는 관절에 추를 매답니다. 처음에 수평으로 들었다 놓으면 추는 중력 때문에 아래로 내려갔다가 반대편으로 올라갑니다. 컴퓨터에 “그네처럼 흔들려”라고 적을 수는 없으니, 대신 <strong>관절·추·중력·처음 각도</strong>를 적습니다. 고정하는 값은 경첩 축(y축), 추까지의 거리 0.5m, 마찰 없음, 시간 간격 0.002초입니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<section id="mjcf-door"><h2>문 한 짝으로 읽는 MJCF 태그</h2>
+<p class="lead">MuJoCo의 XML(MJCF)에는 태그가 많지만, 문 한 짝에는 여덟 개면 충분합니다. <code>option</code> <code>default</code> <code>body</code> <code>joint</code> <code>geom</code> <code>site</code> <code>actuator</code> <code>sensor</code>. 그림 세 장으로 큰 모양을 잡고, 태그마다 속성 하나만 바꿔 숫자가 어떻게 달라지는지 봅니다.</p>
+<figure><svg viewBox="0 0 760 420" font-size="15" role="img" aria-label="문을 위에서 본 그림. 왼쪽 아래의 동그란 경첩에서 회색 닫힌 문이 오른쪽(+x)으로 뻗어 있고, 같은 문이 파란색으로 반시계 방향 35도 열려 위쪽으로 기울어 있다. 두 문의 끝 근처에 주황색 손잡이 점이 있고, 점선 호가 손잡이가 그리는 원을 보여 준다. 검은 호 화살표와 세타 글자가 열린 각도를 나타낸다. 왼쪽 위에 x 화살표(오른쪽), y 화살표(위쪽), z는 화면 밖으로 나온다는 표시가 있다."><defs><marker id="f1-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs>
+<text x="380" y="26" text-anchor="middle">※ 각도는 보이도록 35°로 과장했습니다 (실제 측정값은 0.17°)</text>
+<rect x="170" y="318" width="480" height="24" fill="#aaa" fill-opacity="0.45" stroke="#aaa"/>
+<circle cx="620" cy="330" r="8" fill="#e16a20" fill-opacity="0.6"/>
+<text x="330" y="336">닫힌 문 (θ = 0)</text>
+<path d="M620 330A450 450 0 0 0 538.6 71.9" fill="none" stroke="#e16a20" stroke-width="2" stroke-dasharray="6 5"/>
+<g transform="rotate(-35 170 330)"><rect x="170" y="318" width="480" height="24" fill="#286e99"/><circle cx="620" cy="330" r="8" fill="#e16a20"/><text x="300" y="336" fill="#fff">열린 문</text></g>
+<path d="M470 330A300 300 0 0 0 415.7 157.9" fill="none" stroke="#000" stroke-width="2" marker-end="url(#f1-ah)"/>
+<text x="494" y="234" font-size="22">θ</text>
+<circle cx="170" cy="330" r="11" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="170" cy="330" r="4"/>
+<text x="170" y="392" text-anchor="middle">경첩: 문이 도는 중심</text>
+<text x="620" y="372" text-anchor="middle">닫힌 문의 손잡이</text>
+<text x="575" y="94">열린 문의 손잡이</text>
+<line x1="40" y1="130" x2="104" y2="130" stroke="#000" stroke-width="2" marker-end="url(#f1-ah)"/><line x1="40" y1="130" x2="40" y2="66" stroke="#000" stroke-width="2" marker-end="url(#f1-ah)"/>
+<text x="110" y="135">x</text><text x="34" y="56">y</text>
+<circle cx="40" cy="130" r="7" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="40" cy="130" r="2.5"/>
+<text x="20" y="162">z축(경첩 막대)은</text><text x="20" y="182">화면 밖으로 나옵니다</text></svg><figcaption>위에서 본 문. 회색은 닫힌 문, 파란색은 같은 문이 경첩을 중심으로 θ만큼 열린 모습입니다. 주황 점인 손잡이는 문에 붙어 있어서 경첩에서 0.75 m 거리를 지키며 점선 원 위를 움직입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>경첩부터 보세요</h3><ol class="visual-steps"><li>먼저 동그란 경첩을 찾습니다. 경첩은 제자리에 있고 문 전체가 그 둘레를 돕니다.</li><li>회색 문이 파란 문으로 바뀝니다. 손잡이(주황 점)가 점선 원을 따라 위로 올라갑니다. 문과 손잡이는 한 덩어리라서 같은 각도 θ만큼 같이 돕니다.</li><li>양의 θ는 x축에서 y축 쪽으로, 즉 위에서 볼 때 반시계 방향입니다. 막대(z축)가 화면 밖으로 나오기 때문입니다.</li></ol></aside>
+<figure><svg viewBox="0 0 780 450" font-size="15" role="img" aria-label="문 XML 파일의 태그가 서로 어디에 들어 있는지 보여 주는 나무 그림. 왼쪽 뿌리 mujoco 아래에 option, default, worldbody, actuator, sensor가 있다. default 안에는 geom, worldbody 안에는 body가 있고 body 안에 joint, geom, site 세 개가 있다. actuator 안에는 motor, sensor 안에는 jointpos가 있다. 주황 점선 화살표 두 개가 motor와 jointpos에서 joint로 가며, 둘 다 이름 hinge로 관절을 찾는다는 뜻이다."><defs><marker id="f2-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e16a20"/></marker></defs>
+<g fill="none" stroke="#aaa" stroke-width="2"><path d="M100 220H120M120 30V410M120 30H140M120 95H140M120 200H140M120 340H140M120 410H140"/><path d="M270 95H310M270 200H310M270 340H310M270 410H310"/><path d="M480 200H500M500 150V260M500 150H520M500 205H520M500 260H520"/></g>
+<g fill="#fff" stroke="#286e99" stroke-width="2"><rect x="10" y="197" width="90" height="46" rx="6"/><rect x="140" y="7" width="130" height="46" rx="6"/><rect x="140" y="72" width="130" height="46" rx="6"/><rect x="140" y="177" width="130" height="46" rx="6"/><rect x="140" y="317" width="130" height="46" rx="6"/><rect x="140" y="387" width="130" height="46" rx="6"/><rect x="310" y="72" width="170" height="46" rx="6"/><rect x="310" y="177" width="170" height="46" rx="6"/><rect x="310" y="317" width="170" height="46" rx="6"/><rect x="310" y="387" width="170" height="46" rx="6"/><rect x="520" y="127" width="190" height="46" rx="6"/><rect x="520" y="182" width="190" height="46" rx="6"/><rect x="520" y="237" width="190" height="46" rx="6"/></g>
+<g font-weight="bold"><text x="55" y="224" text-anchor="middle">mujoco</text><text x="205" y="26" text-anchor="middle">option</text><text x="205" y="91" text-anchor="middle">default</text><text x="205" y="196" text-anchor="middle">worldbody</text><text x="205" y="336" text-anchor="middle">actuator</text><text x="205" y="406" text-anchor="middle">sensor</text><text x="395" y="91" text-anchor="middle">geom</text><text x="395" y="196" text-anchor="middle">body</text><text x="395" y="336" text-anchor="middle">motor</text><text x="395" y="406" text-anchor="middle">jointpos</text><text x="615" y="146" text-anchor="middle">joint</text><text x="615" y="201" text-anchor="middle">geom</text><text x="615" y="256" text-anchor="middle">site</text></g>
+<g font-size="12.5"><text x="205" y="45" text-anchor="middle">timestep="0.002"</text><text x="205" y="110" text-anchor="middle">공통값 모음</text><text x="205" y="215" text-anchor="middle">고정된 세계</text><text x="205" y="355" text-anchor="middle">힘을 주는 목록</text><text x="205" y="425" text-anchor="middle">재는 목록</text><text x="55" y="238" text-anchor="middle" font-size="11">model="door"</text><text x="395" y="110" text-anchor="middle">rgba="0.2 0.5 0.7 1"</text><text x="395" y="215" text-anchor="middle">name="door" pos="0 0 1"</text><text x="395" y="355" text-anchor="middle">name="opener" joint="hinge"</text><text x="395" y="425" text-anchor="middle">name="angle" joint="hinge"</text><text x="615" y="165" text-anchor="middle">name="hinge" type="hinge"</text><text x="615" y="220" text-anchor="middle">type="box" size="0.4 0.02 0.5"</text><text x="615" y="275" text-anchor="middle">name="handle" pos="0.75 0 0"</text></g>
+<g fill="none" stroke="#e16a20" stroke-width="2.5" stroke-dasharray="7 5"><path d="M480 340H730V160H712" marker-end="url(#f2-ah)"/><path d="M480 410H752V142H712" marker-end="url(#f2-ah)"/></g>
+<g fill="#e16a20" font-size="13"><text x="490" y="331">이름 "hinge"로 관절을 찾는다</text><text x="490" y="401">이름 "hinge"로 관절을 찾는다</text></g></svg><figcaption>문 파일에서 태그가 들어 있는 자리. 실선은 "안에 들어 있다", 주황 점선은 "이름으로 가리킨다"입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>들여쓰기 하나가 소속 하나입니다</h3><ol class="visual-steps"><li>왼쪽 mujoco에서 오른쪽으로 갈수록 작은 부품입니다. 문(body)은 worldbody 안에 있고, 경첩(joint), 문짝 모양(geom), 손잡이 표시(site)는 문 안에 있습니다.</li><li>주황 점선을 따라가 보세요. motor와 jointpos는 문 안이 아니라 따로 있지만, 이름 "hinge"로 경첩을 가리킵니다. 이름이 연결선입니다.</li><li>option, default, actuator, sensor는 문을 만드는 부품이 아닙니다. 계산 규칙, 공통값, 입력, 측정을 따로 모아 둔 목록입니다.</li></ol></aside>
+<h3 id="mjcf-door-xml">① 문 파일 전체: 열다섯 줄이 문 한 짝입니다</h3>
+<p>위 나무 그림을 글로 쓰면 아래 XML입니다. 들여쓰기가 소속이고, <code>name="hinge"</code>가 motor와 sensor가 경첩을 찾는 연결선입니다.</p><pre data-copy><code id="mjcf-door-code">&lt;mujoco model="door"&gt;
+  &lt;option timestep="0.002"/&gt;
+  &lt;default&gt;
+    &lt;geom rgba="0.2 0.5 0.7 1"/&gt;
+  &lt;/default&gt;
+  &lt;worldbody&gt;
+    &lt;body name="door" pos="0 0 1"&gt;
+      &lt;joint name="hinge" type="hinge" axis="0 0 1"/&gt;
+      &lt;geom type="box" pos="0.4 0 0" size="0.4 0.02 0.5"/&gt;
+      &lt;site name="handle" pos="0.75 0 0" size="0.03" rgba="1 0.4 0 1"/&gt;
+    &lt;/body&gt;
+  &lt;/worldbody&gt;
+  &lt;actuator&gt;&lt;motor name="opener" joint="hinge"/&gt;&lt;/actuator&gt;
+  &lt;sensor&gt;&lt;jointpos name="angle" joint="hinge"/&gt;&lt;/sensor&gt;
+&lt;/mujoco&gt;</code></pre>
+<h3 id="mjcf-door-run">② 돌려서 숫자 하나 얻기</h3>
+<p>XML을 <code>door.xml</code>로 저장하고 아래 함수로 돌립니다(실행 방법은 <a href="run-code.html">예제 실행하기</a>).</p><pre data-copy><code>import mujoco
+
+def run(xml, steps=100, ctrl=1.0):
+    model = mujoco.MjModel.from_xml_string(xml)
+    data = mujoco.MjData(model)
+    if model.nu:
+        data.ctrl[0] = ctrl
+    for _ in range(steps):
+        mujoco.mj_step(model, data)
+    mujoco.mj_forward(model, data)
+    return model, data
+
+xml = open("door.xml").read()
+model, data = run(xml)
+print(data.time, data.sensor("angle").data[0])</code></pre>
+<p class="point"><strong>결과: 100걸음 뒤 시간 0.2초, 각도 0.0030 rad(0.17°).</strong> 입력 1은 목표 각도가 아니라 회전력 1 N·m이고, 문이 무거워서(32 kg) 0.2초 동안은 조금밖에 돌지 않습니다.</p>
+<p>마지막 <code>mj_forward</code>는 위치(<code>xpos</code>)와 센서값을 최신으로 맞춥니다. 아래 실험은 모두 이 <code>run</code>을 쓰고 <code>xml.replace("바꿀 부분", "새 부분")</code>으로 한 군데만 고칩니다.</p>
+<h3 id="mjcf-door-tags">③ 여덟 태그, 속성 하나씩 바꾸면 무엇이 달라지나</h3>
+<p>태그마다 한 줄만 고쳐 같은 <code>run</code>을 돌린 결과입니다(모두 MuJoCo 3.17.0 실행값, 기준은 ② 결과 0.00296 rad). 각 줄의 코드와 이유는 아래 접힌 칸에 있습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>태그</th><th>하는 일</th><th>바꾼 한 줄</th><th>달라진 숫자</th></tr></thead><tbody><tr><td><code>option</code></td><td>계산 규칙</td><td><code>timestep</code> 0.002 → 0.01</td><td>같은 100걸음이 0.2초 → <strong>1.0초</strong>, 각도 0.0030 → 0.0739 rad</td></tr><tr><td><code>default</code></td><td>공통값 물려주기</td><td>joint <code>damping="2"</code>를 default에</td><td><code>dof_damping</code> 0 → <strong>2</strong>, 각도 0.00296 → 0.00290 rad</td></tr><tr><td><code>body</code></td><td>덩어리와 기준점</td><td><code>pos</code> z 1 → 1.5</td><td>손잡이 z 1.0 → <strong>1.5</strong> (손잡이 줄은 그대로)</td></tr><tr><td><code>joint</code></td><td>허용하는 움직임</td><td>hinge → slide, 방향 1 0 0</td><td>센서 0.00296 rad → <strong>0.000631 m</strong></td></tr><tr><td><code>geom</code></td><td>모양·충돌·질량</td><td><code>size</code> x 0.4 → 0.8</td><td>질량 32 → <strong>64 kg</strong>, 각도 0.00296 → 0.000845 rad</td></tr><tr><td><code>site</code></td><td>질량 없는 표시점</td><td>site 줄 삭제</td><td>질량은 둘 다 <strong>32 kg</strong> (site는 질량에 안 들어감)</td></tr><tr><td><code>actuator</code></td><td>입력 → 힘</td><td><code>gear</code> 1 → 10</td><td>각도 0.00296 → <strong>0.0296 rad</strong> (정확히 10배)</td></tr><tr><td><code>sensor</code></td><td>측정값 적기</td><td>jointvel, framepos 추가</td><td><code>sensordata</code> 1칸 → <strong>5칸</strong></td></tr></tbody></table></div>
+<h3 id="mjcf-door-variants">④ 더 깊이 (선택): 태그마다 하나씩 해 보기</h3>
+<p class="small">표의 한 줄마다 코드, 이유, 흔한 실수를 적었습니다. 필요한 태그만 펼치세요.</p>
+
+<details class="lesson-detail"><summary>1. option: 한 걸음에 몇 초를 흘릴까</summary><div class="inside">
+<p><strong>하는 일</strong> 장면 전체의 계산 규칙입니다. 문 파일은 한 걸음의 가상 시간(timestep)만 적었습니다. 이 줄을 지워도 기본값이 같아서 결과는 같지만, 적어 두면 "이 숫자는 이 규칙으로 계산했다"가 파일에 남습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>timestep</code></td><td>한 번 <code>mj_step</code> 할 때 흐르는 시간</td><td>초</td><td>0.002</td></tr><tr><td><code>gravity</code></td><td>중력 가속도 방향과 크기</td><td>m/s²</td><td>0 0 -9.81</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: timestep 0.002 → 0.01</strong><pre><code>model, data = run(xml.replace('timestep="0.002"', 'timestep="0.01"'))</code></pre><p>같은 100걸음인데 <code>data.time</code>이 0.2초에서 <strong>1.0초</strong>가 되고, 각도는 0.00296 rad에서 <strong>0.0739 rad</strong>로 25배가 됩니다. 한 걸음이 5배 길어져 시간이 5배가 되었고, 같은 힘으로 5배 오래 밀면 각도는 시간의 제곱(5×5=25)으로 늘기 때문입니다.</p>
+<p>걸음 수가 아니라 시간을 맞춰 비교하려면 0.01초 걸음을 20번만 걸으면 됩니다(<code>run(…, steps=20)</code>). 시간은 똑같이 0.2초인데 각도는 0.00307 rad입니다. 0.002초 걸음의 0.00296 rad보다 약 4% 큽니다. 걸음이 클수록 계산이 거칠어집니다.</p></div>
+<p class="warning point">걸음 수를 시간으로 착각하지 마세요. 시간은 걸음 수 × timestep이고, <code>data.time</code>으로 확인합니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>2. default: 공통값을 한 번만 적기</summary><div class="inside">
+<p><strong>하는 일</strong> 여러 요소가 같은 값을 쓸 때 한 번만 적어 둡니다. 문 파일의 <code>&lt;default&gt;&lt;geom rgba=…/&gt;</code>는 색을 적지 않은 문짝 geom에 파란색을 물려줍니다. default에 없고 geom에도 없으면 회색(0.5 0.5 0.5 1)이 됩니다.</p>
+<div class="tablewrap"><table><thead><tr><th>쓰는 법</th><th>뜻</th></tr></thead><tbody><tr><td><code>&lt;default&gt;</code> 안에 태그 이름과 속성</td><td>그 종류 요소가 직접 안 쓴 속성의 기본값이 됩니다. 속성 이름은 그 태그의 것과 같습니다.</td></tr><tr><td>요소에 직접 쓴 값</td><td>default보다 항상 우선합니다.</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: default에 관절 댐핑 넣기</strong><pre><code>xml2 = xml.replace('&lt;geom rgba="0.2 0.5 0.7 1"/&gt;',
+                   '&lt;geom rgba="0.2 0.5 0.7 1"/&gt;&lt;joint damping="2"/&gt;')
+model, data = run(xml2)
+print(model.dof_damping[0])</code></pre><p>hinge 줄에는 damping을 쓰지 않았는데 <code>dof_damping</code>이 0에서 <strong>2</strong>가 되고, 각도는 0.00296 rad에서 0.00290 rad로 조금 줄어듭니다. 댐핑은 속도에 비례해 움직임을 막는 힘이라서, 물려받은 값이 문의 회전을 늦춘 것입니다.</p>
+<p>이어서 hinge 줄에 <code>damping="0.5"</code>를 직접 쓰면 <code>dof_damping</code>은 <strong>0.5</strong>가 되고 각도는 0.00294 rad입니다. 직접 쓴 값이 default를 이깁니다.</p></div>
+<p class="warning point">default에 색을 적었다고 모든 geom이 그 색이 되는 것은 아닙니다. 문짝에 <code>rgba="1 0 0 1"</code>을 직접 쓰면 <code>model.geom_rgba[0]</code>는 [1, 0, 0, 1]이 되고 default 파랑은 무시됩니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>3. body: 같이 움직이는 덩어리와 기준점</summary><div class="inside">
+<p><strong>하는 일</strong> 한 덩어리로 움직이는 부품을 묶고 그 부품의 기준점(좌표 원점)을 정합니다. 문 body의 기준점은 경첩 자리입니다. 안에 든 joint, geom, site의 <code>pos</code>는 모두 이 기준점에서 잰 거리입니다. 이 묶음이 없으면 문짝과 손잡이가 같이 도는 한 덩어리가 되지 못합니다.</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>name</code></td><td>다른 곳에서 이름으로 찾을 때 쓰는 이름</td><td>없음</td><td>생략 가능</td></tr><tr><td><code>pos</code></td><td>부모 기준 위치 (worldbody 안이면 세계 좌표)</td><td>m</td><td>0 0 0</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: body pos 0 0 1 → 0 0 1.5</strong><pre><code>model, data = run(xml.replace('pos="0 0 1"', 'pos="0 0 1.5"'), steps=0)
+print(data.site("handle").xpos)</code></pre><p>손잡이의 세계 좌표가 (0.75, 0, 1.0)에서 <strong>(0.75, 0, 1.5)</strong>로 바뀝니다. 손잡이 줄은 한 글자도 안 고쳤는데 같이 올라갑니다. 손잡이의 <code>pos</code>가 문 기준점에서 잰 값이기 때문입니다. <code>pos="2 0 1"</code>로 바꾸면 손잡이는 (2.75, 0, 1.0)이고, 100걸음 뒤 각도는 처음과 같은 0.00296 rad입니다. 문 전체가 평행이동했을 뿐입니다.</p></div>
+<p class="warning point">geom이나 site의 <code>pos</code> 0.75를 세계 좌표로 읽지 마세요. body를 x=2로 옮기자 손잡이가 0.75가 아니라 2.75에 있습니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>4. joint: 어떤 움직임을 허용할까</summary><div class="inside">
+<p><strong>하는 일</strong> body가 부모에 대해 움직일 수 있는 방식을 정합니다. 문의 hinge는 z축 둘레 회전 하나만 허용합니다. joint가 없으면 문은 움직일 자유가 없습니다(모델의 <code>nq</code>가 0).</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>type</code></td><td>hinge는 회전, slide는 직선 이동</td><td>없음</td><td>hinge</td></tr><tr><td><code>axis</code></td><td>회전축 또는 이동 방향 (body 기준)</td><td>없음</td><td>0 0 1</td></tr><tr><td><code>range</code></td><td>움직일 수 있는 범위 (적으면 한계 적용)</td><td>hinge는 도, slide는 m</td><td>0 0 (제한 없음)</td></tr><tr><td><code>name</code></td><td>motor와 sensor가 찾는 이름</td><td>없음</td><td>생략 가능</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: hinge → slide, 방향 1 0 0</strong><pre><code>x = xml.replace('type="hinge" axis="0 0 1"', 'type="slide" axis="1 0 0"')
+model, data = run(x)
+print(data.sensor("angle").data[0], data.site("handle").xpos)</code></pre><p>같은 센서 "angle"이 이제 <strong>0.000631</strong>을 읽는데, 단위가 라디안이 아니라 <strong>미터</strong>입니다. 문은 돌지 않고 x 방향으로 밀려서 손잡이가 0.75에서 0.750631로 갑니다. 손으로 계산해도 힘 1 N, 질량 32 kg이면 ½×(1/32)×0.2² = 0.000625 m로 거의 같습니다. jointpos는 관절 종류에 맞는 값(회전은 rad, 직선은 m)을 읽습니다.</p></div>
+<div class="point"><strong>한 가지 더: range로 한계 두기</strong><pre><code>x = xml.replace('axis="0 0 1"/&gt;',
+                'axis="0 0 1" range="0 0.1"/&gt;')
+model, data = run(x, steps=500)</code></pre><p>500걸음(1초) 뒤 한계가 없으면 0.0733 rad인데, range를 쓰면 <strong>0.00175 rad</strong>에서 멈춥니다. 한계가 0.1 rad가 아니기 때문입니다. 왜 그런지는 아래 "각도 단위" 메모에 있습니다.</p></div>
+<p class="warning point">hinge의 range는 기본이 도(degree)입니다. 라디안으로 생각하고 <code>range="0 1.57"</code>이라 쓰면 1.57도가 됩니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>5. geom: 모양, 충돌, 질량</summary><div class="inside">
+<p><strong>하는 일</strong> 눈에 보이는 모양이자 부딪히는 면이고, 질량의 근거입니다. 문짝 box의 부피 0.8×0.04×1.0 = 0.032 m³에 밀도 1000 kg/m³를 곱하면 32 kg이고, 실제로 <code>model.body("door").mass[0]</code>가 32.0입니다.</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>type</code></td><td>모양 종류 (box, sphere …)</td><td>없음</td><td>sphere</td></tr><tr><td><code>size</code></td><td>box는 x, y, z <strong>반길이</strong> 셋</td><td>m</td><td>0 0 0</td></tr><tr><td><code>pos</code></td><td>body 기준점에서 geom 중심까지</td><td>m</td><td>0 0 0</td></tr><tr><td><code>density</code></td><td>질량을 계산할 때 쓰는 밀도</td><td>kg/m³</td><td>1000</td></tr></tbody></table></div>
+<figure><svg viewBox="0 0 760 320" font-size="15" role="img" aria-label="문짝 box를 위에서 본 그림. 경첩 x=0에서 파란 문짝이 x=0.8 m까지 뻗는다. 문짝 중심 x=0.4 m에 흰 점이 있고, 경첩에서 중심까지와 중심에서 끝까지가 각각 반길이 0.4 m 화살표로 표시된다. 그 아래 화살표는 전체 길이 0.8 m를 나타낸다. 손잡이 주황 점은 x=0.75 m에 있다. 맨 위에 점선 주황 막대는 size 0.4를 전체 길이로 잘못 읽었을 때의 0에서 0.4 m 길이를 보여 준다."><defs><marker id="f3-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs>
+<rect x="100" y="48" width="240" height="24" fill="none" stroke="#e16a20" stroke-width="2" stroke-dasharray="6 5"/><text x="352" y="66" fill="#e16a20">✗ 잘못 읽은 길이: 0.4 m</text>
+<rect x="100" y="150" width="480" height="24" fill="#286e99"/><circle cx="340" cy="162" r="5" fill="#fff"/><circle cx="550" cy="162" r="7" fill="#e16a20"/><circle cx="100" cy="162" r="10" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="100" cy="162" r="3.5"/>
+<g text-anchor="middle"><text x="100" y="136">경첩 x=0</text><text x="340" y="136">중심 pos x=0.4</text><text x="540" y="136">손잡이 x=0.75</text></g><text x="592" y="168">끝 x=0.8</text>
+<g stroke="#aaa" stroke-width="1.5" stroke-dasharray="4 4"><path d="M100 174V275M340 174V275M580 174V275"/></g>
+<g stroke="#000" stroke-width="2"><path d="M104 215H336" marker-start="url(#f3-ah)" marker-end="url(#f3-ah)"/><path d="M344 215H576" marker-start="url(#f3-ah)" marker-end="url(#f3-ah)"/><path d="M104 275H576" marker-start="url(#f3-ah)" marker-end="url(#f3-ah)"/></g>
+<g text-anchor="middle"><text x="220" y="238">반길이 0.4 m</text><text x="460" y="238">반길이 0.4 m</text><text x="340" y="300">전체 길이 = 반길이 × 2 = 0.8 m</text></g></svg><figcaption>box의 size 0.4는 반길이입니다. pos x=0.4가 중심이므로 문짝은 경첩(x=0)에서 x=0.8 m까지 뻗고, 손잡이는 끝에서 5 cm 안쪽(0.75 m)에 있습니다.</figcaption></figure>
+<aside class="figure-guide"><h3>중심의 흰 점에서 양쪽으로 보세요</h3><ol class="visual-steps"><li>가운데 흰 점이 pos x=0.4, 즉 geom의 중심입니다. 거기서 왼쪽 끝(경첩)과 오른쪽 끝이 똑같이 0.4 m입니다. 이 0.4가 size입니다.</li><li>그래서 size는 전체 길이의 반입니다. 점선 주황 막대처럼 0.4를 전체 길이로 읽으면 문이 절반 길이로 보입니다.</li><li>손잡이 site는 문 위의 한 점이라서 문이 돌면 같이 돕니다.</li></ol></aside>
+<div class="point"><strong>하나만 바꿔 보기: size 0.4 → 0.8 (x 반길이)</strong><pre><code>model, data = run(xml.replace('size="0.4 0.02 0.5"', 'size="0.8 0.02 0.5"'))
+print(model.body("door").mass[0], data.sensor("angle").data[0])</code></pre><p>질량이 32에서 <strong>64 kg</strong>으로 두 배가 되고, 100걸음 뒤 각도는 0.00296 rad에서 <strong>0.000845 rad</strong>(약 0.29배)가 됩니다. 문이 길어지고 무거워져 같은 힘 1 N·m로는 돌리기 어려워졌기 때문입니다. pos는 그대로 0.4이므로 문짝은 x=−0.4에서 1.2 m까지 경첩 뒤쪽으로도 튀어나갑니다.</p></div>
+<p class="warning point">size를 전체 길이로 읽지 마세요. 문을 0.8 m로 만들려면 반길이 0.4와 중심 0.4가 함께 필요합니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>6. site: 질량 없는 표시 핀</summary><div class="inside">
+<p><strong>하는 일</strong> body에 꽂아 두는 표시점입니다. 부딪히지도 않고 질량도 없지만 body와 함께 움직여서 "손잡이가 지금 어디인가"를 물을 수 있고, 센서를 붙이는 자리로도 씁니다.</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>name</code></td><td>위치를 읽거나 센서를 붙일 때 쓰는 이름</td><td>없음</td><td>생략 가능</td></tr><tr><td><code>pos</code></td><td>body 기준점에서의 위치</td><td>m</td><td>0 0 0</td></tr><tr><td><code>size</code></td><td>표시 구의 크기(반지름)</td><td>m</td><td>0.005 0.005 0.005</td></tr><tr><td><code>rgba</code></td><td>표시 색</td><td>없음</td><td>0.5 0.5 0.5 1</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: site 줄을 지워 보기</strong><pre><code>site = '&lt;site name="handle" pos="0.75 0 0" size="0.03" rgba="1 0.4 0 1"/&gt;'
+no_site = xml.replace(site, '')
+m0, _ = run(no_site)
+m1, d1 = run(xml)
+print(m0.body("door").mass[0], m1.body("door").mass[0])</code></pre><p>질량은 둘 다 <strong>32.0 kg</strong>이고 geom은 둘 다 1개이며 site만 1개에서 0개가 됩니다. site는 질량 계산에 들어가지 않습니다. 손잡이 위치는 닫혔을 때 (0.75, 0, 1.0)이고, 100걸음 뒤 (0.75, 0.0022, 1.0)입니다. 경첩에서의 거리는 여전히 0.75 m입니다. 돌아도 거리를 지키는 점이 site입니다.</p></div>
+<p class="warning point"><code>mj_forward</code>를 부르기 전에 <code>data.site("handle").xpos</code>를 읽으면 [0, 0, 0]입니다. 또 <code>model.site_pos</code>는 언제나 body 기준의 [0.75, 0, 0]이고, 세계 좌표는 <code>data.site(…).xpos</code>입니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>7. actuator: 입력 숫자를 힘으로 바꾸기</summary><div class="inside">
+<p><strong>하는 일</strong> <code>data.ctrl</code>의 숫자를 관절에 가하는 힘으로 바꿔 줍니다. 문의 motor는 입력에 gear를 곱한 값을 hinge의 회전력으로 씁니다. actuator가 없으면 <code>model.nu</code>가 0이어서 문을 밀 방법이 없습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>name</code></td><td>이 구동기의 이름</td><td>없음</td><td>생략 가능</td></tr><tr><td><code>joint</code></td><td>힘을 줄 관절의 이름</td><td>없음</td><td>필수</td></tr><tr><td><code>gear</code></td><td>입력에 곱하는 배율 (첫 숫자)</td><td>없음</td><td>1 0 0 0 0 0</td></tr><tr><td><code>ctrlrange</code></td><td>입력 범위를 제한</td><td>입력과 같음</td><td>0 0 (제한 없음)</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: gear 1 → 10</strong><pre><code>x = xml.replace('joint="hinge"/&gt;&lt;/actuator&gt;',
+                'joint="hinge" gear="10"/&gt;&lt;/actuator&gt;')
+model, data = run(x)</code></pre><p>입력은 같은 1인데 각도가 0.00296 rad에서 <strong>0.0296 rad</strong>로 정확히 10배가 됩니다. 입력 1이 10 N·m의 회전력으로 바뀌었기 때문입니다.</p></div>
+<p class="warning point">입력은 목표 각도가 아니라 힘입니다. <code>ctrlrange="-0.5 0.5"</code>를 쓰고 입력 1을 넣으면 <code>data.ctrl[0]</code>는 1.0 그대로인데 실제 힘은 0.5로 잘려 각도가 0.00148 rad로 줄어듭니다.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>8. sensor: 측정값을 배열에 적기</summary><div class="inside">
+<p><strong>하는 일</strong> 시뮬레이션 값을 <code>data.sensordata</code>라는 한 줄 배열에 읽기 쉽게 적어 줍니다. 문의 jointpos는 경첩의 각도를 읽습니다. 센서가 없으면 값은 <code>data.qpos</code>에서 직접 찾아야 합니다.</p>
+<div class="tablewrap"><table><thead><tr><th>속성</th><th>뜻</th><th>단위</th><th>기본값</th></tr></thead><tbody><tr><td><code>name</code></td><td>값을 이름으로 읽을 때 쓰는 이름</td><td>없음</td><td>생략 가능</td></tr><tr><td><code>joint</code></td><td>jointpos·jointvel이 잴 관절 이름</td><td>없음</td><td>필수</td></tr><tr><td><code>objtype</code>, <code>objname</code></td><td>framepos가 잴 대상의 종류(site)와 이름</td><td>없음</td><td>필수</td></tr></tbody></table></div>
+<div class="point"><strong>하나만 바꿔 보기: 센서 두 개 더 달기</strong><pre><code>more = '''&lt;sensor&gt;&lt;jointpos name="angle" joint="hinge"/&gt;
+  &lt;jointvel name="speed" joint="hinge"/&gt;
+  &lt;framepos name="handlepos" objtype="site" objname="handle"/&gt;&lt;/sensor&gt;'''
+old = '&lt;sensor&gt;&lt;jointpos name="angle" joint="hinge"/&gt;&lt;/sensor&gt;'
+model, data = run(xml.replace(old, more))
+print(data.sensordata)</code></pre><p>값이 5개 나옵니다: <strong>[0.002957, 0.029279, 0.749997, 0.002218, 1.0]</strong>. 첫 칸은 각도(rad), 둘째 칸은 각속도(rad/s), 셋째~다섯째 칸은 손잡이의 x, y, z(m)입니다. XML에 적은 순서대로 이어 붙고, 각도와 속도는 1칸, framepos는 3칸을 씁니다. 이름으로 읽으면(<code>data.sensor("speed").data</code>) 순서를 외울 필요가 없습니다.</p></div>
+<p class="warning point">센서 순서를 바꾸면 <code>sensordata[0]</code>의 뜻이 바뀝니다. jointvel을 앞에 쓰면 [0]은 속도 0.0293이 됩니다. 이름으로 읽으세요.</p>
+</div></details>
+
+<details class="lesson-detail"><summary>메모: 이름은 연결선, 각도는 라디안</summary><div class="inside">
+<div class="point"><strong>이름이 틀리면 모델이 안 만들어집니다</strong><pre><code>bad = xml.replace('joint="hinge"/&gt;&lt;/actuator&gt;',
+                  'joint="hinje"/&gt;&lt;/actuator&gt;')
+run(bad)</code></pre><p>motor가 가리킨 이름 hinge를 hinje로 잘못 쓰면 <code>from_xml_string</code>이 멈추고 이렇게 말합니다: <em>unknown transmission target 'hinje' for actuator id = 0 … Element name 'opener', id 0, line 13</em>. jointpos 쪽을 틀리면 <em>unrecognized name 'hinje' of sensorized object … Element name 'angle', id 0, line 14</em>입니다.</p>
+<p>파이썬에서 <code>data.sensor("angel")</code>처럼 이름을 틀리면 <em>Invalid name 'angel'. Valid names: ['angle']</em>이 나옵니다. 말해 주는 요소의 이름과 줄 번호를 따라가면 됩니다.</p></div>
+<div class="point"><strong>XML의 각도는 도, 계산 결과는 라디안</strong><pre><code>x = xml.replace('axis="0 0 1"/&gt;', 'axis="0 0 1" range="0 90"/&gt;')
+model, data = run(x, steps=0)
+print(model.jnt_range[0])</code></pre><p>XML에 쓴 <code>range="0 90"</code>은 90도로 읽혀 <code>model.jnt_range</code>에서 <strong>[0, 1.5708]</strong> rad가 됩니다. 문이 π/2 rad(90도)까지 열렸을 때 jointpos가 읽는 값도 <strong>1.5708</strong>입니다.</p>
+<p>앞 실험의 <code>range="0 0.1"</code>은 0.1도, 곧 0.001745 rad였습니다. 파일을 라디안으로 쓰고 싶으면 <code>&lt;compiler angle="radian"/&gt;</code>를 쓰는데, 그러면 <code>range="0 90"</code>은 [0, 90]으로 읽습니다.</p></div>
+</div></details>
+
+<details class="lesson-detail"><summary>스스로 확인하기: 네 문제</summary><div class="inside">
+<p>위 <code>run</code>으로 직접 돌려 보고 답을 맞혀 보세요.</p>
+<ol><li>문짝 size를 <code>0.2 0.02 0.5</code>로 바꾸면 질량은 얼마일까요?</li><li>motor에 <code>gear="-1"</code>을 쓰면 100걸음 뒤 각도의 부호는?</li><li>body를 <code>pos="0 1 1"</code>로 옮기면 닫힌 문 손잡이의 세계 좌표는?</li><li>sensor에서 jointvel을 jointpos 앞에 쓰면 <code>sensordata[0]</code>은 무엇일까요?</li></ol>
+<details><summary>답 보기</summary><div class="inside"><ol><li>16 kg입니다(부피가 절반이라 질량도 절반). 각도는 0.00728 rad로 커집니다.</li><li>음수입니다. −0.00296 rad로, 반대 방향으로 돕니다.</li><li>(0.75, 1.0, 1.0)입니다. body를 y로 1 m 옮겼습니다.</li><li>각속도입니다. 값은 0.0293이고, 각도 0.002957은 [1]로 밀립니다.</li></ol></div></details>
+</div></details>
+
+<p class="small">출처: <a href="https://mujoco.readthedocs.io/en/3.17.0/XMLreference.html">MuJoCo 공식 XML 설명서 (3.17.0)</a>. 속성 기본값은 이 설명서와 MuJoCo 3.17.0 실행 결과로 확인했습니다.</p></section><section class="pdf-page" id="pdf-p43" data-pdf-page="43"><h3>진자: 수평으로 든 추를 놓으면</h3>
+<p>문 경첩처럼 한 축만 돌 수 있는 관절에 추를 매답니다. 처음에 수평으로 들었다 놓으면 추는 중력 때문에 아래로 내려갔다가 반대편으로 올라갑니다. 컴퓨터에 “그네처럼 흔들려”라고 적을 수는 없으니, 대신 <strong>관절·추·중력·처음 각도</strong>를 적습니다. 고정하는 값은 경첩 축(y축), 추까지의 거리 0.5m, 마찰 없음, 시간 간격 0.002초입니다.</p>
 
 <pre><code>&lt;mujoco&gt;
   &lt;worldbody&gt;
@@ -31,9 +201,9 @@ for _ in range(100):
     mujoco.mj_step(모델, 데이터)</code></pre>
 <p>첫 줄은 글로 적은 장면을 계산용 모델로 바꿉니다. 둘째 줄은 이 실험의 현재 상태를 만듭니다. 셋째 줄은 첫 관절의 초기 각도를 90°로 넣되 라디안으로 변환합니다. 마지막 두 줄은 0.002초짜리 걸음을 100번 진행하므로 <strong>총 0.2초</strong>입니다. 여기서 출력되는 것은 각도 하나가 아니라, 그 0.2초 뒤의 상태 전체입니다.</p>
 <div class="point"><strong>교안에서 기록한 값</strong><p>0.2초 간격으로 읽은 각도는 90.0 → 67.5 → 6.6 → −58.7 → −89.2 → −75.3°입니다. 코드의 100걸음 한 번으로 이 여섯 값이 모두 출력되는 것은 아닙니다. 교안 그림은 더 긴 시간 동안 걸음마다 각도를 기록해 0.2초 간격으로 골라 놓은 것입니다.</p></div>
-<p>마찰이 없는 예제라 추는 반대편에서도 거의 같은 높이까지 올라갑니다. 완전히 같은 값이 아닌 데에는 수치 계산 오차가 섞여 있습니다. 이 값들은 교안 기록이며, 이 노트를 만들면서 MuJoCo를 설치해 다시 실행한 결과가 아닙니다.</p>
+<p>마찰이 없는 예제라 추는 반대편에서도 거의 같은 높이까지 올라갑니다. 완전히 같은 값이 아닌 데에는 수치 계산 오차가 섞여 있습니다. 이 값들은 교안 기록이고, MuJoCo 3.17.0으로 다시 실행해 같은 값이 나오는 것을 확인했습니다(<a href="day2-40-mujoco-start.html#d3-p08">MuJoCo 시작하기</a>의 표와 그림).</p>
 <details><summary>왜 90을 그대로 qpos에 넣지 않을까?</summary><div class="inside">회전 관절의 qpos 단위는 라디안입니다. 90을 넣으면 90라디안이지 90°가 아닙니다. 90°는 π/2라디안입니다. 각도를 다루는 코드에서 단위를 먼저 확인하는 습관이 여기서 시작됩니다.</div></details>
-</div></details></section>
+</section>
 
 <section class="pdf-page" id="pdf-p44" data-pdf-page="44"><h3>무대 대본 쓰기: 바닥과 공이 있는 장면</h3>
 <p>연극을 준비할 때 무대·배우·조명·규칙을 정하듯, MJCF라는 XML 형식으로 장면을 적습니다. <strong>body는 함께 움직이는 몸체, geom은 그 몸체의 모양과 충돌 표면</strong>입니다. 한 body에 geom 여러 개를 붙이면 손잡이와 문판처럼 같이 움직이는 복합 모양이 됩니다. 이번 장면은 바닥 위 1m에 공을 두고, 공만 자유롭게 움직이게 합니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
@@ -55,7 +225,7 @@ for _ in range(100):
 </div></details></section>
 
 <section class="pdf-page" id="pdf-p45" data-pdf-page="45"><h3>설계도와 실험판: MjModel과 MjData</h3>
-<p>같은 규칙으로 두 판의 보드게임을 하는 상황을 생각해 봅시다. 규칙서는 하나이고, 판 위의 말 위치와 차례는 판마다 따로입니다. MuJoCo에서 규칙서가 <strong>MjModel</strong>, 지금 판의 상황이 <strong>MjData</strong>입니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>같은 규칙으로 두 판의 보드게임을 하는 상황을 생각해 봅시다. 규칙서는 하나이고, 판 위의 말 위치와 차례는 판마다 따로입니다. MuJoCo에서 규칙서가 <strong>MjModel</strong>, 지금 판의 상황이 <strong>MjData</strong>입니다.</p>
 
 
 
@@ -68,9 +238,37 @@ mujoco.mj_resetData(모델, 가)  # 가의 상태를 초기화한다</code></pre
 <p>가를 진행해도 나의 시간은 그대로입니다. 같은 모델로 두 실험을 따로 돌릴 수 있다는 것이 이 구조의 요점입니다. 반면 <code>모델.opt.gravity</code>를 바꾸면 이후 그 모델로 계산하는 두 판 모두 새 중력을 씁니다. 상태는 갈라져 있고 규칙은 공유되어 있습니다.</p>
 <p class="point">Model을 “바뀌지 않는 설계도”라고 부른 것은 <strong>역할을 구분하는 비유</strong>입니다. 정말로 수정 불가능한 객체라는 뜻이 아닙니다. 이 페이지에서도 중력을 달의 중력으로 바꿉니다.</p>
 <p>예제 출력의 몸체 수 2는 world와 공을 합한 수이고, 모양 수 2는 바닥과 공입니다. freejoint 하나는 qpos 7칸, qvel 6칸을 씁니다. 공 질량 약 4.189kg은 반지름 0.1m 구에 기본 밀도 1000kg/m³를 적용한 값입니다. 숫자가 어디서 나왔는지 이렇게 추적할 수 있어야 질량을 바꿀 때 결과를 예상할 수 있습니다.</p>
-<p>교안의 별도 낙하 실험에서 가를 0.5초 진행하면 높이가 −0.231m이고, 나는 1m 그대로입니다. 되감으면 가도 1m로 돌아옵니다. 달 중력(약 1.62m/s²)으로 바꾼 실험의 0.5초 뒤 높이는 0.797m입니다. <strong>여기서 나온 음수 높이를 “공이 바닥을 뚫었다”로 읽지 마십시오.</strong> 이 낙하 실험 장면에는 충돌하는 바닥이 없습니다. 앞에서 만든 바닥 포함 장면과는 다른 실험이며, 계산이 위치를 음수까지 그대로 적분한 결과입니다.</p>
+<p>교안의 별도 낙하 실험에서 가를 0.5초 진행하면 높이가 −0.231m이고, 나는 1m 그대로입니다. 되감으면 가도 1m로 돌아옵니다. 달 중력(약 1.62m/s²)으로 바꾼 실험의 0.5초 뒤 높이는 0.797m입니다.</p>
+<p><strong>여기서 나온 음수 높이를 “공이 바닥을 뚫었다”로 읽지 마십시오.</strong> 이 낙하 실험 장면에는 충돌하는 바닥이 없습니다. 앞에서 만든 바닥 포함 장면과는 다른 실험이며, 계산이 위치를 음수까지 그대로 적분한 결과입니다.</p>
 <details><summary>resetData는 중력도 지구 중력으로 되돌릴까?</summary><div class="inside">아닙니다. Data의 상태를 초기화할 뿐입니다. Model에서 바꾼 중력 같은 설계 설정까지 원래 XML 값으로 복구하는 함수로 생각하면 안 됩니다.</div></details>
-</div></details></section>
+</section>
+
+<section class="run-block" id="run-day2-42"><h2>내 컴퓨터에서 돌려 보기</h2><p>아래 출력은 이 컴퓨터(MuJoCo 3.17.0)에서 오너의 예제를 직접 돌려 얻은 값입니다. 명령은 줄 두 개(폴더로 이동 + 실행)이고 <a href="run-code.html">예제 실행하기</a>에 이유가 있습니다. 그림 파일을 저장하는 예제는 예제 폴더에 PNG가 생기지 않도록 임시 폴더(<code>cd $env:TEMP</code>)에서 전체 경로로 돌립니다.</p><h3><code>b01_hello.py</code> · 진자 하나를 놓고 0.2초마다 각도 읽기</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b01_hello.py</code></pre><pre><code>0.0초: 각도   90.0도
+0.2초: 각도   67.5도
+0.4초: 각도    6.6도
+0.6초: 각도  -58.7도
+0.8초: 각도  -89.2도
+1.0초: 각도  -75.3도</code></pre><p>읽을 곳: 19~22행이 ‘읽고(20행), 100걸음 진행(22행)’을 6번 반복합니다. 이 차시 진자의 값 90.0 → 67.5 → 6.6 → −58.7 → −89.2 → −75.3°가 그대로 나옵니다.</p><h3><code>b02_first_scene.py</code> · 첫 장면(공)의 Model 숫자 읽기</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b02_first_scene.py</code></pre><pre><code>시간 간격  : 0.002 초
+중력       : [ 0.    0.   -9.81]
+몸체 수    : 2 (world 포함)
+모양 수    : 2
+관절 수    : 1
+qpos 길이  : 7 / qvel 길이: 6
+공의 질량  : 4.189 kg</code></pre><p>읽을 곳: 17~23행이 시간 간격 0.002초, 중력, 몸체 수 2(world 포함), qpos 7칸/qvel 6칸, 공의 질량 4.189kg를 출력합니다.</p><h3><code>b03_model_data.py</code> · Model 하나, Data 둘: 판 ‘가’만 0.5초 진행</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b03_model_data.py</code></pre><pre><code>가: 0.5초, 높이 -0.231m
+나: 0.0초, 높이 1.000m
+되돌린 가: 0.0초, 높이 1.000m
+달에서 0.5초 뒤 가: 높이 0.797m</code></pre><p>읽을 곳: 13행이 Model(한 번), 17~18행이 ‘가’만 250걸음, 19~20행이 가·나의 서로 다른 시간과 높이입니다. 마지막 줄은 중력을 달 값으로 바꾼 뒤의 0.797m입니다.</p><h3><code>v03_skeleton.py</code> · 모든 MuJoCo 프로그램의 기본 뼈대 (교안 21쪽)</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe v03_skeleton.py</code></pre><pre><code>관절 [30. 60.] 도 | 손끝 [0.26 0.4  0.45]</code></pre><p>읽을 곳: 27~34행이 뼈대 순서 그대로입니다. 설계도(<code>MjModel</code>, 27행) → 상태(<code>MjData</code>, 28행) → 2초(1000걸음) 동안 명령 넣고 진행(30~32행) → <code>mj_forward</code>(33행) → 읽기(34행). 2관절 팔의 목표(어깨 30°, 팔꿈치 60°)를 2초 지킨 뒤 관절이 30.0°, 60.0°이고 손끝이 (0.26, 0.4, 0.45) m입니다.</p></section>
+
+<section id="default-asset-material"><h2>default · asset · material: 같은 값은 한 번만, 재료는 이름으로</h2><p>문 한 짝의 <code>&lt;default&gt;</code>는 앞에서 보았습니다. 여기서는 같은 도구 둘을 더 붙입니다. <code>&lt;asset&gt;</code>은 이름을 붙여 둔 <strong>재료 창고</strong>(무늬 그림인 texture, 그것을 감싼 material)이고, geom은 <code>material="이름"</code>으로 가져다 씁니다.</p>
+<p><code>&lt;default&gt;</code> 안의 <code>class</code>는 “이 아이만 예외” 규칙입니다. 적는 곳과 쓰는 곳이 떨어져 있으니, 쓴 뒤에는 모델에서 읽어 확인합니다.</p><div class="tablewrap"><table><thead><tr><th>태그</th><th>하는 일</th><th>b06_default_asset.py에서</th></tr></thead><tbody><tr><td><code>default</code> (바깥)</td><td>안 적은 속성의 기본값</td><td>5~6행: 모든 geom의 마찰 0.8, 색 회색</td></tr><tr><td><code>default class="얼음"</code></td><td>이름 붙인 예외 묶음</td><td>7~9행: 마찰 0.05, 하늘색. 얼음 geom이 <code>class="얼음"</code>으로 고름(18행)</td></tr><tr><td><code>asset</code>의 texture·material</td><td>이름 붙인 재료 창고</td><td>11~13행. 바닥 geom이 <code>material="바닥재"</code>로 가져다 씀(16행)</td></tr></tbody></table></div><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b06_default_asset.py</code></pre><pre><code>바닥: 마찰 0.80, 색 [0.6 0.6 0.6 1. ], 재질 번호 0
+나무: 마찰 0.80, 색 [0.6 0.6 0.6 1. ], 재질 번호 -1
+얼음: 마찰 0.05, 색 [0.7 0.9 1.  1. ], 재질 번호 -1</code></pre><p>읽는 법. ① 나무 geom은 마찰을 한 글자도 안 적었는데 0.80입니다(바깥 default가 물려줌). ② 얼음은 class로 마찰 0.05와 색 [0.7 0.9 1 1]이 바뀌었습니다. 예외는 쓴 곳에만 걸립니다.</p>
+<p>③ 재질 번호는 <code>geom.matid</code>입니다. 바닥은 재료 창고의 첫 재질이라 0, 재질을 안 붙인 나무와 얼음은 −1입니다. 마찰은 렌더링이 아니라 접촉 계산에 쓰이는 값이므로, 색이나 무늬를 바꿔도 마찰은 변하지 않습니다.</p><p>④ <code>friction</code>의 숫자는 하나가 아니라 셋입니다. 미끄러짐, 비틀림(제자리에서 돌기), 구름에 대한 마찰입니다. 아무것도 적지 않은 geom을 이 컴퓨터에서 읽으면 <code>[1, 0.005, 0.0001]</code>이 나오고, 보통은 첫째 값만 바꿉니다. 두 geom이 닿으면 둘 중 큰 값을 씁니다.</p><p>⑤ 실제 로봇 모델은 <code>&lt;asset&gt;</code>에 무늬 말고 3차원 모양 파일(mesh)도 넣습니다. 구글 딥마인드가 공개한 MuJoCo Menagerie라는 모음에 유명한 로봇 팔, 네 발 로봇, 휴머노이드의 MJCF가 이렇게 정리되어 있다고 교과서는 소개합니다(이 수업에서는 열어 보지 않았습니다).</p></section>
 
 <details id="active-day2-42-mujoco"><summary>따라 해 보기 (선택): 시간은 누가 늘리는가</summary><div class="inside">
 <p>여기까지 읽었으면 같은 계산을 한 번 직접 돌려 볼 차례입니다. 아래 두 문제는 이해를 확인하는 용도이며, 틀려도 본문의 해당 문단을 다시 보면 됩니다. 계산할 때는 무엇을 고정했는지 먼저 적어 두십시오.</p>
@@ -81,7 +279,7 @@ mujoco.mj_resetData(모델, 가)  # 가의 상태를 초기화한다</code></pre
 </div></details>
 
 <details><summary>수업 근거/원문 보기</summary><div class="inside">
-<p class="small">본문은 교안과 교과서를 하나의 설명으로 합친 것이며, 출처는 확인용으로만 남깁니다. 이 노트에서 MuJoCo를 실행해 새로 측정한 값은 없습니다.</p>
-<ul><li>교안 9차시: 42쪽 · 43쪽 · 44쪽 · 45쪽</li><li>교과서: PDF 151쪽 · PDF 155쪽 · <a href="https://github.com/playideas/python-book/blob/ef89393f254f7315fe31dcdd8f7fc12eabe488b8/manuscript-vol3/chapters/04-mujoco-basics.md">4장 원고 전체</a></li><li>예제: b01_hello.py, b02_first_scene.py, b03_model_data.py (교안 출력 인용)</li></ul>
+<p class="small">본문은 교안과 교과서를 하나의 설명으로 합친 것이며, 출처는 확인용으로만 남깁니다. 문 한 짝 절과 진자 표의 값, 그리고 아래 ‘내 컴퓨터에서 돌려 보기’의 b01~b03·b06 출력은 MuJoCo 3.17.0으로 직접 실행해 확인했습니다.</p>
+<ul><li>교안 9차시: 42쪽 · 43쪽 · 44쪽 · 45쪽</li><li>교과서: PDF 151쪽 · PDF 155쪽 · <a href="https://github.com/playideas/python-book/blob/ef89393f254f7315fe31dcdd8f7fc12eabe488b8/manuscript-vol3/chapters/04-mujoco-basics.md">4장 원고 전체</a></li><li>예제(오너 폴더 <code>C:\code\src\robo\vol3\04-mujoco-basics\</code>): b01_hello.py, b02_first_scene.py, b03_model_data.py (이 컴퓨터에서 실행해 확인)</li></ul>
 </div></details>
-</article><footer><div class="page-turn"><a href="day2-11-kinematics-check.html">← 이전: 특이점 실습과 기구학 전체 정리</a><a href="day2-46-state.html">다음: 상태의 칸, 크기, 한 걸음의 의미 →</a></div><p><a href="../../index.html">블로그로 돌아가기</a></p></footer></main></div><script src="../scripts/common.js"></script><script src="../scripts/quiz-core.js"></script><script src="../scripts/quiz-data.js"></script><script src="../scripts/quiz.js"></script><script src="../vendor/three-offline.js"></script><script src="../scripts/inline-3d.js"></script></body></html>
+</article><footer><div class="page-turn"><a href="day2-41-xml-primer.html">← 이전: XML 읽는 법과 로봇 부품 표</a><a href="day2-46-state.html">다음: 상태의 칸, 크기, 한 걸음의 의미 →</a></div><p><a href="../../index.html">블로그로 돌아가기</a></p></footer></main></div><script src="../scripts/common.js"></script><script src="../scripts/quiz-core.js"></script><script src="../scripts/quiz-data.js"></script><script src="../scripts/quiz.js"></script><script src="../vendor/three-offline.js"></script><script src="../scripts/inline-3d.js"></script></body></html>

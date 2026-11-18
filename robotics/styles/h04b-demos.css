@@ -1,0 +1,28 @@
+/* Day-1 widgets (h04b-*) and the generated "run it on my PC" blocks. */
+.h4-demo { margin: 1.5rem 0; padding: 1rem; border: 1px solid #b8d3cc; border-radius: 14px; background: #f9fcfb; }
+.h4-demo h3 { margin-top: 0; }
+.h4-how { margin: .3rem 0 .7rem; font-weight: 600; }
+.h4-row { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; align-items: center; margin: .5rem 0; }
+.h4-row label { font-weight: 700; cursor: pointer; }
+.h4-demo button { padding: .45rem .7rem; border: 1px solid #789b93; border-radius: 6px; background: #fff; color: #173e37; cursor: pointer; }
+.h4-demo button:hover { background: #eaf4f1; }
+.h4-demo button:focus-visible, .h4-demo input:focus-visible, .h4-demo canvas:focus-visible { outline: 3px solid #c66b16; outline-offset: 2px; }
+.h4-sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .4rem 1.2rem; margin: .5rem 0; }
+.h4-sliders label { display: block; font-weight: 700; margin: .25rem 0; }
+.h4-sliders input { display: block; width: 100%; }
+.h4-sliders output { color: #8a3d00; font-variant-numeric: tabular-nums; }
+.h4-plot, .h4-room { display: block; width: 100%; background: #fff; border: 1px solid #cfe0da; border-radius: 8px; touch-action: none; cursor: crosshair; }
+.h4-plot { height: 300px; margin: .6rem 0; }
+.h4-room { height: 380px; cursor: grab; }
+.h4-two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); gap: 1rem; align-items: start; margin: .6rem 0; }
+.h4-readout { margin: .7rem 0; padding: .7rem; background: #e9f3ef; border-radius: 7px; line-height: 1.7; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.h4-two .h4-readout { margin: 0; }
+.h4-big { font-size: 1.15em; }
+.h4-verdict { margin-top: .3rem; padding-top: .3rem; border-top: 1px solid #c3d9d2; }
+.h4-run { margin: 1.1rem 0; }
+.h4-run > p > strong > code { font-size: .95em; }
+.h4-run pre.h4-out { background: #1f2a30; color: #e8f1ee; border-radius: 8px; }
+.h4-run pre.h4-out code { color: inherit; background: transparent; }
+.h4-check { margin: 1.6rem 0; }
+.h4-run pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+#day1-mistakes ~ .tablewrap table td:nth-child(2), #day1-mistakes ~ .tablewrap table th:nth-child(2) { min-width: 9em; }

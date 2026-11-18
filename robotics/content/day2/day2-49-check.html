@@ -1,8 +1,9 @@
 <p class="lead">계산기가 맞는지 확인할 때 우리는 어려운 식부터 넣지 않습니다. 1+1을 넣어 봅니다. 시뮬레이터도 같습니다. 답을 이미 아는 문제를 넣어 보고, 어긋나는 크기와 방향을 읽습니다. 이번 차시의 채점 문제는 두 개입니다. <strong>10m에서 놓은 공</strong>과 <strong>20° 비탈 위의 상자</strong>입니다.</p>
+<p class="small run-hint">코드 블록을 내 컴퓨터에서 돌리는 방법은 <a href="run-code.html">예제 실행하기</a>에 있습니다.</p>
 <details><summary>이 장면에서 고정한 조건</summary><div class="inside"><p>앞 차시에서 만든 공 장면을 그대로 씁니다. 고정하는 것은 중력 9.81m/s², 처음 높이, 처음 속도 0입니다. 바꾸는 것은 한 걸음의 길이 Δt이고, 그때 오차가 어떻게 변하는지가 관찰 대상입니다.</p></div></details>
 <section class="pdf-page" id="pdf-p49" data-pdf-page="49"><h3>답을 아는 문제로 채점하기: 낙하와 마찰</h3>
 <figure class="figure"><img src="assets/eli5-day2-fall-error.svg" alt="10미터 자유 낙하1초뒤 정확높이와시간간격0.002및0.001초의계산높이비교"><figcaption>세 점은 같은 시각의 서로 다른 계산입니다. 높이 차이는 보이도록 확대했고, 색은 계산 방법입니다.</figcaption></figure>
-<aside class="figure-guide"><h3>파란 점이 왜 검은 점보다 아래인지 봅니다</h3><ol class="visual-steps"><li>출발10m·초기속도0·중력9.81m/s²·관찰시각1초를 고정했습니다. 검정은 정확식5.095m, 파랑은Δt=.002s, 주황은Δt=.001s 계산입니다.</li><li>한 걸음마다 먼저 속도를 바꾸고 그 새 속도로 위치를 바꿔 조금 더 내려갑니다. 파랑은5.08519m로9.810mm 낮고, 걸음을 절반으로 줄인 주황은4.905mm 낮습니다.</li><li>같은 차이를 오차=−½gΔt·t로 씁니다. .002를 넣으면−.00981m입니다. 그림의 높이는 공 중심이며, 바닥 접촉이 없는 낙하이므로 튀는 현상은 비교하지 않습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<aside class="figure-guide"><h3>파란 점이 왜 검은 점보다 아래인지 봅니다</h3><ol class="visual-steps"><li>출발10m·초기속도0·중력9.81m/s²·관찰시각1초를 고정했습니다. 검정은 정확식5.095m, 파랑은Δt=.002s, 주황은Δt=.001s 계산입니다.</li><li>한 걸음마다 먼저 속도를 바꾸고 그 새 속도로 위치를 바꿔 조금 더 내려갑니다. 파랑은5.08519m로9.810mm 낮고, 걸음을 절반으로 줄인 주황은4.905mm 낮습니다.</li><li>같은 차이를 오차=−½gΔt·t로 씁니다. .002를 넣으면−.00981m입니다. 그림의 높이는 공 중심이며, 바닥 접촉이 없는 낙하이므로 튀는 현상은 비교하지 않습니다.</li></ol></aside>
 
 
 <p>공을 10m 높이에서 놓고 1초 기다립니다. 공기 저항과 충돌이 없다면 정답은 식으로 바로 나옵니다.</p>
@@ -17,20 +18,25 @@
 <p>θ는 비탈 각도, μ는 단위 없는 마찰계수, a는 비탈 아래 방향 가속도(m/s²)입니다. 상자는 멈춘 상태에서 출발합니다. μ가 임계값보다 크면 위 식의 값이 음수가 되는데, 이것을 “상자가 저절로 위로 올라간다”로 읽지 않고 정지 상태로 둡니다.</p>
 <div class="tablewrap"><table><tr><th>μ</th><th>1초 이동 이론</th><th>교안 시뮬레이션</th></tr><tr><td>0.1</td><td>1.217m</td><td>1.219m</td></tr><tr><td>0.3</td><td>0.295m</td><td>0.297m</td></tr><tr><td>0.4</td><td>0m</td><td>0.004m</td></tr><tr><td>0.6</td><td>0m</td><td>0.002m</td></tr></table></div>
 <p>이론과 시뮬레이션이 0.002m 안쪽으로 맞는 줄은 좋은 검산입니다. 그런데 멈춰야 하는 μ=0.4와 0.6에서 상자가 몇 mm 기어 내려갔습니다. 접촉이 아주 딱딱하지 않고 조금 말랑하게 계산되기 때문에 생기는 차이입니다. 이 표는 교안의 특정 마찰 설정과 단순 식을 비교한 것이며, 현실의 모든 정지·운동 마찰을 하나의 μ로 설명한다는 뜻이 아닙니다.</p>
+<h4 id="p49-elliptic">기어 내려가는 것을 줄이려면: 마찰 원뿔 설정</h4>
+<p>위 표의 μ=0.4, 0.6 상자는 정지 마찰이 완벽하게 붙잡지 못해 1초에 4 mm, 2 mm 기어 내려갔고, 시간을 더 주면 같은 빠르기로 계속 내려갑니다. 물건을 오래 쥐는 로봇 손이라면 문제가 됩니다. 같은 장면(<code>b09_slope.py</code>의 장면)에 아래 한 줄을 넣어 다시 돌렸습니다.</p>
+<pre data-copy><code>&lt;option cone="elliptic" impratio="10"/&gt;</code></pre>
+<p>1초 이동이 μ=0.4에서 0.004 m → <strong>0.0002 m</strong>, μ=0.6에서 0.002 m → <strong>0.0002 m</strong>로 줄었습니다. 미끄러져야 하는 μ=0.1과 0.3은 1.219 m, 0.296 m로 거의 그대로입니다(식은 1.217 m, 0.295 m). 마찰을 원뿔 모양으로 더 정확히 계산하고, 마찰 방향 제약을 더 단단하게(<code>impratio</code>) 다루는 설정입니다. 시뮬레이터는 넣은 숫자와 설정만큼만 맞습니다.</p>
 <details><summary>결과 하나만 보고 “정답”이라고 하지 않는 이유</summary><div class="inside">시간 간격, 접촉 모델, 설정이 결과에 영향을 주기 때문입니다. 이론식과 비교하고, 시간 간격을 줄여 변화를 확인하면 오차의 원인을 구분하기 쉬워집니다.</div></details>
-</div></details></section>
+</section>
 
 <section class="pdf-page" id="pdf-p50" data-pdf-page="50"><h3>바닥 접촉은 아주 딱딱한 쿠션처럼</h3>
 <p>현실의 물체도 닿는 순간 미세하게 변형되지만 눈에 잘 보이지 않습니다. 시뮬레이터의 부드러운 접촉은 물체가 조금 파고든 상태를 허용하면서 그 깊이로 힘을 계산합니다. 그래서 <strong>조금 겹쳐 보인다고 접촉 계산이 아예 없는 것은 아닙니다.</strong> 반대로, 튀어 오르는 높이를 보고 접촉 설정을 판단할 수도 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
 
 <div class="tablewrap"><table><tr><th>solref 설정</th><th>최대 파고듦</th><th>다시 뜬 높이</th></tr><tr><td>"0.02 1" 기본값</td><td>0.027m</td><td>0.000m</td></tr><tr><td>"0.02 0.1" 덜 감쇠</td><td>0.021m</td><td>0.043m</td></tr><tr><td>"-10000 -10" 직접 강성·감쇠 형식</td><td>0.039m</td><td>0.650m</td></tr></table></div>
 <p>양수 형식의 첫 수는 접촉이 회복되는 시간 척도, 둘째 수는 감쇠비입니다. 감쇠는 흔들림을 줄이는 효과입니다. 음수 형식은 강성을 직접 지정하는 다른 표현이므로 <strong>−10000초라는 뜻이 아닙니다.</strong> 두 형식은 같은 자리에 다른 문법을 쓰는 것이지, 같은 값의 부호만 바꾼 것이 아닙니다.</p>
+<p>MuJoCo는 계산을 안정적으로 하려고 접촉을 일부러 조금 말랑하게 다룹니다. 그 정도는 <code>solref</code>와 함께 <code>solimp</code>로도 조절합니다. 아무것도 적지 않은 geom을 이 컴퓨터에서 읽으면 <code>solref=[0.02, 1]</code>, <code>solimp=[0.9, 0.95, 0.001, 0.5, 2]</code>입니다. 접촉을 너무 단단하게 하면 <a href="day2-59-sensor.html">시간 간격과 안정성</a>에서 본 불안정이 생길 수 있어, 이 수업은 기본값을 두고 solref 두 줄만 바꿔 봅니다. 현실의 단단한 공은 이렇게 파고들지 않으므로, 시뮬레이션과 현실의 접촉이 조금 다르다는 점은 기억해 둡니다.</p>
 <p>이 표는 같은 실험에서 설정만 바꾼 교안 결과입니다. “값을 세게 하면 언제나 덜 파고든다” 같은 순서로 외우지 마십시오. 시간 간격, 접촉 정규화, 감쇠가 함께 작용하므로 파고듦과 튀는 높이를 <em>둘 다</em> 확인해야 합니다.</p>
 <details><summary>다시 뜬 높이가 0.000m로 출력됐다면 공이 움직이지 않았다는 뜻일까?</summary><div class="inside">아닙니다. 떨어져 부딪힌 뒤 다시 뜬 높이가 표시 정밀도에서 0이라는 뜻입니다. 처음부터 가만히 있었다는 뜻이 아닙니다. 파고듦 값 0.027m가 함께 있으니 접촉 자체는 분명히 일어났습니다.</div></details>
 </div></details></section>
 
 <section class="pdf-page" id="pdf-p51" data-pdf-page="51"><h3>계산된 장면을 카메라로 찍기</h3>
-<p>물리 상태가 계산되어 있어도 이미지는 따로 만들어야 합니다. 장면에 미리 이름 붙여 둔 카메라를 쓸 수도 있고, 코드에서 자유 카메라의 위치를 정할 수도 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>물리 상태가 계산되어 있어도 이미지는 따로 만들어야 합니다. 장면에 미리 이름 붙여 둔 카메라를 쓸 수도 있고, 코드에서 자유 카메라의 위치를 정할 수도 있습니다.</p>
 
 <pre><code>자유 = mujoco.MjvCamera()
 자유.lookat[:] = [0, 0, 0.1]
@@ -41,13 +47,20 @@ mujoco.mj_forward(모델, 데이터)
 렌더러.update_scene(데이터, camera=자유)
 이미지 = 렌더러.render()</code></pre>
 <ul><li><code>MjvCamera()</code>: 카메라 설정을 담을 객체.</li><li><code>lookat</code>: 바라볼 지점의 좌표. 카메라가 놓인 위치 그 자체는 아닙니다.</li><li><code>distance</code>: 그 지점까지 거리 2m.</li><li><code>azimuth</code>: 수평 방향에서 45° 돌려 봅니다.</li><li><code>elevation</code>: 여기서는 −35°로 내려다봅니다. <strong>카메라 각도는 도 단위</strong>이며 관절 qpos의 라디안과 다릅니다.</li><li><code>forward</code>: 찍기 전에 현재 상태로 계산값을 맞춥니다.</li><li><code>update_scene</code>: 어떤 상태를 어떤 카메라로 그릴지 전달합니다.</li><li><code>render</code>: RGB 숫자 배열을 만듭니다.</li></ul>
+<h4 id="p51-fixed-camera">장면에 박아 두는 카메라와 큰 그림 찍기</h4>
+<p>XML 안에 이름 붙은 <code>&lt;camera&gt;</code>를 넣으면 코드에서 <code>camera="side"</code>로 고를 수 있습니다. 위치는 <code>pos</code>, 방향은 <code>xyaxes</code>라는 여섯 숫자로 줍니다. 앞 세 개는 카메라의 x축(화면 오른쪽), 뒤 세 개는 y축(화면 위)을 세계 좌표로 적은 것이고, 회전 행렬의 열이 새 축의 방향이라는 1일차 이야기와 같습니다.</p>
+<pre data-copy><code>&lt;camera name="side" pos="0 -2 0.55" xyaxes="1 0 0 0 0.05 1"/&gt;</code></pre>
+<p>이 카메라의 x축은 (1, 0, 0), y축은 (0, 0.05, 1)입니다. 카메라는 <strong>자기 −z 방향</strong>을 보는데, 이 컴퓨터에서 <code>데이터.cam_xmat</code>로 읽으니 보는 방향이 (0, 0.999, −0.050)이었습니다. 앞쪽(+y)을 보면서 아주 조금 아래를 향합니다.</p>
+<p>또 하나. 렌더러는 기본으로 640×480까지만 찍습니다. <code>mujoco.Renderer(모델, 600, 800)</code>처럼 더 큰 그림을 요구하면 <code>Image width 800 &gt; framebuffer width 640</code> 오류가 나고, 해결은 XML에 크기를 적는 것입니다.</p>
+<pre data-copy><code>&lt;visual&gt;&lt;global offwidth="800" offheight="600"/&gt;&lt;/visual&gt;</code></pre>
+<p>이렇게 적고 같은 호출을 하면 이미지 모양이 (600, 800, 3)으로 나옵니다(오너의 <code>v04_joint_vs_actuator.py</code>도 이 줄을 씁니다).</p>
 <p>교안의 배열 모양 <code>(240,320,3)</code>은 세로 240픽셀, 가로 320픽셀, 색 채널 3개입니다. <code>uint8</code>은 각 채널을 0~255 정수로 담는 형식입니다. 영상 인식 모델이 입력으로 받는 이미지도 결국 이런 배열입니다.</p>
 <p>여기서 시간 감각이 하나 갈라집니다. 물리 계산은 0.002초마다 하지만 영상은 약 1/30초마다 찍습니다. 두 간격은 서로 나누어떨어지지 않으므로, “다음 촬영 시각에 실제 시각이 도달했는지”를 검사하며 찍습니다. 교안은 이렇게 46장을 찍어 6장을 골라 시간순 격자로 배치했습니다. 계산 횟수와 사진 장수가 별개라는 점이, 나중에 센서 주기와 제어 주기를 다룰 때 다시 나옵니다.</p>
 <details><summary>렌더링하지 않아도 낙하 계산을 할 수 있을까?</summary><div class="inside">그렇습니다. 물리 계산과 이미지 생성은 별개입니다. 화면 없이 계산하고 숫자만 확인할 수 있으며, 렌더러는 결과를 보고 싶을 때 씁니다. 이미지 생성에는 실행 환경의 그래픽 지원이 필요할 수 있습니다.</div></details>
-</div></details></section>
+</section>
 
 <section class="pdf-page" id="pdf-p52" data-pdf-page="52"><h3>직접 실행 문제: 손으로 먼저 예상하기</h3>
-<p>세 문제 모두 “실행 전에 예상하고, 실행 뒤 차이를 설명하기”가 목적입니다. 아래 숫자는 주어진 식으로 계산한 예상값이며 MuJoCo 실행 결과가 아닙니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>세 문제 모두 “실행 전에 예상하고, 실행 뒤 차이를 설명하기”가 목적입니다. 아래 숫자는 주어진 식으로 계산한 예상값이며 MuJoCo 실행 결과가 아닙니다.</p>
 
 <details><summary>① 낙하 간격을 0.004초로 바꾸면 높이 오차는?</summary><div class="inside"><p>t=1s, g=9.81m/s²에서 −½×9.81×0.004×1=−0.01962m, 즉 <strong>−19.62mm</strong>입니다. 0.002초의 −9.81mm보다 두 배이므로, 시뮬레이션 높이는 정확한 5.095m보다 더 낮게 나올 것이라고 예상합니다.</p><pre><code>간격들 = [0.004, 0.002]
 # 각 간격을 model.opt.timestep에 적용하고 1초까지 진행
@@ -56,10 +69,10 @@ mujoco.mj_forward(모델, 데이터)
 a = max(0.0, 9.81 * (np.sin(theta) - mu * np.cos(theta)))
 예상거리 = 0.5 * a * 1.0**2</code></pre><p>첫 줄은 도를 라디안으로, 둘째 줄은 가속도를, 셋째 줄은 정지 상태에서 1초 동안 움직인 거리를 계산합니다. <code>max</code>는 이 문제의 정지 조건을 반영합니다.</p></div></details>
 <details><summary>③ 상자 size를 0.05씩으로 줄이면 질량은?</summary><div class="inside"><p>전체 한 변은 0.1m입니다. 부피 0.001m³×밀도 1000kg/m³=<strong>1kg</strong>이고, 앞의 8kg의 1/8입니다. 명시적인 mass가 따로 있으면 이 밀도 계산 대신 mass 설정이 적용되므로 해당 코드도 확인해야 합니다.</p></div></details>
-<pre><code>cd build-src/vol3/v3c04
-uv run --project ../../../examples/vol3 python b08_free_fall.py</code></pre>
-<p>cd는 예제 폴더로 이동, uv run은 지정한 프로젝트 환경으로 실행, 마지막 이름은 실행할 파일입니다. 원본 저장소 구조와 의존성 준비가 필요합니다. 이 학습 페이지를 여는 것만으로 MuJoCo가 설치되지는 않습니다.</p>
-</div></details></section>
+<pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b08_free_fall.py</code></pre>
+<p>첫 줄은 예제 폴더로 이동, 둘째 줄은 MuJoCo가 들어 있는 <code>.venv</code> 파이썬으로 <code>b08_free_fall.py</code>를 실행합니다. 이 컴퓨터에서 실행하면 줄 네 개가 나오고 첫 줄은 <code>간격 0.002초: 높이 차이 -9.810mm (예측 -9.810mm), 속도 차이 6.4e-14m/s</code>였습니다. 이 학습 페이지를 여는 것만으로 MuJoCo가 설치되지는 않습니다. 환경과 실행 방법은 <a href="run-code.html">예제 실행하기</a>를 보세요.</p>
+</section>
 
 <section class="pdf-page" id="pdf-p53" data-pdf-page="53"><h3>확인 문제: step 직후 xpos는?</h3>
 <p>교안의 기본 예제에서 <code>mj_step</code>을 부른 직후 <code>데이터.body(1).xpos</code>를 읽으면 무엇이 나올까요? 앞 차시의 순서를 떠올리며 답해 보십시오.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
@@ -84,7 +97,29 @@ uv run --project ../../../examples/vol3 python b08_free_fall.py</code></pre>
 <p class="check">실제로 실행한다면 예상값, 측정값, 차이를 세 열로 기록하십시오. 값이 달라도 곧바로 버그나 새로운 물리라고 단정하지 않습니다.</p>
 </div></details>
 
+<section class="run-block" id="run-day2-49"><h2>내 컴퓨터에서 돌려 보기</h2><p>아래 출력은 이 컴퓨터(MuJoCo 3.17.0)에서 오너의 예제를 직접 돌려 얻은 값입니다. 명령은 줄 두 개(폴더로 이동 + 실행)이고 <a href="run-code.html">예제 실행하기</a>에 이유가 있습니다. 그림 파일을 저장하는 예제는 예제 폴더에 PNG가 생기지 않도록 임시 폴더(<code>cd $env:TEMP</code>)에서 전체 경로로 돌립니다.</p><h3><code>b08_free_fall.py</code> · 낙하 검산: 걸음 길이와 높이 오차</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b08_free_fall.py</code></pre><pre><code>간격 0.002초: 높이 차이 -9.810mm (예측 -9.810mm), 속도 차이 6.4e-14m/s
+간격 0.001초: 높이 차이 -4.905mm (예측 -4.905mm), 속도 차이 9.8e-14m/s
+간격 0.0005초: 높이 차이 -2.453mm (예측 -2.452mm), 속도 차이 7.6e-13m/s
+간격 0.004초: 높이 차이 -19.620mm (예측 -19.620mm), 속도 차이 5.3e-15m/s</code></pre><p>읽을 곳: 12~16행이 간격 네 개를 돌며 1초 낙하를 계산하고, 20행이 시뮬레이션과 식 −½gΔt·t의 차이를 보여 줍니다. 간격을 절반으로 줄이면 오차도 절반(−9.810 → −4.905mm)입니다.</p><h3><code>b09_slope.py</code> · 20° 비탈: 마찰별 1초 이동거리</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b09_slope.py</code></pre><pre><code>tan 20도 = 0.364 (마찰 계수가 이보다 크면 미끄러지지 않는다)
+마찰 0.1: 1초 동안 1.219m 내려감 (식 ½at² = 1.217m)
+마찰 0.3: 1초 동안 0.297m 내려감 (식 ½at² = 0.295m)
+마찰 0.4: 1초 동안 0.004m 내려감 (식 ½at² = 0.000m)
+마찰 0.6: 1초 동안 0.002m 내려감 (식 ½at² = 0.000m)
+마찰 0.2: 1초 동안 0.757m 내려감 (식 ½at² = 0.756m)
+마찰 0.35: 1초 동안 0.074m 내려감 (식 ½at² = 0.064m)
+마찰 0.37: 1초 동안 0.020m 내려감 (식 ½at² = 0.000m)</code></pre><p>읽을 곳: 8행이 tan20° = 0.364, 10~29행이 마찰값마다 모델을 새로 만들어 1초 이동거리와 식 ½at²을 비교합니다. 마찰 0.4와 0.6에서 식은 0인데 몇 mm 내려가는 것이 접촉의 말랑함입니다. 0.35는 0.074 대 0.064로 경계 근처의 차이가 가장 큽니다.</p><h3><code>b10_bounce.py</code> · 접촉 solref 세 가지</h3><pre data-copy><code>cd $env:TEMP
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\04-mujoco-basics\b10_bounce.py</code></pre><pre><code>기본값 (0.02 1): 가장 깊이 파고듦 0.027m, 다시 뜬 높이 0.000m
+덜 감쇠 (0.02 0.1): 가장 깊이 파고듦 0.021m, 다시 뜬 높이 0.043m
+스프링 직접 (-10000 -10): 가장 깊이 파고듦 0.039m, 다시 뜬 높이 0.650m</code></pre><p>읽을 곳: 10~29행이 solref 세 값으로 공을 떨어뜨려 가장 깊이 파고든 정도와 다시 뜬 높이를 잽니다. 파일은 <code>bounce.png</code>도 저장합니다.</p><h3><code>b11_render.py</code> · 카메라로 그림 만들기</h3><pre data-copy><code>cd $env:TEMP
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\04-mujoco-basics\b11_render.py</code></pre><pre><code>이미지: (240, 320, 3) uint8
+저장: render_cameras.png</code></pre><p>읽을 곳: 24행의 <code>mj_forward</code>를 부른 뒤 렌더하고, 29행이 배열 모양 (240, 320, 3) uint8을 출력합니다.</p><h3><code>b12_frames.py</code> · 46프레임을 찍어 격자와 GIF로</h3><pre data-copy><code>cd $env:TEMP
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\04-mujoco-basics\b12_frames.py</code></pre><pre><code>찍은 프레임 수: 46
+저장: bounce_frames.png
+저장: bounce.gif</code></pre><p>읽을 곳: 33~35행이 계산은 0.002초마다, 촬영은 약 1/30초마다 하며 촬영 직전에 forward를 부릅니다. 46장을 찍고 <code>bounce_frames.png</code>, <code>bounce.gif</code>를 저장합니다.</p></section>
+
 <details><summary>수업 근거/원문 보기</summary><div class="inside">
-<p class="small">표의 수치는 교안 출력이고, 식으로 계산한 값은 검산입니다. 이 노트에서 MuJoCo를 실행한 결과는 없습니다.</p>
-<ul><li>교안 9차시: <a href="../../source-library/pdf/lecture-day2/pages/p0049.txt">49쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0050.txt">50쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0051.txt">51쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0052.txt">52쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0053.txt">53쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0054.txt">54쪽</a></li><li>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0159.txt">PDF 159쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0165.txt">PDF 165쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/04-mujoco-basics.md">4.3~4.4절 원고</a></li><li>예제: b08_free_fall.py, b09_slope.py, b10_bounce.py, b11_render.py, b12_frames.py (교안 출력 인용)</li></ul>
+<p class="small">표의 수치는 교안에도 있는 값이고, 아래 ‘내 컴퓨터에서 돌려 보기’의 b08~b12를 이 컴퓨터에서 돌려 같은 값을 확인했습니다. 식으로 계산한 값은 검산입니다.</p>
+<ul><li>교안 9차시: <a href="../../source-library/pdf/lecture-day2/pages/p0049.txt">49쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0050.txt">50쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0051.txt">51쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0052.txt">52쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0053.txt">53쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0054.txt">54쪽</a></li><li>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0159.txt">PDF 159쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0165.txt">PDF 165쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/04-mujoco-basics.md">4.3~4.4절 원고</a></li><li>예제(오너 폴더 <code>C:\code\src\robo\vol3\04-mujoco-basics\</code>): b08_free_fall.py, b09_slope.py, b10_bounce.py, b11_render.py, b12_frames.py (이 컴퓨터에서 실행해 확인)</li></ul>
 </div></details>

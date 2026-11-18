@@ -1,0 +1,104 @@
+<p class="lead">MuJoCo는 장면을 XML이라는 글로 받습니다. 처음 보면 낯설지만 규칙은 세 가지뿐입니다. 열고 닫기, 이름="값", 그리고 “안에 들어 있으면 그 태그에 속한다”입니다. 먼저 로봇 부품이 어떤 태그가 되는지 보고, 그다음 글 읽는 법을 익힙니다.</p>
+<p class="small run-hint">코드 블록을 내 컴퓨터에서 돌리는 방법은 <a href="run-code.html">예제 실행하기</a>에 있습니다.</p>
+<p class="small">MuJoCo 2일차 교안(49쪽) p.10–11을 풀어 쓴 글입니다. 이 글 다음이 <a href="day2-42-mujoco.html#mjcf-door">문 한 짝으로 읽는 MJCF 태그</a>입니다.</p>
+
+<section id="d3-p10"><h2>로봇 부품은 어떤 태그가 될까</h2>
+<figure><svg viewBox="0 0 760 420" font-size="15" role="img" aria-label="탁자 위의 2관절 팔을 위에서 본 그림. 왼쪽 아래 둥근 받침에서 파란 위팔이 오른쪽 위로 뻗고, 그 끝의 팔꿈치에서 초록 아래팔이 위쪽으로 꺾여 올라간다. 아래팔 끝에는 붉은 점(손끝)이 있다. 팔꿈치 오른쪽에는 노란 작은 상자가 있고, 팔 전체 아래에 갈색 탁자가 깔려 있다. 부품마다 1부터 7까지 번호 표시가 붙어 있다.">
+<rect x="70" y="110" width="320" height="280" fill="#e7d6c0" stroke="#b9a07f"/>
+<line x1="110" y1="250" x2="214" y2="190" stroke="#286e99" stroke-width="14" stroke-linecap="round"/>
+<line x1="214" y1="190" x2="214" y2="90" stroke="#2a9d6c" stroke-width="13" stroke-linecap="round"/>
+<circle cx="110" cy="250" r="16" fill="#444" fill-opacity="0.85"/>
+<circle cx="110" cy="250" r="6" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<circle cx="214" cy="190" r="6" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<circle cx="214" cy="90" r="6" fill="#d33"/>
+<rect x="258" y="178" width="24" height="24" fill="#f0c030" stroke="#a88300"/>
+<g stroke="#000" stroke-width="1.5" fill="#fff"><circle cx="172" cy="248" r="12"/><circle cx="244" cy="140" r="12"/><circle cx="84" cy="276" r="12"/><circle cx="188" cy="168" r="12"/><circle cx="240" cy="76" r="12"/><circle cx="270" cy="224" r="12"/><circle cx="350" cy="350" r="12"/></g>
+<g text-anchor="middle" font-size="14"><text x="172" y="253">1</text><text x="244" y="145">2</text><text x="84" y="281">3</text><text x="188" y="173">4</text><text x="240" y="81">5</text><text x="270" y="229">6</text><text x="350" y="355">7</text></g>
+<text x="440" y="130" font-size="14">위에서 본 그림입니다.</text>
+<text x="440" y="152" font-size="14">오른쪽이 x, 위쪽이 y입니다.</text>
+<text x="440" y="190" font-size="14">관절 각도는 어깨 30°, 팔꿈치 60°.</text>
+<text x="440" y="212" font-size="14">이때 손끝은 (0.26 m, 0.40 m).</text>
+<line x1="440" y1="270" x2="500" y2="270" stroke="#000" stroke-width="2"/><line x1="440" y1="262" x2="440" y2="278" stroke="#000" stroke-width="2"/><line x1="500" y1="262" x2="500" y2="278" stroke="#000" stroke-width="2"/>
+<text x="512" y="275" font-size="14">0.15 m</text>
+</svg><figcaption>탁자 위 2관절 팔 장면을 위에서 본 모습. 팔 길이(위팔 0.30 m, 아래팔 0.25 m)와 상자 크기는 장면 파일의 값을 그대로 그렸습니다. 번호는 아래 표의 번호입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>팔을 따라 어깨에서 손끝까지 가 보세요</h3><ol class="visual-steps"><li>먼저 왼쪽 아래 둥근 받침(3번)을 찾습니다. 여기가 어깨이고, 팔 전체가 이 점을 중심으로 돕니다.</li><li>파란 위팔(1번)의 끝이 팔꿈치(4번)입니다. 초록 아래팔(2번)은 팔꿈치에서 꺾여 올라가 붉은 점(5번)에서 끝납니다. 어깨가 돌면 위팔과 아래팔이 함께 돌고, 팔꿈치가 돌면 아래팔만 돕니다.</li><li>노란 상자(6번)와 탁자(7번)는 팔이 아닙니다. 부품 표에서 “로봇이 아닌 것”으로 따로 적어 두었습니다.</li></ol></aside>
+<div class="tablewrap"><table><thead><tr><th>번호</th><th>부품</th><th>MuJoCo에서는</th><th>한 줄 설명</th></tr></thead><tbody>
+<tr><td>1, 2</td><td>링크(위팔, 아래팔)</td><td><code>body</code> + <code>geom</code></td><td>body가 기준점, geom이 모양과 무게</td></tr>
+<tr><td>3, 4</td><td>관절(어깨, 팔꿈치)</td><td><code>joint</code></td><td>링크가 어떻게 움직일 수 있는지 허락</td></tr>
+<tr><td>3, 4와 같은 자리</td><td>모터</td><td><code>actuator</code></td><td>관절에 힘을 줍니다. 모양은 없습니다</td></tr>
+<tr><td>5</td><td>측정점(손끝)</td><td><code>site</code></td><td>위치를 읽을 점. 질량이 없습니다</td></tr>
+<tr><td>이 장면에는 없음</td><td>센서</td><td><code>sensor</code></td><td>각도, 가속도, 닿음을 잽니다</td></tr>
+<tr><td>6, 7</td><td>상자, 탁자, 바닥(로봇이 아닌 것)</td><td><code>body</code> / <code>geom</code></td><td>그냥 세상에 놓인 물체입니다</td></tr>
+<tr><td>그림 밖</td><td>제어기</td><td>내가 쓰는 파이썬 코드</td><td>목표를 정해 모터에 보냅니다</td></tr>
+</tbody></table></div>
+<p class="point"><strong>외울 것은 한 줄입니다.</strong> 링크는 body와 geom을 합친 것, 관절은 joint, 모터는 actuator, 센서는 sensor, 재는 점은 site입니다. 각 태그의 속성은 <a href="day2-42-mujoco.html#mjcf-door">문 한 짝</a> 예제에서 하나씩 바꿔 봅니다.</p></section>
+
+<section id="d3-p11"><h2>XML은 이렇게 읽습니다</h2>
+<figure><svg viewBox="0 0 760 320" font-size="15" role="img" aria-label="XML 한 줄과 그 아래 들여 쓴 자식들을 조각으로 나눈 그림. 첫 줄은 body 여는 태그로 세 조각이다. 조각 하나는 태그 이름 body, 다음은 속성 name=crate, 다음은 속성 pos=0 0 0.5이고, 마지막 조각은 여는 태그를 닫는 부호이다. 그 아래에 body에 속한 자식으로 스스로 닫는 freejoint 태그와 box 모양 geom 태그가 놓이고, 마지막에 body를 닫는 태그가 있다.">
+<g font-family="monospace" font-size="18" text-anchor="middle">
+<rect x="20" y="30" width="90" height="40" rx="4" fill="#fff" stroke="#286e99" stroke-width="2"/><text x="65" y="56">&lt;body</text>
+<rect x="116" y="30" width="170" height="40" rx="4" fill="#fff" stroke="#e16a20" stroke-width="2"/><text x="201" y="56">name="crate"</text>
+<rect x="292" y="30" width="170" height="40" rx="4" fill="#fff" stroke="#e16a20" stroke-width="2"/><text x="377" y="56">pos="0 0 0.5"</text>
+<rect x="468" y="30" width="40" height="40" rx="4" fill="#fff" stroke="#286e99" stroke-width="2"/><text x="488" y="56">&gt;</text>
+<rect x="60" y="160" width="170" height="34" rx="4" fill="#fff" stroke="#2a9d6c" stroke-width="2"/><text x="145" y="183" font-size="16">&lt;freejoint/&gt;</text>
+<rect x="60" y="206" width="400" height="34" rx="4" fill="#fff" stroke="#2a9d6c" stroke-width="2"/><text x="260" y="229" font-size="16">&lt;geom type="box" size="0.1 0.2 0.3"/&gt;</text>
+<rect x="20" y="264" width="110" height="34" rx="4" fill="#fff" stroke="#286e99" stroke-width="2"/><text x="75" y="287" font-size="16">&lt;/body&gt;</text>
+</g>
+<g font-size="14" text-anchor="middle"><text x="65" y="96">태그 이름</text><text x="201" y="96">속성 이름="값"</text><text x="377" y="96">숫자 여럿은 공백으로</text><text x="488" y="122">여는 태그 끝</text></g>
+<g stroke="#888" stroke-width="1"><line x1="65" y1="72" x2="65" y2="84"/><line x1="201" y1="72" x2="201" y2="84"/><line x1="377" y1="72" x2="377" y2="84"/><line x1="488" y1="72" x2="488" y2="110"/></g>
+<line x1="40" y1="140" x2="40" y2="258" stroke="#2a9d6c" stroke-width="3" stroke-dasharray="6 4"/>
+<text x="52" y="146" font-size="14" fill="#2a9d6c">body 안에 들어 있어서 body에 속합니다</text>
+<text x="250" y="183" font-size="14">스스로 닫는 태그: 안이 비면 /&gt; 로 끝냅니다</text>
+<text x="475" y="229" font-size="14">이것도 한 줄로 끝나는 자식</text>
+<text x="150" y="287" font-size="14">닫는 태그: 이름 앞에 / 를 붙여 짝을 맞춥니다</text>
+</svg><figcaption>body 한 개를 조각으로 나눈 그림. 파란 테두리는 열고 닫는 부호, 주황 테두리는 속성, 초록 테두리는 body에 속한 자식 태그입니다.</figcaption></figure>
+<aside class="figure-guide"><h3>파란 테두리에서 초록 테두리로, 위에서 아래로 읽으세요</h3><ol class="visual-steps"><li>맨 위 줄은 body를 <strong>연다</strong>는 선언입니다. 이름 뒤에 속성이 이름="값" 모양으로 줄줄이 붙습니다. 값은 항상 큰따옴표로 감싸고, 숫자가 여럿이면 공백으로 가릅니다.</li><li>그 아래 두 줄(초록)은 body가 열려 있는 동안 적혔기 때문에 body에 속합니다. 안쪽으로 들여 쓰는 것은 읽기 편하라고 하는 것이고, 속하는지는 <strong>열린 태그 안에 있는가</strong>로 정해집니다.</li><li>맨 아래 <code>&lt;/body&gt;</code>가 닫는 짝입니다. 짝이 맞아야 어디까지가 body 안인지 알 수 있습니다.</li></ol></aside>
+<div class="tablewrap"><table><thead><tr><th>용어</th><th>이 예에서</th><th>뜻</th></tr></thead><tbody>
+<tr><td>태그</td><td><code>&lt;body&gt; … &lt;/body&gt;</code></td><td>이름 앞의 /가 닫는 표시</td></tr>
+<tr><td>속성</td><td><code>name="crate" pos="0 0 0.5"</code></td><td>이름="값"</td></tr>
+<tr><td>스스로 닫기</td><td><code>&lt;freejoint/&gt;</code></td><td>넣을 것이 없으면 /&gt; 로 한 줄에 끝</td></tr>
+<tr><td>부모와 자식</td><td>body 안의 freejoint와 geom</td><td>안에 넣은 태그는 그 태그에 속함</td></tr>
+<tr><td>주석</td><td><code>&lt;!-- 설명 --&gt;</code></td><td>MuJoCo가 읽지 않는 메모</td></tr>
+</tbody></table></div>
+
+<h3>이 장면을 MuJoCo에 읽혀 봅니다</h3>
+<p>위 그림의 body를 바닥 위 0.5 m에 놓인 상자로 완성한 장면입니다. 첫 줄 <code>&lt;mujoco&gt;</code>를 1줄이라고 세면 <code>body</code>는 4줄, 상자 <code>geom</code>은 6줄입니다. 이 줄 번호가 아래 오류 문장에서 다시 나옵니다.</p>
+<pre><code>&lt;mujoco model="box"&gt;
+  &lt;worldbody&gt;
+    &lt;geom type="plane" size="1 1 0.1"/&gt;
+    &lt;body name="crate" pos="0 0 0.5"&gt;
+      &lt;freejoint/&gt;
+      &lt;geom type="box" size="0.1 0.2 0.3"/&gt;
+    &lt;/body&gt;
+  &lt;/worldbody&gt;
+&lt;/mujoco&gt;</code></pre>
+<p>이 파일을 <code>from_xml_string</code>으로 읽어 보면 숫자가 이렇게 나옵니다.</p>
+<div class="tablewrap"><table><thead><tr><th>읽은 값</th><th>나온 숫자</th><th>이유</th></tr></thead><tbody>
+<tr><td>몸체 수 <code>nbody</code></td><td>2</td><td>세계(world) 하나 + crate</td></tr>
+<tr><td>모양 수 <code>ngeom</code></td><td>2</td><td>바닥 plane + 상자 box</td></tr>
+<tr><td><code>nq</code> / <code>nv</code></td><td>7 / 6</td><td>freejoint는 위치 3 + 회전 4칸, 속도는 6칸</td></tr>
+<tr><td>상자 질량</td><td>48.0 kg</td><td>size는 반 길이이므로 0.2×0.4×0.6 m = 0.048 m³, 밀도 1000 kg/m³</td></tr>
+<tr><td>1초 뒤 높이 z</td><td>0.2999 m</td><td>떨어져서 바닥에 앉으면 중심 높이가 반 높이 0.3 m</td></tr>
+</tbody></table></div>
+<p class="point"><strong>size 0.3은 높이가 0.3이 아니라 반 높이입니다.</strong> 위 표의 48 kg과 0.2999 m가 모두 이 규칙에서 나옵니다. 아래에서 직접 확인하세요.</p>
+<div id="xml-scene-demo" data-xml-scene-demo></div>
+<p class="check">해 볼 것: <strong>size</strong>를 0.1, 0.2, 0.3으로 맞추면 질량이 48 kg(위 표의 상자)이 되는지, <strong>모양 pos의 x</strong>를 0으로 하면 판이 경첩을 가운데 두고 도는지 보세요. θ를 움직이면 몸체의 빨간 점은 그대로이고 주황 점(모양 중심)만 반원을 그립니다. 모양은 몸체에 붙어 있어 몸체가 돌면 함께 돌기 때문입니다.</p>
+
+<h3>실수하면 이런 문장이 나옵니다</h3>
+<p>위 파일에 실수를 하나씩만 넣어 읽혔습니다. 모두 파이썬 <code>ValueError</code>로 나오고, 마지막 줄에 줄 번호가 있습니다.</p>
+<div class="tablewrap"><table><thead><tr><th>넣은 실수</th><th>MuJoCo가 한 말(줄여서)</th><th>가리킨 줄</th></tr></thead><tbody>
+<tr><td><code>&lt;/body&gt;</code> 줄을 지움</td><td><code>XML_ERROR_MISMATCHED_ELEMENT … XMLElement name=body</code></td><td>4 (빠진 곳이 아니라 <strong>열린 body</strong>)</td></tr>
+<tr><td>큰따옴표 빠짐 <code>size=0.1 0.2 0.3</code></td><td><code>XML_ERROR_PARSING_ATTRIBUTE … name=geom</code></td><td>6</td></tr>
+<tr><td>대문자 <code>&lt;Body&gt;</code></td><td><code>Schema violation: unrecognized element … 'Body'</code></td><td>4</td></tr>
+<tr><td>속성 철자 <code>sizee</code></td><td><code>unrecognized attribute: 'sizee'</code></td><td>6</td></tr>
+<tr><td>숫자 자리에 글자 <code>0.1 abc 0.3</code></td><td><code>bad format in attribute 'size'</code></td><td>6</td></tr>
+</tbody></table></div>
+<p>표 첫 줄에서 보듯, 닫는 태그가 빠지면 MuJoCo는 <strong>빠진 곳이 아니라 열어 놓고 닫지 못한 태그</strong>의 줄을 알려 줍니다. 오류 줄 번호에서 위로 올라가며 짝을 찾으세요.</p>
+<details class="lesson-detail"><summary>내 컴퓨터에서 같은 문장 확인하기</summary><div class="inside">
+<p>위 장면과 다섯 가지 실수를 한꺼번에 돌리는 파일이 <code>practice/xml_primer.py</code>입니다. <code>robotics</code> 폴더에서 아래처럼 실행하면 표의 숫자와 오류 문장이 그대로 출력됩니다. 파일은 만들지 않습니다.</p>
+<pre data-copy><code>cd C:\code\blog\robotics
+C:\code\src\robo\.venv\Scripts\python.exe practice\xml_primer.py</code></pre>
+<p>XML에서 바꿔 볼 것: <code>size="0.1 0.2 0.3"</code>의 숫자를 두 배로 하고 질량이 몇 배가 되는지 예상한 뒤 돌려 보세요(답은 8배, 384 kg).</p>
+</div></details>
+<p class="check">다음은 이 파일을 태그별로 풀어 보는 <a href="day2-42-mujoco.html#mjcf-door">문 한 짝으로 읽는 MJCF 태그 →</a></p></section>
+<p class="small">참고한 곳: MuJoCo 2일차 교안 p.10–11, 교과서 4.1절. 쪽 번호는 찾아보라는 표시일 뿐이고 필요한 내용은 이 글에 옮겨 두었습니다. 오류 문장과 숫자는 MuJoCo 3.17.0으로 직접 실행한 값입니다.</p>

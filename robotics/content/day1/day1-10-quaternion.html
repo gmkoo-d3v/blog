@@ -40,7 +40,12 @@
 <div class="formula">돌릴 화살표 v → p=(0,vₓ,vᵧ,v_z)<br>p′=q p q⁻¹<br>z축90°인 q: (1,0,0) → (0,1,0)</div>
 <p>p는 화살표를 계산에 넣으려고 첫 칸에0을 붙인 것입니다. 최종 p′의 뒤 세 수가 돌아간 화살표입니다. <strong>중간 q p가 언제나3차원 벡터라거나, 앞뒤 곱이 각각 실제45° 회전이라고 나누어 해석하지 않습니다.</strong> 전체 q p q⁻¹이90°를 만듭니다.</p>
 <details><summary>기호와 소프트웨어 순서 · 선택 상세</summary><div class="inside"><p>쿼터니언을 w+xi+yj+zk라고도 씁니다. i,j,k는 곱셈 규칙을 가진 기호입니다. ij=k이지만 ji=−k이므로 순서가 중요합니다. 이 규칙을 전부 외우기보다 축·각도·입출력을 먼저 연결합니다.</p><p>이 수업의 도구와 MuJoCo quat/xquat은wxyz, SciPy 기본 as_quat()은xyzw입니다. scalar_first=True이면wxyz입니다. 같은 값이라도 다른 칸에 넣으면 다른 회전이 됩니다.</p></div></details>
-</div></details></section>
+</div></details><!--h04b-run:p56--><div class="point h4-run"><strong>내 컴퓨터에서 돌려 보기</strong> <span class="small">(PowerShell · 파이썬 경로가 왜 이래야 하는지는 <a href="run-code.html">예제 실행하기</a>)</span><p><strong><code>02-frames-rotations\b13_quat_basic.py</code></strong> · 읽을 줄 1–14</p><pre data-copy><code>cd C:\code\src\robo\vol3\02-frames-rotations
+..\..\.venv\Scripts\python.exe b13_quat_basic.py</code></pre><pre class="h4-out"><code>z축 90도 쿼터니언 [w x y z]: [0.7071 0.     0.     0.7071]
+길이: 1.0
+x축을 돌리면: [0. 1. 0.]
+scipy as_quat()                 : [0.     0.     0.7071 0.7071]
+scipy as_quat(scalar_first=True): [0.7071 0.     0.     0.7071]</code></pre><p>z축 90도를 [w x y z] 네 수로 적고 SciPy의 두 가지 순서와 나란히 찍습니다. 같은 자세인데 숫자 위치가 다릅니다.</p><p class="small">이 쪽의 그림을 만든 파일(같은 폴더, 실행하면 그림 PNG를 저장): <code>02-frames-rotations\s47_quaternion_half_angle.py</code></p><p class="small">이 쪽의 예제가 불러 쓰는 도우미 파일(직접 실행하지 않고 같은 폴더에 둡니다): <code>02-frames-rotations\quaternion_tools.py</code></p></div><!--/h04b-run:p56--></section>
 
 <section class="pdf-page" id="day1-p57" data-source="lecture-day1-revised" data-pdf-page="57">
 <h2>두 회전 잇기와 같은 자세의 두 표기</h2>
@@ -52,15 +57,29 @@ q_x = 축각_쿼터니언([1,0,0], 90)
 <p>이 해밀턴 곱은 행렬 Rz@Rx와 대응하며 배열 원소별 곱 <code>q_z*q_x</code>와 다릅니다. 순서를 바꾸면 일반적으로 자세도 달라집니다.</p>
 <p>q와−q는 다른 숫자로 같은 회전을 적습니다. (0.7071,0,0,0.7071)과 (−0.7071,0,0,−0.7071)은 모두 앞 (1,0,0)을 (0,1,0)으로 보냅니다. 숫자 네 칸이 다르다고 자세도 다르다고 판정하지 않습니다.</p>
 <details><summary>두 자세의 차이를 구하는 식</summary><div class="inside"><div class="formula">단위 q₁,q₂의 자세 차이=2 arccos(clamp(|q₁·q₂|,0,1))</div><p>절댓값은 q와−q가 같은 자세임을 반영합니다. clamp는 작은 수치 오차로1을 넘는 일을 막습니다. 결과는 두 자세 사이의 회전각이며 공간에서 이동한 거리가 아닙니다.</p></div></details>
-</div></details></section>
+</div></details><!--h04b-run:p57--><div class="point h4-run"><strong>내 컴퓨터에서 돌려 보기</strong> <span class="small">(PowerShell · 파이썬 경로가 왜 이래야 하는지는 <a href="run-code.html">예제 실행하기</a>)</span><p><strong><code>02-frames-rotations\b14_quat_compose.py</code></strong> · 읽을 줄 1–17</p><pre data-copy><code>cd C:\code\src\robo\vol3\02-frames-rotations
+..\..\.venv\Scripts\python.exe b14_quat_compose.py</code></pre><pre class="h4-out"><code>곱(q_z, q_x) == Rz(90) @ Rx(90) ? True
+곱(q_x, q_z) == 곱(q_z, q_x) ? False
+쿼터니언으로 돌린 앞: [0. 1. 0.]
+행렬로 돌린 앞    : [0. 1. 0.]</code></pre><p>두 쿼터니언을 곱한 것이 두 회전행렬을 곱한 것과 같고, 순서를 바꾸면 달라집니다.</p><p><strong><code>02-frames-rotations\b15_quat_double.py</code></strong> · 읽을 줄 1–16</p><pre data-copy><code>cd C:\code\src\robo\vol3\02-frames-rotations
+..\..\.venv\Scripts\python.exe b15_quat_double.py</code></pre><pre class="h4-out"><code>q  : [0.7071 0.     0.     0.7071]
+-q : [-0.7071  0.      0.     -0.7071]
+q로 돌린 앞 : [0. 1. 0.]
+-q로 돌린 앞: [0. 1. 0.]
+내적: -1.0 / 사이각: 0.0 도
+10도 : [0.9962 0.     0.     0.0872]
+370도: [-0.9962  0.      0.     -0.0872]</code></pre><p>q와 −q는 같은 자세입니다(내적 −1, 사이각 0도). 10도와 370도도 부호만 다른 같은 자세입니다.</p></div><!--/h04b-run:p57--></section>
 
 <section class="pdf-page" id="day1-p58" data-source="lecture-day1-revised" data-pdf-page="58">
 <h2>길이와 틀린 자세는 다른 문제입니다</h2>
 <p>똑같은 방향을 향하는 화살표도 숫자 길이는 조금 흐트러질 수 있습니다. 정규화는 그 길이를 맞춥니다. <strong>엉뚱한 방향을 올바른 방향으로 돌려 주는 보정</strong>은 아닙니다.</p><details><summary>정규화 코드와 센서 오차 구분</summary><div class="inside">
 <p>반올림하며 회전을 많이 이으면 q의 길이가1에서 벗어날 수 있습니다.0이 아닌 q를 자기 길이로 나눠 길이1로 맞추는 것이 <strong>정규화</strong>입니다.</p>
 <pre><code>q = q / np.linalg.norm(q)  # 0이 아닌 q의 길이를1로 맞춤</code></pre>
-<p>교안의 float32 반복 예는 길이1.000397을 정규화해1로 맞춥니다. 하지만 센서가 실제보다5° 더 돌았다고 잘못 알려 줬다면 길이1인 잘못된 자세일 수 있습니다. 정규화가 센서 치우침까지 없애지는 않습니다.</p>
-</div></details></section>
+<p><code>b16_quat_drift.py</code>의 float32 반복 예는 길이 1.000397을 정규화해 1로 맞춥니다(이 PC에서 돌린 값). 하지만 센서가 실제보다5° 더 돌았다고 잘못 알려 줬다면 길이1인 잘못된 자세일 수 있습니다. 정규화가 센서 치우침까지 없애지는 않습니다.</p>
+</div></details><!--h04b-run:p58--><div class="point h4-run"><strong>내 컴퓨터에서 돌려 보기</strong> <span class="small">(PowerShell · 파이썬 경로가 왜 이래야 하는지는 <a href="run-code.html">예제 실행하기</a>)</span><p><strong><code>02-frames-rotations\b16_quat_drift.py</code></strong> · 읽을 줄 1–18</p><pre data-copy><code>cd C:\code\src\robo\vol3\02-frames-rotations
+..\..\.venv\Scripts\python.exe b16_quat_drift.py</code></pre><pre class="h4-out"><code>쿼터니언 길이        : 1.000397  (1이어야 함)
+회전 행렬 직교성 오차: 0.002233  (0이어야 함)
+정규화한 뒤 길이     : 1.000000</code></pre><p>float32로 회전을 반복해 이으면 쿼터니언 길이가 1에서 벗어나고, 정규화하면 1로 돌아옵니다.</p></div><!--/h04b-run:p58--></section>
 
 <section class="pdf-page" id="day1-p59" data-source="lecture-day1-revised" data-pdf-page="59">
 <h2>같은 시간마다 같은 각도만큼 돌고 싶습니다</h2>
@@ -76,6 +95,9 @@ q_x = 축각_쿼터니언([1,0,0], 90)
 <p><strong>단위 길이의 두 끝점과 시간에 선형인 진행률 t</strong>로 SLERP를 하면 두 자세 사이의 각속도가 일정합니다. 쿼터니언을 쓴다는 사실만으로 항상 고른 것은 아닙니다. t를 처음 느리게, 나중 빠르게 바꾸면 같은 경로에서도 속도가 달라집니다.</p>
 <p>이 보간이 실제 기계식 짐벌의 축 정렬을 없애거나, 장애물·모터 한계까지 해결하지는 않습니다.</p>
 <details><summary>원호 비유에서 구면의 식으로 · 선택 상세</summary><div class="inside"><p>단위 쿼터니언은 네 수의 제곱합이1인 점입니다. 그 구면에서 두 끝을 잇는 호를 같은 비율로 따라갑니다. q와−q가 같은 자세이므로 짧은 경로에 맞게 끝점 부호를 고릅니다.</p><div class="formula">q(t)=sin((1−t)Ω)/sinΩ · q₀ + sin(tΩ)/sinΩ · q₁<br>cosΩ=q₀·q₁, 0≤t≤1</div><p>이는 단위 끝점·짧은 경로 부호를 사용한 식입니다. 아주 가까운 끝점은 안정적인 근사와 정규화를 씁니다. 지금은 식을 외우기보다 시범의 같은 시간·같은 회전각을 먼저 연결합니다.</p><p><a href="../../assets/day1/gimbal_quaternion_lab.html">기존 조작실의 보간 경로 비교</a>도 같은 질문을 다른 출발·도착으로 보여 줍니다. 시범 조건이 다르면 숫자까지 같을 필요는 없습니다.</p></div></details>
-</div></details></section>
+</div></details><!--h04b-run:p59--><div class="point h4-run"><strong>내 컴퓨터에서 돌려 보기</strong> <span class="small">(PowerShell · 파이썬 경로가 왜 이래야 하는지는 <a href="run-code.html">예제 실행하기</a>)</span><p><strong><code>02-frames-rotations\b17_slerp.py</code></strong> · 읽을 줄 1–22</p><pre data-copy><code>cd C:\code\src\robo\vol3\02-frames-rotations
+..\..\.venv\Scripts\python.exe b17_slerp.py</code></pre><pre class="h4-out"><code>시작에서 끝까지 최단 회전: 133.6 도
+오일러 섞기: 걸음마다  22.1~ 28.5도, 모두 더하면  256.6도
+slerp : 걸음마다  13.4~ 13.4도, 모두 더하면  133.6도</code></pre><p>ZYX=[170, 60, −120]°에서 출발해 끝까지 10구간으로 나눕니다. 오일러 각 섞기는 합이 256.6°(최단 133.6°의 거의 두 배)이고 구간마다 크기가 다르며, SLERP는 모든 구간이 13.4°입니다.</p></div><!--/h04b-run:p59--></section>
 
-<details class="sources"><summary>수업 근거와 수치의 범위</summary><div class="inside"><p>1일차 수정 교안55–59쪽과 교과서2.6–2.7(PDF72–79쪽)을 재구성했습니다. 복소수 시범과4초·4구간 보간 비교는 추가한 학습 예이며 교안 원문 출력이 아닙니다.</p><p>교안59쪽의 별도 ZYX=[170,60,−120]° 예는10구간에서 오일러 총256.6°, SLERP 총133.6°와 구간당 약13.4°를 제시합니다. 이 페이지36.44° 등은 새 시범 조건의 값입니다.</p><p>반각 그림과 보조 조작실은 기존 학습 생성물을 재사용했습니다. 그림의 예전 슬라이드 번호는 수정 교안과 다를 수 있습니다. 숫자·시각화 설명이며 실물 로봇이나 모든 교안 실험을 새로 실행했다는 뜻은 아닙니다.</p></div></details>
+<!--h04b-check--><section class="h4-check" id="day1-check"><h2>스스로 확인하기</h2><p class="small">답은 글에서 찾지 않고 예제를 직접 돌리거나 한 줄 바꿔 돌려서 얻습니다. 숫자는 이 컴퓨터에서 나온 값입니다.</p><div data-quiz-id="e10-w"></div><div data-quiz-id="e10-len"></div><div data-quiz-id="e10-eul"></div></section><!--/h04b-check--><details class="sources"><summary>수업 근거와 수치의 범위</summary><div class="inside"><p>1일차 수정 교안55–59쪽과 교과서2.6–2.7(PDF72–79쪽)을 재구성했습니다. 복소수 시범과4초·4구간 보간 비교는 추가한 학습 예이며 교안 원문 출력이 아닙니다.</p><p>ZYX=[170,60,−120]° 예(<code>b17_slerp.py</code>)를 이 PC에서 돌리면 10구간에서 오일러 총 256.6°, SLERP 총 133.6°, 구간당 약 13.4°가 나옵니다(슬라이드 59쪽과 같은 값). 이 페이지36.44° 등은 새 시범 조건의 값입니다.</p><p>반각 그림과 보조 조작실은 기존 학습 생성물을 재사용했습니다. 그림의 예전 슬라이드 번호는 수정 교안과 다를 수 있습니다. 이 글의 b13~b17 출력 숫자는 이 컴퓨터에서 예제를 직접 돌린 값입니다. 실물 로봇의 측정은 아닙니다.</p></div></details>

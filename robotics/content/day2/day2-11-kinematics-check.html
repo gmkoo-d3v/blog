@@ -3,13 +3,14 @@
 <section class="pdf-page" id="pdf-p39" data-pdf-page="39">
 <h2>감쇠, 접힌 팔, 옮긴 하트</h2>
 <figure class="figure"><img src="assets/day2-draw_line.png" alt="같은 직선 목표에서 속도를 줄인 DLS와 큰 속도가 나온 의사역행렬 비교"><figcaption>복습에서는 주황 경로의 마지막 점과 검은 목표선 끝을 비교합니다.</figcaption></figure>
-<aside class="figure-guide"><h3>주황 선이 곧아 보여도 목표와의 거리를 잽니다</h3><ol class="visual-steps"><li>왼쪽 주황은DLS, 파랑은의사역행렬입니다. 검은 목표선과 회색반경0.7m 한계는 고정입니다. 오른쪽은 관절 속도 크기이며 로그 눈금입니다.</li><li>DLS의 마지막 위치약(0.695,0.087)m와 목표(0.8,0.1)m를 비교합니다. y차이는13mm뿐이지만 x로105mm 뒤처져 전체 오차는√(105²+13²)≈106mm입니다.</li><li>감쇠를 키우면 작은σ방향을 덜 따라가므로 속도는 줄어도 위치가 더 정확해진다고 보장하지 않습니다. 아래 λ비교에서도 y이탈·전체오차·최대속도를 서로 다른 값으로 읽습니다.</li></ol></aside><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<aside class="figure-guide"><h3>주황 선이 곧아 보여도 목표와의 거리를 잽니다</h3><ol class="visual-steps"><li>왼쪽 주황은DLS, 파랑은의사역행렬입니다. 검은 목표선과 회색반경0.7m 한계는 고정입니다. 오른쪽은 관절 속도 크기이며 로그 눈금입니다.</li><li>DLS의 마지막 위치약(0.695,0.087)m와 목표(0.8,0.1)m를 비교합니다. y차이는13mm뿐이지만 x로105mm 뒤처져 전체 오차는√(105²+13²)≈106mm입니다.</li><li>감쇠를 키우면 작은σ방향을 덜 따라가므로 속도는 줄어도 위치가 더 정확해진다고 보장하지 않습니다. 아래 λ비교에서도 y이탈·전체오차·최대속도를 서로 다른 값으로 읽습니다.</li></ol></aside>
 
 
 <details open><summary>실습 1 · λ를 0.01, 0.05, 0.2로 바꾸면?</summary><div class="inside">
 <p>38쪽의 직선 추종을 그대로 두고 감쇠 계수만 바꿉니다. 경로·시간 간격·이득은 고정입니다. 교안과 같은 식을 별도로 구현해 계산한 결과입니다.</p>
 <div class="tablewrap"><table><tr><th>λ</th><th>가장 빠른 관절 속도(rad/s)</th><th>선(y=0.1)에서 최대 이탈(mm)</th></tr><tr><td>0.01</td><td>28.55</td><td>13.72</td></tr><tr><td>0.05</td><td>1.322</td><td>13.41</td></tr><tr><td>0.2</td><td>0.572</td><td>11.78</td></tr></table></div>
-<p>λ를 키우면 관절 속도가 줄어듭니다. 0.01에서 0.2로 가면 28.55에서 0.572로, 약 50분의 1입니다. 그런데 y이탈은 13.72mm에서 11.78mm로 거의 그대로입니다. <strong>이 표만 보고 “감쇠를 키우면 정확해진다”고 결론 내리면 틀립니다.</strong> y이탈은 선에 얼마나 가까이 있는지만 재고, x방향으로 얼마나 뒤처졌는지는 재지 않습니다. 감쇠를 키우면 그 방향의 지연이 커집니다. 전체 목표 오차를 따로 계산해야 비교가 됩니다.</p>
+<p>λ를 키우면 관절 속도가 줄어듭니다. 0.01에서 0.2로 가면 28.55에서 0.572로, 약 50분의 1입니다. 그런데 y이탈은 13.72mm에서 11.78mm로 거의 그대로입니다.</p>
+<p><strong>이 표만 보고 “감쇠를 키우면 정확해진다”고 결론 내리면 틀립니다.</strong> y이탈은 선에 얼마나 가까이 있는지만 재고, x방향으로 얼마나 뒤처졌는지는 재지 않습니다. 감쇠를 키우면 그 방향의 지연이 커집니다. 전체 목표 오차를 따로 계산해야 비교가 됩니다.</p>
 </div></details>
 <details><summary>실습 2 · 팔꿈치를 170°, 179°, 180°로 접으면?</summary><div class="inside">
 <p>펴는 쪽만 특이점이라고 생각하기 쉽습니다. 30쪽의 식에 접는 쪽 각도를 넣어 봅니다.</p>
@@ -24,7 +25,7 @@
 <p>여기서 얻을 교훈은 “하트를 조금 옮겨도 된다”가 아닙니다. 옮긴 뒤에는 <strong>모든 점</strong>이 작업 공간과 관절 한계 안에 있는지, 특이점 근처를 지나지 않는지를 먼저 확인해야 합니다. 0.15m는 작아 보이지만 0.7m라는 한계에 비하면 20%가 넘는 이동입니다.</p>
 </div></details>
 <p class="small">이 페이지의 세 실습 수치는 교안과 같은 식을 별도로 구현해 계산한 값입니다. 교안 예제 파일을 그대로 실행한 출력이 아니며, 마지막 자릿수는 수치 라이브러리와 반복 조건에 따라 달라질 수 있습니다.</p>
-</div></details></section>
+</section>
 
 <section class="pdf-page" id="pdf-p40" data-pdf-page="40">
 <h2>확인 문제: DLS가 실제로 하는 선택은?</h2>
@@ -44,6 +45,18 @@
 <div class="check">자기 말로 설명해 보기: “DLS를 썼는데도 손끝이 목표와 다를 수 있는 이유를 두 가지로 말하라.” → 하나는 감쇠가 큰 관절 움직임을 줄이느라 오차를 남긴 경우, 다른 하나는 목표가 작업 공간 밖이거나 관절 한계 때문에 애초에 불가능한 경우입니다. 앞은 알고리즘의 선택, 뒤는 로봇의 한계입니다.</div>
 </div></details></section>
 
+<section class="run-block" id="run-day2-11"><h2>내 컴퓨터에서 돌려 보기</h2><p>아래 출력은 이 컴퓨터(MuJoCo 3.17.0)에서 오너의 예제를 직접 돌려 얻은 값입니다. 명령은 줄 두 개(폴더로 이동 + 실행)이고 <a href="run-code.html">예제 실행하기</a>에 이유가 있습니다. 그림 파일을 저장하는 예제는 예제 폴더에 PNG가 생기지 않도록 임시 폴더(<code>cd $env:TEMP</code>)에서 전체 경로로 돌립니다.</p><h3><code>b26_draw_line.py</code> · 실습 1: λ를 0.01, 0.2로</h3><pre data-copy><code>cd $env:TEMP
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\03-kinematics\b26_draw_line.py</code></pre><pre><code>의사역행렬: 가장 빠른 관절 속도   202.7rad/s, 선(y = 0.1)에서 가장 멀리 벗어난 거리  76.1mm
+DLS λ=0.01: 가장 빠른 관절 속도    28.6rad/s, 선(y = 0.1)에서 가장 멀리 벗어난 거리  13.7mm
+DLS λ=0.2: 가장 빠른 관절 속도     0.6rad/s, 선(y = 0.1)에서 가장 멀리 벗어난 거리  11.8mm</code></pre><p>읽을 곳: 32행의 <code>("DLS λ=0.05", 0.05)</code> 한 곳만 바꿉니다. 속도는 28.6 → 1.3 → 0.6rad/s로 줄고 이탈은 13.7 → 13.4 → 11.8mm로 거의 그대로입니다(표의 28.55·1.322·0.572는 같은 값을 소수 셋째 자리까지 본 것입니다).</p><h3><code>b17_singular2.py</code> · 실습 2: 팔꿈치 170°, 179°, 180°</h3><pre data-copy><code>cd C:\code\src\robo\vol3\03-kinematics
+..\..\.venv\Scripts\python.exe b17_singular2.py</code></pre><pre><code>팔꿈치   행렬식    조건수      특이값
+ 170도   0.02084        4.8   [0.31507 0.06614]
+ 179도   0.00209       47.7   [0.31622 0.00662]
+ 180도   0.00000        inf   [0.31623 0.     ]</code></pre><p>읽을 곳: 6행의 목록을 <code>[170, 179, 180]</code>으로 바꿉니다. 마지막 칸이 σmin이고 0.06614, 0.00662, 0으로 줄어듭니다. 180°에서 행렬식의 정확한 값은 0입니다(컴퓨터 출력의 10<sup>−16</sup>이 아니라 sin 180° = 0).</p><h3><code>b25_draw_heart.py</code> · 실습 3: 하트를 (0.55, 0.15)로</h3><pre data-copy><code>cd $env:TEMP
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\03-kinematics\b25_draw_heart.py</code></pre><pre><code>가장 먼 점 0.70421
+경로 점 400개, 가장 큰 손끝 오차 5.4e-03m
+어깨 13.7~64.8도, 팔꿈치 -100.3~5.7도</code></pre><p>읽을 곳: 11행의 <code>[0.4, 0.15]</code>를 <code>[0.55, 0.15]</code>로 바꾸고 아무 곳에나 <code>print(np.linalg.norm(경로, axis=1).max())</code>를 더합니다(위 첫 줄). 가장 먼 점이 0.704m로 팔 길이 0.7m를 넘어 손끝 오차가 5.4mm 남습니다.</p></section>
+
 <section class="active-learning" id="active-day2-11-kinematics-check">
 <p class="eyebrow">선택 · 배운 뒤 스스로 확인</p>
 <h2>접힌 팔의 행렬식, 그리고 “잘 따라갔다”의 기준</h2>
@@ -61,6 +74,6 @@
 <p>강의 교안 PDF p.39~41(λ 비교, 접힌 팔, 옮긴 하트, 확인 문제, 단원 정리)을 교과서 3.7~3.11절과 하나의 설명으로 합쳤습니다. 교과서의 “MuJoCo가 다 해 주는데 왜 직접 짰나”에 대한 답(이해와 검산)과 3.11절 요약은 본문에 흡수했고, 자료를 나란히 비교하는 문단은 두지 않았습니다.</p>
 <ul>
 <li>교과서 참고: <a href="../../source-library/pdf/robot-textbook/pages/p0127.txt">PDF 파일 127쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0146.txt">PDF 파일 146쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/03-kinematics.md">3장 원고 전체</a></li>
-<li>수치 구분: p.39의 세 실습 값과 0.70421m·5.36mm·13.72~64.81°·−100.32~5.74°는 교안과 같은 식을 독립 계산한 값이고, p.40~41은 교안의 확인 문제와 요약입니다. MuJoCo는 이 수업에서 실행하지 않았습니다.</li>
+<li>수치 구분: p.39의 세 실습 값과 0.70421m·5.36mm·13.72~64.81°·−100.32~5.74°는 오너의 <code>b26_draw_line.py</code>, <code>b17_singular2.py</code>, <code>b25_draw_heart.py</code>에서 값 한 줄씩만 바꿔 이 컴퓨터에서 돌려 확인했습니다. p.40~41은 교안의 확인 문제와 요약입니다. MuJoCo는 이 차시에서 쓰지 않았습니다.</li>
 </ul>
 </div></details>

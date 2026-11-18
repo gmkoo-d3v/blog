@@ -1,0 +1,35 @@
+<p class="lead">예제 파일은 이 컴퓨터의 <code>C:\code\src\robo\vol3\</code> 아래에 있습니다. 실행할 때 지켜야 할 것은 하나입니다. <strong>MuJoCo가 들어 있는 파이썬</strong>, 즉 <code>C:\code\src\robo\.venv\Scripts\python.exe</code>로 돌리는 것입니다.</p>
+<p class="small">이 글의 명령과 출력은 이 컴퓨터(윈도, MuJoCo 3.17.0, 파이썬 3.12.3)에서 실행해 확인했습니다.</p>
+
+<h2>폴더 네 개</h2>
+<div class="tablewrap"><table><thead><tr><th>폴더 (<code>vol3\</code> 아래)</th><th>내용</th><th>예제 파일</th><th>이 노트에서</th></tr></thead><tbody>
+<tr><td><code>01-what-is-a-robot</code></td><td>1장 로봇이란</td><td>b01–b26</td><td>1일차 1~6번 글</td></tr>
+<tr><td><code>02-frames-rotations</code></td><td>2장 좌표계와 회전</td><td>b01–b26</td><td>1일차 7~12번 글</td></tr>
+<tr><td><code>03-kinematics</code></td><td>3장 기구학</td><td>b01–b25</td><td>2일차 기구학 글</td></tr>
+<tr><td><code>04-mujoco-basics</code></td><td>4장 MuJoCo 입문</td><td>b01–b24, 보충 v01–v05</td><td>2일차 MuJoCo 글</td></tr>
+</tbody></table></div>
+<p>파일 이름의 <code>b##</code>는 장 안의 예제 번호라서 장마다 b01부터 다시 시작합니다. <code>v##</code>는 04 폴더에만 있는 보충 예제입니다.</p>
+
+<h2>실행하는 세 가지 방법</h2>
+<p>같은 예제(<code>04-mujoco-basics\b01_hello.py</code>)를 세 곳에서 돌렸더니 마지막 줄이 모두 <code>1.0초: 각도  -75.3도</code>로 같았습니다. 편한 방법을 고르면 됩니다.</p>
+<pre data-copy><code># 1) 폴더로 들어가서 실행
+cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b01_hello.py
+
+# 2) 어느 폴더에서든 전체 경로로 실행
+C:\code\src\robo\.venv\Scripts\python.exe C:\code\src\robo\vol3\04-mujoco-basics\b01_hello.py
+
+# 3) 환경을 지정해서 실행 (uv가 설치되어 있을 때)
+cd C:\code\src\robo
+uv run --no-sync python vol3\04-mujoco-basics\b01_hello.py</code></pre>
+<p>1일차 글에 적힌 <code>python 01-what-is-a-robot\b13_period.py</code> 같은 줄은 <code>vol3</code> 폴더에서 치는 명령입니다. 그 줄의 <code>python</code>을 위의 <code>.venv</code> 파이썬 경로로 바꾸어 실행하세요. <code>vol3</code>에서 <code>01-what-is-a-robot\b15_env_check.py</code>를 이 방식으로 돌리면 <code>MuJoCo     : 3.17.0</code>이 나옵니다.</p>
+
+<div class="warning point"><strong>그냥 <code>python</code>이면 MuJoCo를 못 찾습니다</strong><p>PATH에 걸린 파이썬(<code>C:\Users\user\AppData\Local\Programs\Python\Python312\python.exe</code>)으로 <code>import mujoco</code>를 하니 <code>ModuleNotFoundError: No module named 'mujoco'</code>가 나왔습니다. 두 파이썬은 버전이 같아도 다른 프로그램입니다. 환경을 켜 두고 <code>python</code>만 치고 싶다면 <code>C:\code\src\robo\.venv\Scripts\Activate.ps1</code>을 먼저 실행하세요(이 컴퓨터에서 활성화 스크립트가 있는 것만 확인했고 실행해 보지는 않았습니다).</p></div>
+
+<h2>알아 두면 덜 헤매는 세 가지</h2>
+<ul>
+<li><strong>저장되는 파일은 “지금 있는 폴더”에 생깁니다.</strong> 임시 폴더에서 <code>b12_frames.py</code>를 돌렸더니 <code>bounce.gif</code>와 <code>bounce_frames.png</code>가 그 폴더에 만들어졌습니다. 예제 폴더를 어지럽히기 싫으면 다른 폴더에서 전체 경로로 실행하세요.</li>
+<li><strong>한글 글꼴 경고가 보일 수 있습니다.</strong> 예제의 <code>그림도구.py</code>는 5행에서 <code>D2Coding</code> 글꼴을 지정합니다. 이 컴퓨터에는 그 글꼴이 있어서 <code>b12_frames.py</code>가 경고 없이 돌았습니다. 글꼴이 없는 컴퓨터에서는 <code>findfont: Font family '…' not found.</code> 꼴의 경고가 여러 줄 나오고 그림 속 한글이 □로 보입니다. 해결은 <a href="day2-40-mujoco-start.html#d3-p05">MuJoCo 시작하기</a>의 글꼴 항목에 있습니다.</li>
+<li><strong>예제 폴더 밖에서는 도우미 파일을 불러올 수 없습니다.</strong> <code>팔장면.py</code> 같은 도우미 파일은 04 폴더 안에 있습니다. 예제를 <em>경로째로 실행</em>하면 어느 폴더에서든 잘 돌지만(<code>b22_arm_check.py</code>를 임시 폴더에서 돌려 확인), 다른 폴더에서 직접 쓴 코드에서 <code>from 팔장면 import XML</code>을 하면 <code>ModuleNotFoundError: No module named '팔장면'</code>이 납니다. 내 코드를 쓸 때는 04 폴더 안에 두세요.</li>
+</ul>
+<p>창이 뜨는 예제(<code>v01_viewer_pendulum.py</code>)는 화면이 있는 컴퓨터에서만 의미가 있습니다. 창을 읽는 법은 <a href="day2-40-mujoco-start.html#d3-p07">MuJoCo 시작하기</a>에 있습니다.</p>

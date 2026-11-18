@@ -26,3 +26,5 @@ aside{max-height:calc(100vh - 60px);overflow:auto;padding-right:5px}.nav-group{b
 /* Reading guides live next to the figure, not in the navigation sidebar. */
 aside.figure-guide{position:static;top:auto;align-self:auto;font-size:inherit;display:block;max-height:none;overflow:visible;padding:16px 20px;margin:16px 0 24px;border-left:4px solid #287359;background:#eff7f0;color:#20352c}
 .figure-guide p{margin:8px 0}.figure-guide ol{padding-left:1.5em;margin:8px 0}.figure-guide li+li{margin-top:8px}.figure-guide strong{color:#174d3b}.teaching-scene{display:block;max-width:100%;height:auto;margin:16px auto;background:#f7faf7;border:1px solid #c7d9cb;border-radius:6px}.teaching-scene text{font:16px sans-serif;fill:#233b33}
+
+.cmd-copy{float:right;margin:0 0 4px 8px;padding:.2rem .6rem;border:1px solid #789b93;border-radius:6px;background:#fff;color:#173e37;cursor:pointer;font-size:13px}

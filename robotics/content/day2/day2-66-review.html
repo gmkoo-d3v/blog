@@ -24,13 +24,13 @@
 </div></details></section>
 
 <section class="pdf-page" id="pdf-p68" data-pdf-page="68"><h3>2일차 전체를 하나의 흐름으로</h3>
-<p class="point">기구학은 주로 “어디에 있나, 어디로 움직이나”를 다루고, 동역학 시뮬레이션은 “힘 때문에 시간이 지나며 어떻게 움직이나”를 더합니다. 둘을 나란히 놓고 비교해야 모델과 계산을 서로 검산할 수 있습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p class="point">기구학은 주로 “어디에 있나, 어디로 움직이나”를 다루고, 동역학 시뮬레이션은 “힘 때문에 시간이 지나며 어떻게 움직이나”를 더합니다. 둘을 나란히 놓고 비교해야 모델과 계산을 서로 검산할 수 있습니다.</p>
 <div class="steps"><span>로봇 구조</span><b>→</b><span>순기구학</span><b>↔</b><span>역기구학</span><b>→</b><span>야코비안·DLS</span><b>→</b><span>MuJoCo 검산</span></div><p class="diagram-read">첫 두 상자는 같은0.4·0.3m팔을 양방향으로 읽습니다. q=(0°,90°)를 FK에 넣으면 p=(0.4,0.3)m, 이 p를 IK에 넣으면 원래 q를 포함한 후보가 나옵니다. 다음 J는 그 자세 근처의 작은 변화, MuJoCo는 같은 구조에 힘·시간을 더한 변화를 계산합니다. 화살표는 처리 순서이며 손끝이 그리는 경로가 아닙니다.</p>
 <ul><li><strong>순기구학:</strong> 관절값을 알고 손끝 위치·방향을 구합니다. 부모에서 자식으로 고정 변환과 관절 변환을 차례로 곱합니다.</li><li><strong>2링크 역기구학:</strong> 손끝 목표에서 관절각을 찾습니다. 코사인 법칙으로 풀며 두 자세, 하나의 경계 자세, 닿지 않는 목표가 생길 수 있습니다. 관절 제한까지 검사합니다.</li><li><strong>야코비안:</strong> 관절을 조금 움직일 때 손끝이 어떻게 움직이는지 연결합니다. 속도와 작은 수정량을 다루는 데 씁니다.</li><li><strong>수치 역기구학·DLS:</strong> 목표까지 작은 수정을 반복합니다. 특이점 근처의 과도한 관절 변화를 완화하되, 오차·수렴·제약을 함께 확인합니다.</li><li><strong>MuJoCo:</strong> 구조에 질량·힘·접촉·시간을 더해 움직임을 계산합니다. 액추에이터 목표와 센서를 연결해 상자 밀기를 관찰합니다.</li></ul>
 
 <details><summary>마지막 자가 점검: 이 다섯 문장을 쉬운 말로 설명할 수 있을까?</summary><div class="inside"><ol><li>부모가 움직이면 연결된 자손의 세계 자세가 바뀐다.</li><li>관절각으로 손끝을 찾는 것과 손끝 목표로 관절각을 찾는 것은 반대 문제다.</li><li>큰 관절 속도 없이 만들기 어려운 손끝 방향이 있다.</li><li>step은 시간 진행, forward는 현재 상태 계산이다.</li><li>목표에 도착하는 것과 안전한 경로로 작업을 끝내는 것은 다르다.</li></ol><p>막히는 문장이 있으면 그 주제로 돌아가 그림과 작은 예를 다시 보십시오. 수식을 통째로 외우는 것보다 입력·출력·단위를 말할 수 있는지가 먼저입니다.</p></div></details>
 <p>다음 3일차의 예고는 ROS 2의 노드, 토픽, QoS, 서비스, 파라미터, 액션, launch와 점 로봇 실습입니다. 이는 내일 범위이며 2일차에서 이미 실습했다는 뜻이 아닙니다. 책 3장·4장 전체가 복습 범위이고, 기본값/재질·대화형 뷰어·자이로 적분·속도 측정은 교안이 별도로 지정한 읽기 과제입니다.</p>
-</div></details></section>
+</section>
 
 <details id="active-day2-66-review"><summary>따라 해 보기 (선택): 순서와 성공 조건</summary><div class="inside">
 <p>본문의 고리를 실제 코드 순서로 세워 보는 문제입니다. 각 단계에서 오가는 값의 단위가 무엇인지 함께 말해 보십시오.</p>
@@ -39,6 +39,8 @@
 <div data-quiz-id="d66-transfer"></div>
 <p class="check">마지막으로 “나는 어느 단계까지 확인했고, 어디부터 아직 모른다”를 한 줄로 적어 두십시오. 모르는 부분을 정확히 찾는 것도 학습 결과입니다.</p>
 </div></details>
+
+<section class="run-block" id="run-day2-66"><h2>2일차 예제 한 번에 점검하기</h2><p>이 날의 숫자는 모두 오너의 예제 폴더 두 곳에서 나왔습니다(<code>C:\code\src\robo\vol3\03-kinematics\</code>, <code>04-mujoco-basics\</code>). 각 파일을 이 컴퓨터에서 돌려 확인한 핵심 줄입니다. 돌리는 방법은 <a href="run-code.html">예제 실행하기</a>를 보세요.</p><div class="tablewrap"><table><thead><tr><th>차시</th><th>파일</th><th>핵심 출력 한 줄</th></tr></thead><tbody><tr><td>6</td><td><code>b01_two_questions.py</code></td><td>5mm 안에 든 조합: 6 개</td></tr><tr><td>6</td><td><code>b03_fk2_trig.py</code></td><td>어깨 30도, 팔꿈치 45도 → 손끝 [0.424 0.49 ]</td></tr><tr><td>7</td><td><code>b10_ik2_analytic.py</code></td><td>목표 (0.3, 0.4): 답 2개</td></tr><tr><td>7</td><td><code>b12_jac_fd.py</code></td><td>가장 큰 차이: 2.2e-11</td></tr><tr><td>8</td><td><code>b17_singular2.py</code></td><td>0도 행렬식 0.00000, 조건수 inf</td></tr><tr><td>8</td><td><code>b21_limits.py</code></td><td>한계 지키기 True: 어깨 2.5도, 팔꿈치 68.0도</td></tr><tr><td>8</td><td><code>b26_draw_line.py</code></td><td>의사역행렬 202.7rad/s, DLS λ=0.05 1.3rad/s</td></tr><tr><td>9</td><td><code>b07_step_forward.py</code></td><td>상태 qpos z 0.8018, 계산값 xpos z 0.8058</td></tr><tr><td>9</td><td><code>b09_slope.py</code></td><td>마찰 0.3: 1초 동안 0.297m 내려감</td></tr><tr><td>10</td><td><code>v04_joint_vs_actuator.py</code></td><td>관절만 어깨 −28.7도 / 액추에이터 −2.9도</td></tr><tr><td>10</td><td><code>b18_contacts.py</code></td><td>가장 큰 수직력 494N, 무게의 25배</td></tr><tr><td>10</td><td><code>b24_arm_push.py</code></td><td>상자 마지막 위치 [0.194 0.461 0.03 ]</td></tr></tbody></table></div></section>
 
 <details><summary>수업 근거/원문 보기</summary><div class="inside">
 <p class="small">p66 문제는 교안 슬라이드의 확인 문제이고, p67~68의 정리는 4.10~4.11절을 하나의 흐름으로 다시 쓴 것입니다. 다음 날 범위는 아직 다루지 않았습니다.</p>

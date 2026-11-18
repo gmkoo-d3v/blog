@@ -1,0 +1,462 @@
+[
+  {
+    "id": "e01-open",
+    "type": "number",
+    "prompt": "b02_open_loop.py를 돌리면 마지막 줄에 “목표까지 남은 거리”가 나옵니다. 몇 m인가요?",
+    "expected": 0.014,
+    "tolerance": 0.0006,
+    "unit": "m",
+    "hint": "예제 폴더에서 실행해 마지막 줄의 숫자를 읽습니다.",
+    "explanation": "45걸음을 정수로 반올림해 보내서 목표를 1.4cm 지나쳤습니다. 닫힌 고리는 이 지나침을 다음 걸음에서 줄입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e01-gain",
+    "type": "number",
+    "prompt": "b03_closed_loop.py의 이득 = 1.5를 3.0으로 바꿔 돌렸습니다. 5.0초 줄의 “남은 거리”는 몇 m인가요? (원본은 0.048m)",
+    "expected": 0.008,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "복사본에서 7행만 바꿉니다. 4.0초까지는 최대 속도 0.5m/s에 걸려 원본과 거의 같지만 그 뒤가 다릅니다.",
+    "explanation": "처음 4초 남짓은 속도 제한(0.5m/s)이 걸려 이득이 달라도 같은 걸음입니다. 제한이 풀리는 도착 직전에는 이득이 클수록 빨리 줄어 5.0초에 0.008m(원본 0.048m)입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e01-washer",
+    "type": "choice",
+    "prompt": "b01_washer_vs_robot.py의 안전_거리 = 0.2를 0.5로 바꿔 돌리면 “앞 0.45m” 줄은 어떻게 되나요?",
+    "options": [
+      {
+        "text": "여전히 앞으로 간다",
+        "correct": false,
+        "feedback": "0.45는 0.5보다 작습니다. 10행의 비교를 다시 읽어 보세요."
+      },
+      {
+        "text": "제자리에서 돈다",
+        "correct": true,
+        "feedback": "0.45 > 0.5가 거짓이라 else 쪽이 됩니다. 같은 센서값도 판단의 기준을 바꾸면 다른 행동을 고릅니다."
+      },
+      {
+        "text": "오류가 난다",
+        "correct": false,
+        "feedback": "숫자만 바꾼 것이라 오류는 나지 않습니다."
+      }
+    ],
+    "hint": "10행의 부등호 방향을 보세요.",
+    "explanation": "고리의 ‘판단’은 코드 한 줄의 기준입니다. 센서값은 그대로여도 기준을 옮기면 행동이 달라집니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e02-slip",
+    "type": "number",
+    "prompt": "b04_slip_noise.py를 --slip 0.4로 돌리면 열린 고리의 평균 남은 거리는 몇 m인가요?",
+    "expected": 0.629,
+    "tolerance": 0.002,
+    "unit": "m",
+    "hint": "첫 줄(열린 고리)의 평균을 읽습니다.",
+    "explanation": "기본(0.2)에서 0.310m였던 열린 고리가 미끄러짐을 두 배로 하자 0.629m가 되었습니다. 닫힌 고리는 0.007m입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e02-noslip",
+    "type": "number",
+    "prompt": "같은 파일을 --slip 0으로 돌리면 열린 고리 평균은 몇 m인가요?",
+    "expected": 0.014,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "미끄러짐이 없으면 열린 고리는 무작위가 없습니다.",
+    "explanation": "미끄러짐이 없으면 열린 고리도 매번 같은 반올림 오차 0.014m만 남습니다. 열린 고리가 나쁜 것이 아니라 ‘몸이 명령대로 안 가는 경우’에 약한 것입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e02-fake",
+    "type": "number",
+    "prompt": "b06_loop_class.py가 멈췄을 때 “진짜 남은 거리”는 몇 m인가요?",
+    "expected": 0.039,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "마지막 줄을 읽습니다.",
+    "explanation": "로봇은 잰 값으로 5cm 안이라 판단하고 멈췄지만 진짜는 3.9cm입니다. 판단에 쓴 값과 진짜 값이 다릅니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e03-ticks",
+    "type": "number",
+    "prompt": "b08_parts_numbers.py에서 한바퀴_눈금 = 1024를 2048로 바꿔 돌리면 눈금 하나는 몇 mm인가요?",
+    "expected": 0.107,
+    "tolerance": 0.001,
+    "unit": "mm",
+    "hint": "첫 줄에 나옵니다. 눈금이 두 배로 많아지면 눈금 하나는?",
+    "explanation": "눈금당 거리가 절반이 되어 0.107mm입니다. 분해능이 좋아진 것이지 바퀴 미끄러짐까지 줄어든 것은 아닙니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e03-tau",
+    "type": "number",
+    "prompt": "b09_motor.py의 시간_상수 = 0.05를 0.10으로 바꾸면 DC 모터가 명령의 95%에 닿기까지 몇 초 걸리나요?",
+    "expected": 0.299,
+    "tolerance": 0.003,
+    "unit": "초",
+    "hint": "원본은 0.149초였습니다. 시간 상수가 두 배입니다.",
+    "explanation": "95%에는 시간 상수의 약 3배(3τ)가 걸리므로 τ=0.10이면 0.299초입니다. 이 글의 조작판에서 τ를 0.10으로 놓고 같은 값을 확인할 수 있습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e03-avg",
+    "type": "number",
+    "prompt": "b10_sensor_average.py의 마지막 줄(64번 평균)에서 흔들림(표준편차)은 몇 m인가요?",
+    "expected": 0.0025,
+    "tolerance": 0.0002,
+    "unit": "m",
+    "hint": "출력의 마지막 줄입니다.",
+    "explanation": "1번 평균 0.0195m의 약 1/8입니다(1/√64). 잡음은 평균으로 줄지만 치우침은 줄지 않습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e04-gain2",
+    "type": "number",
+    "prompt": "b13_period.py를 --gain 2로 돌렸을 때 주기 0.60초 줄의 “최대 지나침”은 몇 m인가요?",
+    "expected": 0.2,
+    "tolerance": 0.002,
+    "unit": "m",
+    "hint": "마지막 주기 줄을 읽습니다.",
+    "explanation": "KΔt=2×0.6=1.2이므로 오차에 −0.2를 곱하며 한 번 지나치고 돌아옵니다. 지나침은 0.2m입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e04-delay",
+    "type": "number",
+    "prompt": "b14_delay.py에서 측정이 0.3초 늦을 때 “마지막 1초 동안 흔들림 폭”은 몇 m인가요?",
+    "expected": 0.101,
+    "tolerance": 0.002,
+    "unit": "m",
+    "hint": "네 번째 줄입니다.",
+    "explanation": "0.3초 지연부터 흔들림이 마지막 1초에도 남습니다. 0.2초에서는 0.000m였습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e04-edge",
+    "type": "choice",
+    "prompt": "이 글의 조작판에서 이득 4, 주기 0.5초(KΔt=2.0)로 놓고 읽으면 위치는 어떻게 되나요?",
+    "options": [
+      {
+        "text": "1m에 얌전히 멈춘다",
+        "correct": false,
+        "feedback": "KΔt=2이면 오차에 곱하는 수가 −1입니다."
+      },
+      {
+        "text": "1m를 중심으로 0과 2m 사이를 같은 크기로 왕복한다",
+        "correct": true,
+        "feedback": "오차가 −1배씩 되므로 크기가 줄지도 커지지도 않는 진동입니다."
+      },
+      {
+        "text": "점점 커지며 발산한다",
+        "correct": false,
+        "feedback": "2보다 커야 발산합니다. 2.0은 경계입니다."
+      }
+    ],
+    "hint": "e다음=(1−KΔt)e에 KΔt=2를 넣으세요.",
+    "explanation": "경계값 KΔt=2에서는 오차가 부호만 바꾸며 줄지 않습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e05-box",
+    "type": "number",
+    "prompt": "b16_falling_box.py에서 0.4초의 상자 중심 높이(MuJoCo 값)는 몇 m인가요?",
+    "expected": 0.211,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "‘공식’ 값이 아니라 앞의 값입니다.",
+    "explanation": "MuJoCo 0.211m, 공식 0.215m로 4mm 벌어집니다. 0.002초 걸음으로 계산한 값과 이상적인 식의 차이입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e05-fric",
+    "type": "number",
+    "prompt": "b20_friction.py에서 마찰 계수 0.2일 때 미끄러진 거리는 몇 m인가요?",
+    "expected": 0.254,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "마지막 줄입니다.",
+    "explanation": "마찰 1.0에서 0.048m였던 거리가 0.254m, 약 다섯 배입니다. 공식 v²/(2μg)=0.255m와 맞습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e05-repeat",
+    "type": "number",
+    "prompt": "b19_repeat.py의 첫 줄에서 3초 뒤 위치의 x(옆 속도 1.0m/s)는 몇 m인가요?",
+    "expected": 0.436,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "첫 줄 배열의 첫 값입니다.",
+    "explanation": "0.436m입니다. 옆 속도를 0.5, 1.5, 2.0m/s로 바꾸면 0.218, 0.654, 0.872m로 속도에 정비례합니다. 같은 조건을 두 번 돌려도 결과가 완전히 같습니다(True).",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e06-dog",
+    "type": "number",
+    "prompt": "b21_watchdog.py에서 감시견을 켰을 때 “가장 멀리” 간 x는 몇 m인가요?",
+    "expected": 0.993,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "두 번째 줄입니다.",
+    "explanation": "감시견이 없으면 센서가 끊긴 동안 마지막 명령으로 달려 1.250m까지 갑니다. 켜면 0.993m에서 멈춥니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e06-wall",
+    "type": "number",
+    "prompt": "b23_three_tries.py를 --obstacle-y 0.6으로 돌렸을 때 첫째 규칙(목표만)의 “장애물 표면과 가장 가까울 때” 값은 몇 m인가요?",
+    "expected": -0.16,
+    "tolerance": 0.002,
+    "unit": "m",
+    "hint": "부호까지 읽습니다. 음수는 장애물 안입니다.",
+    "explanation": "기본(y=0.5)의 −0.232에서 −0.160으로 얕아졌지만 여전히 음수라 충돌입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e06-noisy",
+    "type": "number",
+    "prompt": "b25_avoid_noisy.py의 “3. 밀려나며 옆으로, 잡음만” 줄에서 20번 중 몇 번 도착했나요?",
+    "expected": 20,
+    "tolerance": 0.01,
+    "unit": "번",
+    "hint": "‘도착’ 뒤의 숫자입니다.",
+    "explanation": "20번 모두 도착했고 충돌은 0번입니다. 판단 규칙이 잡음에 강하다는 뜻이지 모든 배치에서 성공한다는 뜻은 아닙니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e07-deg",
+    "type": "number",
+    "prompt": "b06_deg_rad.py 첫 줄의 np.cos(90) 값은 얼마인가요?",
+    "expected": -0.4481,
+    "tolerance": 0.0005,
+    "unit": "",
+    "hint": "소수 넷째 자리까지 읽습니다.",
+    "explanation": "90을 도로 읽지 않고 90rad로 읽은 값입니다. 오류 메시지 없이 그럴듯한 숫자가 나오는 단위 실수입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e07-yaw",
+    "type": "number",
+    "prompt": "이 글의 조작판에서 로봇을 180도 돌리면 컵의 로봇 기준 x는 몇 m인가요? (컵은 방 (2, 1), 로봇 원점은 (1.5, 0))",
+    "expected": -0.5,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "원점을 빼면 (0.5, 1). 180도 돌린 눈금자로 읽으면 부호가 바뀝니다.",
+    "explanation": "컵은 그대로이고 눈금자만 돌았습니다. b18_homogeneous.py --yaw 180의 값과 같습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e07-twice",
+    "type": "choice",
+    "prompt": "b04_rot2d_props.py의 “30도를 두 번 == 60도 한 번?” 줄 결과는?",
+    "options": [
+      {
+        "text": "True",
+        "correct": true,
+        "feedback": "2차원 회전은 순서와 상관없이 각도만 더해집니다."
+      },
+      {
+        "text": "False",
+        "correct": false,
+        "feedback": "다시 실행해서 마지막 줄을 읽어 보세요."
+      }
+    ],
+    "hint": "마지막 줄을 읽습니다.",
+    "explanation": "평면 회전은 한 축이라 각도를 더하면 됩니다. 3차원에서는 달라집니다(다음 글).",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e08-zlast",
+    "type": "number",
+    "prompt": "b07_rot3d_axes.py에서 y축으로 90도 돌린 결과의 z 성분은 얼마인가요?",
+    "expected": -1.0,
+    "tolerance": 0.001,
+    "unit": "",
+    "hint": "두 번째 줄 [x y z]의 세 번째 값입니다.",
+    "explanation": "앞 (1,0,0)이 아래 (0,0,−1)로 갑니다. 이 수업의 축 약속에서는 아래입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e08-cup",
+    "type": "number",
+    "prompt": "b09_cam_to_body.py가 출력하는 “몸 기준 컵 위치”의 z 성분은 몇 m인가요?",
+    "expected": 0.05,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "마지막 줄의 세 번째 값입니다.",
+    "explanation": "카메라 기준 (0.1, −0.05, 0.8)이 몸 기준 (0.8, −0.1, 0.05)가 됩니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e08-order",
+    "type": "choice",
+    "prompt": "b08_order.py의 마지막 줄 “두 행렬이 같은가?”는?",
+    "options": [
+      {
+        "text": "True",
+        "correct": false,
+        "feedback": "앞 방향이 (0,1,0)과 (0,0,1)로 갈라졌습니다."
+      },
+      {
+        "text": "False",
+        "correct": true,
+        "feedback": "3차원 회전은 순서를 바꾸면 결과가 달라집니다."
+      }
+    ],
+    "hint": "위 두 줄의 결과를 보세요.",
+    "explanation": "x 먼저·z 나중과 z 먼저·x 나중은 다른 자세입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e09-xyz",
+    "type": "choice",
+    "prompt": "b10_euler_scipy.py에서 대문자 'XYZ'(움직이는 축)가 Rz@Ry@Rx와 같은가요?",
+    "options": [
+      {
+        "text": "True",
+        "correct": false,
+        "feedback": "세 번째 줄을 다시 읽어 보세요."
+      },
+      {
+        "text": "False",
+        "correct": true,
+        "feedback": "움직이는 축은 ZYX 순서가 Rz@Ry@Rx와 같고, XYZ는 다른 순서입니다."
+      }
+    ],
+    "hint": "세 번째 줄입니다.",
+    "explanation": "같은 글자라도 소문자는 고정축, 대문자는 움직이는 축이고 순서가 반대로 읽힙니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e09-gimbal",
+    "type": "number",
+    "prompt": "b11_gimbal.py의 마지막 줄(피치 90도)에서 되읽은 요는 몇 도인가요?",
+    "expected": -30,
+    "tolerance": 0.1,
+    "unit": "도",
+    "hint": "[요 피치 롤] 중 첫째 값입니다.",
+    "explanation": "롤 0이 아니라 요 −30으로 되읽히고 SciPy는 짐벌 락 경고를 냅니다. 같은 자세를 요·롤 조합 여럿이 만듭니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e09-rodr",
+    "type": "number",
+    "prompt": "b12_rodrigues.py가 행렬에서 다시 읽은 회전 벡터의 ‘길이’는 몇 도인가요?",
+    "expected": 120,
+    "tolerance": 0.1,
+    "unit": "도",
+    "hint": "마지막 줄입니다.",
+    "explanation": "성분은 1.209씩이지만 벡터 전체의 길이가 회전각 120°입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e10-w",
+    "type": "number",
+    "prompt": "b13_quat_basic.py가 찍은 z축 90도 쿼터니언 [w x y z]의 w는 얼마인가요?",
+    "expected": 0.7071,
+    "tolerance": 0.0002,
+    "unit": "",
+    "hint": "첫 줄 배열의 첫 값입니다.",
+    "explanation": "w=cos(45°)=0.7071. 만들 때 반각 45°를 쓰는 이유는 쿼터니언이 두 번 곱해 돌리기 때문입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e10-len",
+    "type": "number",
+    "prompt": "b16_quat_drift.py가 찍은 쿼터니언 길이는 얼마인가요?",
+    "expected": 1.000397,
+    "tolerance": 2e-06,
+    "unit": "",
+    "hint": "첫 줄입니다. 소수 여섯 자리까지.",
+    "explanation": "float32로 이어 붙이다 길이가 1에서 0.0004 벗어났습니다. 정규화하면 1.000000입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e10-eul",
+    "type": "number",
+    "prompt": "b17_slerp.py에서 오일러 각 섞기를 모두 더한 총 회전각은 몇 도인가요? (SLERP는 133.6도)",
+    "expected": 256.6,
+    "tolerance": 0.1,
+    "unit": "도",
+    "hint": "‘오일러 섞기’ 줄의 마지막 값입니다.",
+    "explanation": "최단 회전은 133.6°인데 오일러 섞기는 구간마다 22.1~28.5°씩 돌아 합이 256.6°입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e11-cam",
+    "type": "number",
+    "prompt": "b26_frames_chain.py가 찍은 “카메라 기준 컵”의 z 성분은 몇 m인가요?",
+    "expected": 1.029,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "리스트의 세 번째 값입니다.",
+    "explanation": "카메라 기준 컵 (0.5, −0.017, 1.029). b19의 값과 같습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e11-mj",
+    "type": "choice",
+    "prompt": "b21_mujoco_check.py에서 MuJoCo euler='10 20 30'은 SciPy 소문자 'xyz'와 같은가요?",
+    "options": [
+      {
+        "text": "같다",
+        "correct": false,
+        "feedback": "네 번째 줄이 False였습니다."
+      },
+      {
+        "text": "다르다. 대문자 'XYZ'와 같다",
+        "correct": true,
+        "feedback": "MuJoCo의 euler는 움직이는 축 XYZ입니다."
+      }
+    ],
+    "hint": "마지막 두 줄입니다.",
+    "explanation": "라이브러리마다 오일러 약속이 다릅니다. 작은 예로 직접 비교하는 것이 가장 확실합니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e11-yaw0",
+    "type": "number",
+    "prompt": "b18_homogeneous.py를 --yaw 0으로 돌리면 로봇 기준 컵의 x는 몇 m인가요?",
+    "expected": 0.5,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "회전이 없으면 원점만 빼면 됩니다.",
+    "explanation": "방 기준 컵 (2,1)에서 로봇 원점 (1.5,0)을 빼면 (0.5, 1)입니다. 이 글의 b01_two_frames와 같습니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e12-euler",
+    "type": "number",
+    "prompt": "b23_gyro_integrate.py에서 (가) 오일러 각에 그냥 더하기의 “10초 뒤” 오차는 몇 도인가요?",
+    "expected": 100.982,
+    "tolerance": 0.01,
+    "unit": "도",
+    "hint": "첫 줄입니다.",
+    "explanation": "각속도를 오일러 각에 그냥 더하면 센서가 완벽해도 100도 넘게 틀립니다. (라)는 0.001도입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e12-bias",
+    "type": "number",
+    "prompt": "b24_gyro_drift.py에서 “잡음 + 치우침”의 10초 오차는 몇 도인가요?",
+    "expected": 3.41,
+    "tolerance": 0.01,
+    "unit": "도",
+    "hint": "마지막 줄 끝 값입니다.",
+    "explanation": "잡음만 있을 때(0.49도)보다 7배 큽니다. 치우침은 한쪽으로 쌓이기 때문입니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  },
+  {
+    "id": "e12-chain",
+    "type": "number",
+    "prompt": "b22_mistakes.py가 찍은 T_로봇_손 @ T_방_로봇의 x는 몇 m인가요?",
+    "expected": 1.8,
+    "tolerance": 0.001,
+    "unit": "m",
+    "hint": "마지막 줄 첫 값입니다.",
+    "explanation": "맞는 곱은 1.5가 되어야 하는데 순서를 바꾸면 오류 없이 1.8이 나옵니다.",
+    "source": "1일차 자기 점검 · 내 PC에서 돌린 값(vol3 예제)"
+  }
+]

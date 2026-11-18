@@ -1,4 +1,5 @@
 <p class="lead">관절이 네 개인 팔에서 팔꿈치 각도를 읽으려고 <code>데이터.qpos[1]</code>을 썼더니 엉뚱한 값이 나옵니다. 코드가 틀린 것이 아닙니다. 관절 하나에 숫자 하나라고 가정한 것이 틀렸습니다. 구관절은 자세를 네 칸으로 적고, 자유 관절은 일곱 칸을 씁니다. 이번 차시는 <strong>상태를 적는 서랍의 칸 배치</strong>와, 그 서랍을 읽는 시점을 다룹니다.</p>
+<p class="small run-hint">코드 블록을 내 컴퓨터에서 돌리는 방법은 <a href="run-code.html">예제 실행하기</a>에 있습니다.</p>
 <details><summary>이 장면에서 고정한 조건</summary><div class="inside"><p>앞 차시의 공 장면을 그대로 이어서 씁니다. 고정하는 것은 관절의 종류와 순서이고, 바뀌는 것은 각 관절이 몇 번째 칸을 차지하느냐입니다. 관절을 하나 더 붙이면 뒤에 오는 모든 관절의 번호가 밀립니다.</p></div></details>
 <section class="pdf-page" id="pdf-p46" data-pdf-page="46"><h3>qpos와 qvel은 길이가 다른 서랍이다</h3>
 <figure class="figure"><img src="assets/eli5-day2-state-addresses.svg" alt="같은 관절색을 따라 qpos와 qvel 시작 주소6과5를 비교"><figcaption>직사각형 폭은 해당 관절이 차지하는 숫자 칸 수입니다. 좌표축이나 실제 링크 길이가 아닙니다.</figcaption></figure>
@@ -31,7 +32,7 @@
 </div></details></section>
 
 <section class="pdf-page" id="pdf-p48" data-pdf-page="48"><h3>step은 시간 진행, forward는 현재 상태로 다시 계산</h3>
-<p>게임 캐릭터의 좌표를 코드로 바꿨는데 화면은 아직 예전 위치에 있는 상황을 떠올려 봅시다. 저장된 상태와, 그 상태로부터 계산해 둔 결과는 다릅니다. MuJoCo도 마찬가지여서 한 걸음 안에서 일어나는 일의 순서를 알아야 값을 제대로 읽습니다.</p><details class="lesson-detail"><summary>숫자·공식·코드로 이어 보기</summary><div class="inside">
+<p>게임 캐릭터의 좌표를 코드로 바꿨는데 화면은 아직 예전 위치에 있는 상황을 떠올려 봅시다. 저장된 상태와, 그 상태로부터 계산해 둔 결과는 다릅니다. MuJoCo도 마찬가지여서 한 걸음 안에서 일어나는 일의 순서를 알아야 값을 제대로 읽습니다.</p>
 
 <div class="steps"><span>현재 qpos·qvel</span><b>→</b><span>위치·힘·센서 계산</span><b>→</b><span>다음 qpos·qvel로 적분</span></div><p class="diagram-read">가운데 상자는 지금 상태로 계산한 값이고, 오른쪽은 적분한 새 상태입니다. 예제의0.200초에서 qpos높이0.8018m와 xpos높이0.8058m가 다른 이유가 이 순서입니다. forward는 가운데 상자만 새 qpos로 다시 계산하며 시간을 더하지 않습니다.</p>
 <p>한 걸음은 <strong>지금 상태로 위치·센서·접촉을 계산하고, 가속도를 구하고, 맨 끝에서 qpos와 qvel을 적분</strong>하는 순서로 진행됩니다. 그래서 step을 마친 직후에 읽는 xpos나 센서 값은 적분 직전, 즉 이번 걸음을 시작할 때의 상태를 반영합니다.</p>
@@ -40,10 +41,11 @@
 mujoco.mj_forward(모델, 데이터)
 현재높이 = 데이터.body("ball").xpos[2]</code></pre>
 <p>첫 줄은 시간을 진행합니다. 둘째 줄은 진행된 상태에 맞춰 위치 같은 계산값을 갱신합니다. 셋째 줄은 이제 갱신된 세계 좌표의 z성분을 읽습니다. 여기서 <strong>이름 ball은 그 모델에 실제로 있어야</strong> 하며, 없으면 이름 조회가 실패합니다.</p>
-<p>교안 기본 예제에서 100걸음 뒤 시간은 0.200초이고 qpos의 높이는 0.8018m인데, step 직후 읽은 xpos는 0.8058m입니다. 한 걸음 전 위치가 남아 있다는 뜻입니다. forward를 부르면 xpos도 0.8018m가 됩니다. 이어서 qpos 높이를 0.3으로 직접 바꾸면 xpos는 0.8018m 그대로 있고, forward를 부른 뒤에야 0.3m가 됩니다. 상태를 바꾼 것과 계산 결과를 갱신한 것이 별개임을 보여 주는 장면입니다.</p>
+<p>교안 기본 예제에서 100걸음 뒤 시간은 0.200초이고 qpos의 높이는 0.8018m인데, step 직후 읽은 xpos는 0.8058m입니다. 한 걸음 전 위치가 남아 있다는 뜻입니다. forward를 부르면 xpos도 0.8018m가 됩니다.</p>
+<p>이어서 qpos 높이를 0.3으로 직접 바꾸면 xpos는 0.8018m 그대로 있고, forward를 부른 뒤에야 0.3m가 됩니다. 상태를 바꾼 것과 계산 결과를 갱신한 것이 별개임을 보여 주는 장면입니다.</p>
 <p class="warning point">“step 직후에는 모든 값이 무조건 한 걸음 전”이라고 모든 적분기와 모든 필드에 일반화하지는 마십니다. 여기서는 교안의 기본 적분 예제로 동기화 문제를 설명합니다. 다만 <strong>현재 qpos에 대응하는 위치·센서·그림을 읽으려면 forward로 재계산한다</strong>는 습관은 그대로 가져갈 만합니다.</p>
 <details><summary>forward를 100번 부르면 0.2초가 흐를까?</summary><div class="inside">아닙니다. 시간 적분을 하지 않으므로 시간이 흐르지 않습니다. 교안은 forward를 3번 호출해도 시간 0, 높이 1m, 계산된 z가속도 −9.81m/s²임을 보여 줍니다.</div></details>
-</div></details></section>
+</section>
 
 <details id="active-day2-46-state"><summary>따라 해 보기 (선택): 칸 수를 세고, 읽는 시점을 맞추기</summary><div class="inside">
 <p>본문을 읽었으니 같은 계산을 손으로 한 번 해 보십시오. 아래 문제는 관절을 하나 더 붙였을 때 배열이 어떻게 늘어나는지 묻습니다. 각 관절의 칸을 종이에 적고 더하면 실수를 줄일 수 있습니다.</p>
@@ -53,7 +55,28 @@ mujoco.mj_forward(모델, 데이터)
 <p class="check">box size는 반 길이입니다. size=0.05m라면 한 변이 0.10m라는 것을 실제로 그림을 그려 확인해 두면, 질량 계산에서 같은 착각을 반복하지 않습니다.</p>
 </div></details>
 
+<section class="run-block" id="run-day2-46"><h2>내 컴퓨터에서 돌려 보기</h2><p>아래 출력은 이 컴퓨터(MuJoCo 3.17.0)에서 오너의 예제를 직접 돌려 얻은 값입니다. 명령은 줄 두 개(폴더로 이동 + 실행)이고 <a href="run-code.html">예제 실행하기</a>에 이유가 있습니다. 그림 파일을 저장하는 예제는 예제 폴더에 PNG가 생기지 않도록 임시 폴더(<code>cd $env:TEMP</code>)에서 전체 경로로 돌립니다.</p><h3><code>b04_joint_types.py</code> · 관절 네 종류가 차지하는 칸</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b04_joint_types.py</code></pre><pre><code>mjJNT_HINGE  qpos[0:1] (1칸), qvel 0번부터 ← 경첩
+mjJNT_SLIDE  qpos[1:2] (1칸), qvel 1번부터 ← 레일
+mjJNT_BALL   qpos[2:6] (4칸), qvel 2번부터 ← 구관절
+mjJNT_FREE   qpos[6:13] (7칸), qvel 5번부터 ← 자유
+전체 nq = 13 / nv = 11
+선반의 관절 수: 0</code></pre><p>읽을 곳: 19~24행이 관절마다 qpos 시작·끝 칸과 qvel 시작 번호를 읽고, 25~26행이 전체 nq=13, nv=11과 선반(고정 몸체)의 관절 0개를 출력합니다. 구관절 다음의 free가 qpos는 6번, qvel은 5번에서 시작해 한 칸 어긋나는 모습이 이 차시의 그림입니다.</p><h3><code>b05_geom_mass.py</code> · size는 반 길이, 질량은 부피×밀도</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b05_geom_mass.py</code></pre><pre><code>질량   8.000 kg ← 상자
+질량   4.189 kg ← 공
+질량   0.662 kg ← 막대
+질량   0.160 kg ← 스티로폼
+질량  30.000 kg ← 쇠공
+상자 geom의 size: [0.1 0.1 0.1] → 한 변 0.2 m</code></pre><p>읽을 곳: 15~17행이 다섯 물체의 질량과 상자 size [0.1 0.1 0.1] → 한 변 0.2m를 출력합니다. 8kg(상자), 0.16kg(density 20), 30kg(mass 직접 지정)이 같은 20cm 상자·공의 다른 설정입니다.</p><h3><code>b07_step_forward.py</code> · forward는 시간을 안 보내고, step 직후 xpos는 한 걸음 전</h3><pre data-copy><code>cd C:\code\src\robo\vol3\04-mujoco-basics
+..\..\.venv\Scripts\python.exe b07_step_forward.py</code></pre><pre><code>mj_forward 3번: 시간 0.0, 높이 1.0, z 가속도 -9.81
+mj_step 100번: 시간 0.200
+  상태 qpos z  : 0.8018
+  계산값 xpos z: 0.8058  ← 한 걸음 전 위치
+  forward 뒤   : 0.8018
+qpos를 바꾼 직후 xpos z: 0.8018
+forward 뒤 xpos z     : 0.3</code></pre><p>읽을 곳: 13~15행(forward 3번 → 시간 0), 17~21행(step 100번 뒤 qpos 0.8018과 xpos 0.8058의 차이)과 그 아래 두 줄(qpos를 0.3으로 바꿔도 forward 전에는 xpos가 그대로)입니다.</p></section>
+
 <details><summary>수업 근거/원문 보기</summary><div class="inside">
-<p class="small">출처는 확인용입니다. 본문의 수치는 교안 출력이며 이 노트에서 다시 실행한 결과가 아닙니다.</p>
-<ul><li>교안 9차시: <a href="../../source-library/pdf/lecture-day2/pages/p0046.txt">46쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0047.txt">47쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0048.txt">48쪽</a></li><li>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0155.txt">PDF 155쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0161.txt">PDF 161쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/04-mujoco-basics.md">4.2~4.3절 원고</a></li><li>예제: b04_joint_types.py, b05_geom_mass.py, b07_step_forward.py (교안 출력 인용)</li></ul>
+<p class="small">출처는 확인용입니다. 본문의 수치는 교안에도 있는 값이고, 아래 ‘내 컴퓨터에서 돌려 보기’의 b04·b05·b07을 이 컴퓨터에서 돌려 같은 값을 확인했습니다.</p>
+<ul><li>교안 9차시: <a href="../../source-library/pdf/lecture-day2/pages/p0046.txt">46쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0047.txt">47쪽</a> · <a href="../../source-library/pdf/lecture-day2/pages/p0048.txt">48쪽</a></li><li>교과서: <a href="../../source-library/pdf/robot-textbook/pages/p0155.txt">PDF 155쪽</a> · <a href="../../source-library/pdf/robot-textbook/pages/p0161.txt">PDF 161쪽</a> · <a href="../../source-library/snapshot/manuscript-vol3/chapters/04-mujoco-basics.md">4.2~4.3절 원고</a></li><li>예제(오너 폴더 <code>C:\code\src\robo\vol3\04-mujoco-basics\</code>): b04_joint_types.py, b05_geom_mass.py, b07_step_forward.py (이 컴퓨터에서 실행해 확인)</li></ul>
 </div></details>

@@ -1,5 +1,9 @@
 [
   {
+    "slug": "run-code",
+    "title": "내 PC에서 예제 실행하기"
+  },
+  {
     "slug": "links",
     "title": "막대 두 개를 움직이면 맨 끝은 어디에 있을까요?"
   },
@@ -42,5 +46,9 @@
   {
     "slug": "jacobian-lab",
     "title": "각도·코드·손끝 속도를 잇는 야코비안 실험실"
+  },
+  {
+    "slug": "widget-kit",
+    "title": "보고 움직이는 그림 부품 모음"
   }
 ]
